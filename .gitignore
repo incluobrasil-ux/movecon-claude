@@ -1,0 +1,10 @@
+# Copia integral do tempo dos bots (21,9 GB): fica so no PC
+_arquivo-grok/
+# Estado da tela do Obsidian (muda a cada abertura)
+.obsidian/workspace*.json
+.obsidian/cache
+# Trabalho em andamento (midias pesadas)
+10-Trabalho/*
+!10-Trabalho/.gitkeep
+__pycache__/
+*.pyc

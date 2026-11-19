@@ -1,0 +1,9 @@
+{
+  "userIgnoreFilters": [
+    "_arquivo-grok/",
+    "07-Ferramentas/scripts/"
+  ],
+  "newFileLocation": "folder",
+  "newFileFolderPath": "10-Trabalho",
+  "alwaysUpdateLinks": true
+}

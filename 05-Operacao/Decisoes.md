@@ -1,0 +1,60 @@
+---
+tipo: operacao
+atualizado: 2026-11-19
+---
+# Decisões
+
+Registro das decisões do gestor e do operador, **da mais nova para a mais antiga**. Uma linha por decisão: data e hora (BRT), palavras exatas quando houver, o que muda e a nota de padrão afetada. A decisão mais nova ganha da antiga.
+
+Fonte das decisões até 19/11/2026: `_arquivo-grok/movecon/ceo/tarefas.md`, `_arquivo-grok/movecon/marketplace/HANDOFF-POSTADOR-2026-11-14.md` e as notas dos bots.
+
+## Novembro de 2026
+
+| Data e hora | Decisão (palavras do Samuel quando registradas) | Afeta |
+|---|---|---|
+| 19/11 13h45 | Sair do Grok e trabalhar pelo Claude; montar o cofre do zero com tudo | este cofre |
+| 19/11 11h30 | "Pode liberar entrar em grupos em todas as contas"; região "sudoeste da Bahia e norte de Minas". Máx. 5 pedidos por hora e 30 por dia por conta | [[Publicador Marketplace]] |
+| 19/11 11h16 | "tirar o selo tanan intermediaçoes em todas as postagens que forem pro instagram de pedro" | [[Reel Instagram]] |
+| 19/11 10h44 | "tira a #tananintermediacoes das legendas da pedro" | [[Reel Instagram]] |
+| 19/11 10h24 | Conta 4 entra em grupos do nicho; anúncios em mais grupos | [[Publicador Marketplace]] |
+| 19/11 10h20 | "todos os dias vou querer esses relatorio" (contagem do Marketplace) | [[Analista]] |
+| 19/11 10h01 | Reels diferentes em cada conta; @pedroabreu.consultor 3 por dia (manhã, tarde, noite) | [[Publicador Instagram]] |
+| 19/11 09h55 | Minerar 50 brutos + criativos prontos (Biblioteca do Facebook, TikTok) | [[Minerador]] |
+| 19/11 07h27 | Instagram da pasta "criativos": 1 post por hora | [[Publicador Instagram]] |
+| 19/11 07h10 | "Tira do ar e manda os substitutos": removidos os anúncios com foto de Vitória da Conquista | [[Publicador Marketplace]] |
+| 18/11 22h40 | Não pegar fotos de anúncios de Vitória da Conquista | [[Fotos de veiculo]], [[Minerador]] |
+| 18/11 17h57 | "so nao quero quando se trata da mesma foto, se for mesmo modelo pode postar" | [[Anuncio Marketplace]] |
+| 18/11 16h33 | "Pode mover os brutos pro meu PC" | — |
+| 18/11 14h08 | Minerar mais bens e o Editor preparar fotos para todas as contas | [[Minerador]] |
+| 18/11 13h48 | Anúncios já postados em mais grupos, 20 por vez, mais de uma vez por anúncio | [[Publicador Marketplace]] |
+| 18/11 11h52 | Todas as contas do BitBrowser, 1 anúncio por hora por conta, até acabar a fila | [[Publicador Marketplace]] |
+| 14/11 15h33 | "Aplica tudo": copy v3; ranking diário; aprovações só pelo CEO, 1 vez por dia em lote | [[Aprovacao e registro]] |
+| 14/11 14h45 | "Nao poste nada no Instagram nem tiktok" (@planejeseucredito e TikTok parados) | [[Perfil-do-operador]] |
+| 14/11 14h44 | Accelo não entra no Marketplace | [[Anuncio Marketplace]] |
+| 14/11 13h37 | Apagar as fotos de cada anúncio depois de publicado e conferido | [[Publicador Marketplace]] |
+| 14/11 13h35 | Títulos e descrições diferentes em cada anúncio, sempre com entrada e foco no parcelamento | [[Anuncio Marketplace]] |
+| 14/11 13h34 | Pode publicar à noite e de madrugada | [[Publicador Marketplace]] |
+| 14/11 11h30 | Tarja só em cima da placa | [[Fotos de veiculo]] |
+| 14/11 08h40 | Vídeos: entrada ~18% do bem, parcela 0,9% do bem | [[Reel Instagram]] |
+| 13/11 22h12 | Vídeos levam rodapé "CLIQUE NO LINK E FALE NO WHATSAPP" e só entrada e parcelas | [[Reel Instagram]] |
+| 13/11 11h43 | Marketplace: carros R$ 50–200 mil; caminhões e vans a partir de R$ 70 mil, até R$ 300 mil; entrada de 20%; fotos reais; placa tampada | [[Anuncio Marketplace]] |
+| 13/11 08h50 | Fotos de bem real (Webmotors) sempre aprovadas antes de postar | [[Aprovacao e registro]] |
+
+## Outubro de 2026
+
+| Data e hora | Decisão | Afeta |
+|---|---|---|
+| 28/10 | SDR: 1ª resposta ~40 s; abre com "Oi, tudo bem? Qual é o seu nome?"; funil começa pela entrada | [[Atendimento]] |
+| 24/10 13h30 | Uma região fixa por conta no Marketplace | [[Contas e navegador]] |
+| 24/10 13h24 | Degrau de conta nova: 1/dia na 1ª semana, 2/dia na 2ª, 3/dia depois | [[Contas e navegador]] |
+| 24/10 02h38 | Contas do Facebook no BitBrowser, um perfil por conta | [[Contas e navegador]] |
+| 24/10 02h04 | Tabelas da Alpha valem sempre, independente do "válida até" | [[Calculo de entrada e parcela]] |
+| 23/10 01h20 | Compliance no atendimento, não nas peças | [[Compliance]] |
+| 22/10 00h35 | "Entrada" na peça agressiva (lance fixo e sorteio); "1ª parcela" na educativa e de lance livre | [[Reel Instagram]] |
+| 22/10 00h14 | Toda copy sai da função Copywriter, pronta antes da edição e da postagem | [[Copywriter]] |
+| 22/10 00h10 | Nenhum aviso legal na arte; só na legenda | [[Compliance]] |
+| 21/10 23h25 | Publicar no Marketplace mesmo ciente da regra de comércio da Meta | [[Publicador Marketplace]] |
+| 21/10 23h24 | Vídeo oficial de montadora e música em alta liberados | [[Editor]] |
+| 21/10 22h42 | SDR continua com a voz real do Samuel (não o clone) | [[Atendimento]] |
+| 21/10 | Vídeos ilustrativos de terceiros liberados, com "vídeo ilustrativo" na legenda | [[Regras de ouro]] |
+| 21/10 23h06 | Verba de tráfego R$ 40/dia; raio de 300 km de Vitória da Conquista | [[Perfil-do-operador]] |

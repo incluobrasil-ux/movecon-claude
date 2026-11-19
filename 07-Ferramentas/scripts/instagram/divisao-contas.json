@@ -1,0 +1,263 @@
+{
+ "regra": "Samuel 19/11 10h01 via CEO: \"os reels vao ser diferentes em cada conta, voce vai dividir as midias, nesse facebook novo pode publicar mais lento, um de manha um de tarde e outro de noite\". Cada 4o item da fila restante vai para @pedroabreu.consultor; o resto para @tanan_intermediacoes. n6 e n7 ja postados na @tanan. n35 pulado (T-Cross ja no ar).",
+ "itens": [
+  {
+   "n": 8,
+   "conta": "tanan_intermediacoes",
+   "arquivo": "04-volvo-fh460-v5.mp4",
+   "bem": "04-volvo-fh460-v5"
+  },
+  {
+   "n": 9,
+   "conta": "tanan_intermediacoes",
+   "arquivo": "03-poer-exclusive-v3.mp4",
+   "bem": "03-poer-exclusive-v3"
+  },
+  {
+   "n": 10,
+   "conta": "tanan_intermediacoes",
+   "arquivo": "05-daf-xf-v5.mp4",
+   "bem": "05-daf-xf-v5"
+  },
+  {
+   "n": 11,
+   "conta": "pedroabreu.consultor",
+   "arquivo": "03-renegade-v5.mp4",
+   "bem": "03-renegade-v5"
+  },
+  {
+   "n": 12,
+   "conta": "tanan_intermediacoes",
+   "arquivo": "06-mercedes-actros-v5.mp4",
+   "bem": "06-mercedes-actros-v5"
+  },
+  {
+   "n": 13,
+   "conta": "tanan_intermediacoes",
+   "arquivo": "04-montana-v5b.mp4",
+   "bem": "04-montana-v5b"
+  },
+  {
+   "n": 14,
+   "conta": "tanan_intermediacoes",
+   "arquivo": "08-scania-r440-v5.mp4",
+   "bem": "08-scania-r440-v5"
+  },
+  {
+   "n": 15,
+   "conta": "pedroabreu.consultor",
+   "arquivo": "04-strada-endurance-v3.mp4",
+   "bem": "04-strada-endurance-v3"
+  },
+  {
+   "n": 16,
+   "conta": "tanan_intermediacoes",
+   "arquivo": "09-iveco-stralis-v5.mp4",
+   "bem": "09-iveco-stralis-v5"
+  },
+  {
+   "n": 17,
+   "conta": "tanan_intermediacoes",
+   "arquivo": "05-onix-lt-v3.mp4",
+   "bem": "05-onix-lt-v3"
+  },
+  {
+   "n": 18,
+   "conta": "tanan_intermediacoes",
+   "arquivo": "10-scania-p360-v5.mp4",
+   "bem": "10-scania-p360-v5"
+  },
+  {
+   "n": 19,
+   "conta": "pedroabreu.consultor",
+   "arquivo": "06-fastback-v5.mp4",
+   "bem": "06-fastback-v5"
+  },
+  {
+   "n": 20,
+   "conta": "tanan_intermediacoes",
+   "arquivo": "11-facchini-v5.mp4",
+   "bem": "11-facchini-v5"
+  },
+  {
+   "n": 21,
+   "conta": "tanan_intermediacoes",
+   "arquivo": "06-onix-plus-premier-v3.mp4",
+   "bem": "06-onix-plus-premier-v3"
+  },
+  {
+   "n": 22,
+   "conta": "tanan_intermediacoes",
+   "arquivo": "12-volkswagen-worker-v5b.mp4",
+   "bem": "12-volkswagen-worker-v5b"
+  },
+  {
+   "n": 23,
+   "conta": "pedroabreu.consultor",
+   "arquivo": "07-hb20-limited-v3.mp4",
+   "bem": "07-hb20-limited-v3"
+  },
+  {
+   "n": 24,
+   "conta": "tanan_intermediacoes",
+   "arquivo": "13-guerra-v5.mp4",
+   "bem": "13-guerra-v5"
+  },
+  {
+   "n": 25,
+   "conta": "tanan_intermediacoes",
+   "arquivo": "08-hb20s-comfort-v3.mp4",
+   "bem": "08-hb20s-comfort-v3"
+  },
+  {
+   "n": 26,
+   "conta": "tanan_intermediacoes",
+   "arquivo": "14-mercedes-atron-2324-v5.mp4",
+   "bem": "14-mercedes-atron-2324-v5"
+  },
+  {
+   "n": 27,
+   "conta": "pedroabreu.consultor",
+   "arquivo": "08-titano-v5.mp4",
+   "bem": "08-titano-v5"
+  },
+  {
+   "n": 28,
+   "conta": "tanan_intermediacoes",
+   "arquivo": "15-mercedes-atego-v5b.mp4",
+   "bem": "15-mercedes-atego-v5b"
+  },
+  {
+   "n": 29,
+   "conta": "tanan_intermediacoes",
+   "arquivo": "09-polo-v5.mp4",
+   "bem": "09-polo-v5"
+  },
+  {
+   "n": 30,
+   "conta": "tanan_intermediacoes",
+   "arquivo": "16-mercedes-axor-v5.mp4",
+   "bem": "16-mercedes-axor-v5"
+  },
+  {
+   "n": 31,
+   "conta": "pedroabreu.consultor",
+   "arquivo": "09-toro-volcano-v3.mp4",
+   "bem": "09-toro-volcano-v3"
+  },
+  {
+   "n": 32,
+   "conta": "tanan_intermediacoes",
+   "arquivo": "17-scania-g370-v5b.mp4",
+   "bem": "17-scania-g370-v5b"
+  },
+  {
+   "n": 33,
+   "conta": "tanan_intermediacoes",
+   "arquivo": "10-argo-trekking-v3.mp4",
+   "bem": "10-argo-trekking-v3"
+  },
+  {
+   "n": 34,
+   "conta": "tanan_intermediacoes",
+   "arquivo": "17-sprinter-v5.mp4",
+   "bem": "17-sprinter-v5"
+  },
+  {
+   "n": 36,
+   "conta": "pedroabreu.consultor",
+   "arquivo": "18-master-v5.mp4",
+   "bem": "18-master-v5"
+  },
+  {
+   "n": 37,
+   "conta": "tanan_intermediacoes",
+   "arquivo": "11-cronos-precision-v3.mp4",
+   "bem": "11-cronos-precision-v3"
+  },
+  {
+   "n": 38,
+   "conta": "tanan_intermediacoes",
+   "arquivo": "18-volvo-vm330-v5b.mp4",
+   "bem": "18-volvo-vm330-v5b"
+  },
+  {
+   "n": 39,
+   "conta": "tanan_intermediacoes",
+   "arquivo": "11-kwid-v5.mp4",
+   "bem": "11-kwid-v5"
+  },
+  {
+   "n": 40,
+   "conta": "pedroabreu.consultor",
+   "arquivo": "19-scania-r460-v5b.mp4",
+   "bem": "19-scania-r460-v5b"
+  },
+  {
+   "n": 41,
+   "conta": "tanan_intermediacoes",
+   "arquivo": "13-kicks-v5.mp4",
+   "bem": "13-kicks-v5"
+  },
+  {
+   "n": 42,
+   "conta": "tanan_intermediacoes",
+   "arquivo": "20-ford-cargo-2842-v5b.mp4",
+   "bem": "20-ford-cargo-2842-v5b"
+  },
+  {
+   "n": 43,
+   "conta": "tanan_intermediacoes",
+   "arquivo": "14-pulse-drive-v3.mp4",
+   "bem": "14-pulse-drive-v3"
+  },
+  {
+   "n": 44,
+   "conta": "pedroabreu.consultor",
+   "arquivo": "C01-accelo-815-v3.mp4",
+   "bem": "C01-accelo-815-v3"
+  },
+  {
+   "n": 45,
+   "conta": "tanan_intermediacoes",
+   "arquivo": "14-tracker-v5.mp4",
+   "bem": "14-tracker-v5"
+  },
+  {
+   "n": 46,
+   "conta": "tanan_intermediacoes",
+   "arquivo": "C02-delivery-express-v3.mp4",
+   "bem": "C02-delivery-express-v3"
+  },
+  {
+   "n": 47,
+   "conta": "tanan_intermediacoes",
+   "arquivo": "15-hb20-v5.mp4",
+   "bem": "15-hb20-v5"
+  },
+  {
+   "n": 48,
+   "conta": "pedroabreu.consultor",
+   "arquivo": "C03-cargo-2428-v3.mp4",
+   "bem": "C03-cargo-2428-v3"
+  },
+  {
+   "n": 49,
+   "conta": "tanan_intermediacoes",
+   "arquivo": "16-hrv-v5.mp4",
+   "bem": "16-hrv-v5"
+  },
+  {
+   "n": 50,
+   "conta": "tanan_intermediacoes",
+   "arquivo": "C04-daily-35-150-v3.mp4",
+   "bem": "C04-daily-35-150-v3"
+  },
+  {
+   "n": 51,
+   "conta": "tanan_intermediacoes",
+   "arquivo": "C06-ducato-maxicargo-v3.mp4",
+   "bem": "C06-ducato-maxicargo-v3"
+  }
+ ]
+}
