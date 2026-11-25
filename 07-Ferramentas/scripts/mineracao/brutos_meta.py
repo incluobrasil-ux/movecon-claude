@@ -30,8 +30,12 @@ JS = r"""
 
 
 def url(termo):
-    p = {"active_status": "active", "ad_type": "all", "country": "BR", "media_type": "video",
-         "q": termo, "search_type": "keyword_unordered"}
+    """termo normal = busca por palavra; "pagina:<id>" = todos os vídeos ativos daquela página."""
+    p = {"active_status": "active", "ad_type": "all", "country": "BR", "media_type": "video"}
+    if termo.startswith("pagina:"):
+        p.update(view_all_page_id=termo.split(":", 1)[1], search_type="page")
+    else:
+        p.update(q=termo, search_type="keyword_unordered")
     return "https://www.facebook.com/ads/library/?" + urllib.parse.urlencode(p)
 
 
@@ -44,32 +48,67 @@ def dias(texto):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("termos", nargs="+")
+    ap.add_argument("termos", nargs="*")
+    ap.add_argument("--lojas-boas", action="store_true", help="busca a página inteira de cada loja da lista 'boas' (07-Ferramentas/referencias/lojas-brutos.json)")
     ap.add_argument("--rolagens", type=int, default=4)
     ap.add_argument("--saida", required=True)
     a = ap.parse_args()
+    if a.lojas_boas:
+        lj = json.load(open(Path(__file__).resolve().parents[3] / "07-Ferramentas" / "referencias" / "lojas-brutos.json", encoding="utf-8"))
+        a.termos += [f"pagina:{pid}" for pid in lj.get("boas", {})]
+    if not a.termos:
+        ap.error("informe termos de busca ou --lojas-boas")
     todos = {}
     with sync_playwright() as p:
         br = p.chromium.launch(channel="chrome", headless=True)
         pg = br.new_page(locale="pt-BR", viewport={"width": 1400, "height": 1000})
-        hd = {}  # id do anúncio -> URL do vídeo em alta (vem no JSON da página, não no player)
+        # PC fraco: não carrega imagem, vídeo nem fonte (os links vêm no HTML e nos dados da página)
+        pg.route("**/*", lambda rota: rota.abort() if rota.request.resource_type in ("image", "media", "font") else rota.continue_())
+        dados = {}  # id do anúncio -> campos tirados do JSON da página (não depende do player carregar)
 
-        def pegar_hd(texto):
-            for m in re.finditer(r'"ad_archive_id":"(\d+)"', texto):
-                trecho = texto[m.end():m.end() + 20000]
-                v = re.search(r'"video_hd_url":"([^"]+)"', trecho)
-                if v and m.group(1) not in hd:
-                    hd[m.group(1)] = v.group(1).encode().decode("unicode_escape").replace("\\/", "/")
+        def campo(seg, nome):
+            m = re.search(r'"%s":"((?:[^"\\]|\\.)*)"' % nome, seg)
+            if not m:
+                return ""
+            try:
+                return json.loads('"' + m.group(1) + '"')
+            except Exception:
+                return m.group(1)
+
+        def ler_json(texto, termo):
+            partes = re.split(r'"ad_archive_id":"', texto)
+            for seg in partes[1:]:
+                aid = re.match(r"(\d+)", seg)
+                if not aid:
+                    continue
+                aid = aid.group(1); seg = seg[:30000]
+                sd, hdv = campo(seg, "video_sd_url"), campo(seg, "video_hd_url")
+                if not (sd or hdv) or aid in dados:
+                    continue
+                corpo = re.search(r'"body":\{"text":"((?:[^"\\]|\\.)*)"', seg)
+                corpo = json.loads('"' + corpo.group(1) + '"') if corpo else ""
+                extra = " | ".join(x for x in (campo(seg, "title"), campo(seg, "link_description"), campo(seg, "caption")) if x)
+                ini = re.search(r'"start_date":(\d{9,})', seg)
+                dados[aid] = {"id": aid, "termo": termo, "texto": (corpo + " | " + extra).strip(" |"),
+                              "video": sd or hdv, "video_hd": hdv or sd, "poster": campo(seg, "video_preview_image_url"),
+                              "page_id": campo(seg, "page_id") or (re.search(r'"page_id":"?(\d+)', seg) or [None, ""])[1],
+                              "page_name": campo(seg, "page_name"),
+                              "dias_ativo": (int(time.time()) - int(ini.group(1))) // 86400 if ini else None,
+                              "url": f"https://www.facebook.com/ads/library/?id={aid}"}
+
+        termo_atual = [""]
 
         def ao_responder(r):
             try:
                 if ("graphql" in r.url or "ads/library" in r.url) and r.request.resource_type in ("xhr", "fetch", "document"):
-                    pegar_hd(r.text())
+                    ler_json(r.text(), termo_atual[0])
             except Exception:
                 pass
 
         pg.on("response", ao_responder)
         for t in a.termos:
+            termo_atual[0] = t
+            antes = len(dados)
             pg.goto(url(t), wait_until="domcontentloaded", timeout=60000)
             pg.wait_for_timeout(7000)
             if "Nenhum anúncio corresponde" in pg.inner_text("body"):
@@ -77,24 +116,14 @@ def main():
                 continue
             for _ in range(a.rolagens):
                 pg.mouse.wheel(0, 6000); pg.wait_for_timeout(2500)
-            novos = 0
-            for ad in pg.evaluate(JS):
-                if not ad["id"] or ad["id"] in todos or not ad["video"]:
-                    continue
-                tx = ad["texto"]
-                linhas = [l.strip() for l in tx.split("\n") if l.strip()]
-                anun = next((linhas[i + 1] for i, l in enumerate(linhas) if l.startswith("Ver detalhes")), "")
-                precos = re.findall(r"R\$\s?[\d\.]{4,}(?:,\d{2})?", tx)
-                todos[ad["id"]] = {"id": ad["id"], "termo": t, "anunciante": anun, "dias_ativo": dias(tx),
-                                   "precos": precos, "texto": tx, "video": ad["video"], "video_hd": hd.get(ad["id"], ""),
-                                   "url": f"https://www.facebook.com/ads/library/?id={ad['id']}"}
-                novos += 1
-            print(f"[{t}] {novos} vídeos novos (total {len(todos)})", flush=True)
+            print(f"[{t}] {len(dados) - antes} vídeos novos (total {len(dados)})", flush=True)
             time.sleep(8)
         br.close()
-    for ad in todos.values():
-        ad["video_hd"] = ad["video_hd"] or hd.get(ad["id"], "")
-    print("com link HD:", sum(1 for x in todos.values() if x["video_hd"]), "de", len(todos))
+    for ad in dados.values():
+        ad["anunciante"] = ad["page_name"]
+        ad["precos"] = re.findall(r"R\$\s?[\d\.]{4,}(?:,\d{2})?", ad["texto"])
+    todos = dados
+    print("com capa:", sum(1 for x in todos.values() if x["poster"]), "de", len(todos))
     Path(a.saida).parent.mkdir(parents=True, exist_ok=True)
     json.dump(list(todos.values()), open(a.saida, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
     print("salvo:", a.saida)

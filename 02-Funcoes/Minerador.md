@@ -16,7 +16,9 @@ skill: minerar-bens, minerar-criativos, minerar-mercado
 | Para | Ferramenta |
 |---|---|
 | Bens (Mobiauto) | `07-Ferramentas/scripts/mineracao/miner.py` (ajustar caminhos antes do 1º uso) |
-| Vídeos brutos (Meta) | `07-Ferramentas/scripts/mineracao/brutos_meta.py "termo1" "termo2" --rolagens 4 --saida <pasta>/meta.json` (anúncios de vídeo ativos, preço do texto e link do vídeo em 720p; baixar só os candidatos) |
+| Vídeos brutos (Meta), passo 1: coleta | `07-Ferramentas/scripts/mineracao/brutos_meta.py --lojas-boas --rolagens 8 --saida <pasta>/meta.json`, e depois termos: `brutos_meta.py "termo1" "termo2" --rolagens 5 --saida <pasta>/meta2.json`. Lê os dados do JSON da página com o Chrome sem imagem nem vídeo (cerca de 250 MB de RAM, cerca de 25 s por página) |
+| Vídeos brutos (Meta), passo 2: peneira | `07-Ferramentas/scripts/mineracao/triagem_brutos.py <pasta>/meta.json [meta2.json] --pasta <pasta>`. **Um processo só.** Pula loja ruim e anúncio já visto ([[lojas-brutos]] e `10-Trabalho/_memoria-mineracao.json`), reprova rosto na capa sem baixar e lê só os primeiros 30 s (cerca de 7 s por vídeo). Resultado em `<pasta>/triagem.json` |
+| Lojas boas e ruins | `07-Ferramentas/referencias/lojas-brutos.json`: atualize no fim de cada mineração |
 | Vídeos brutos (YouTube) | listar: `py -3 -m yt_dlp --flat-playlist --print "%(id)s\|%(duration)s\|%(title)s" "ytsearch25:<termo>"`; baixar: `-f "bv*[height<=1920][ext=mp4]+ba[ext=m4a]/b"` |
 | Biblioteca da Meta | `07-Ferramentas/scripts/biblioteca_meta.py "termo" --pais BR --rolagens 8 --saida <pasta>/x.json` |
 | Google | `07-Ferramentas/scripts/transparencia_google.py dominios.txt saida.json --regiao BR` |
