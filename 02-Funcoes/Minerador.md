@@ -23,6 +23,7 @@ skill: minerar-bens, minerar-criativos, minerar-mercado
 | Bens (Mobiauto) | `07-Ferramentas/scripts/mineracao/miner.py` (ajustar caminhos antes do 1º uso) |
 | Vídeos brutos (Meta), passo 1: coleta | `07-Ferramentas/scripts/mineracao/brutos_meta.py --lojas-boas --rolagens 8 --saida <pasta>/meta.json`, e depois termos: `brutos_meta.py "termo1" "termo2" --rolagens 5 --saida <pasta>/meta2.json`. Lê os dados do JSON da página com o Chrome sem imagem nem vídeo (cerca de 250 MB de RAM, cerca de 25 s por página) |
 | Vídeos brutos (Meta), passo 2: peneira | `07-Ferramentas/scripts/mineracao/triagem_brutos.py <pasta>/meta.json [meta2.json] --pasta <pasta>`. **Um processo só.** Outro nicho que não seja caminhão: `--palavras "suv|compass|byd|..."` e `--min-preco`/`--max-preco` da faixa. Pula loja ruim e anúncio já visto em qualquer PC ([[lojas-brutos]] e `07-Ferramentas/referencias/memoria-mineracao.jsonl`), reprova rosto na capa sem baixar e lê só os primeiros 30 s (cerca de 7 s por vídeo). Resultado em `<pasta>/triagem.json` |
+| Vídeos brutos (TikTok) | `07-Ferramentas/scripts/mineracao/tiktok_links.py <links.txt> --saida <pasta>/tiktok.json --termo "<o que buscou no app>"`. A pessoa procura no app do TikTok, só olhando, e copia os links dos vídeos bons. O script abre cada link sem login, baixa em até 1080x1920 e grava no formato do `brutos_meta.py`. Depois vem a mesma peneira (`triagem_brutos.py <pasta>/tiktok.json --pasta <pasta>`) |
 | Lojas boas e ruins | `07-Ferramentas/referencias/lojas-brutos.json`: atualize no fim de cada mineração |
 | Vídeos brutos (YouTube) | listar: `py -3 -m yt_dlp --flat-playlist --print "%(id)s\|%(duration)s\|%(title)s" "ytsearch25:<termo>"`; baixar: `-f "bv*[height<=1920][ext=mp4]+ba[ext=m4a]/b"` |
 | Biblioteca da Meta | `07-Ferramentas/scripts/biblioteca_meta.py "termo" --pais BR --rolagens 8 --saida <pasta>/x.json` |
@@ -60,7 +61,12 @@ skill: minerar-bens, minerar-criativos, minerar-mercado
 ## Aprendizados
 - A Meta bloqueia por IP depois de um número variável de buscas (já foi 10, 17, 45; com 4 coletas em paralelo, cerca de 130 em 1 h). Sinal: "Nenhum anúncio corresponde" em termo que tinha resultado. Esperar de 1 a 14 h.
 - YouTube pede "não é robô" e cerca de metade das tentativas falha: desacelerar e pular.
-- TikTok: só o Creative Center abre sem login; os dias no ar são estimados pelo id do vídeo e precisam ser marcados como estimativa.
+- TikTok: só o Creative Center abre sem login. Os dias no ar são estimados pelo id do vídeo e precisam ser marcados como estimativa.
+- TikTok (teste de 25/11/2026):
+  - **sem login, busca, hashtag e perfil caem em captcha** ("Arraste o controle"), e o `yt-dlp` também falha. Não contorne;
+  - **a página de um vídeo abre sem login**: traz legenda com preço, data de postagem, perfil e o vídeo em até 1080x1920. Daí o método por links (`tiktok_links.py`);
+  - no TikTok, `dias_ativo` = dias desde a postagem, não tempo de anúncio;
+  - loja de caminhão no TikTok costuma pôr texto e marca d'água (CapCut) por cima: a peneira reprova sozinha.
 - Webmotors e OLX: erro 403.
 - Brutos de caminhão (25/11/2026), primeiro teste no Claude:
   - Na Meta, o player entrega 360p. O link em 720p vem nos dados da página, e o `brutos_meta.py` já pega esse link.

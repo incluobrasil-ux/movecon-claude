@@ -38,6 +38,7 @@ def main():
 2. Ferramentas prontas (não crie outra):
    - Biblioteca da Meta, concorrentes: py -3 07-Ferramentas/scripts/biblioteca_meta.py "termo" --pais BR --rolagens 8 --prints <pasta>/prints --saida <pasta>/x.json
    - Biblioteca da Meta, vídeos brutos: 07-Ferramentas/scripts/mineracao/brutos_meta.py e depois triagem_brutos.py --palavras "<palavras do nicho>" --min-preco/--max-preco (um processo só; sem --palavras a peneira só aceita caminhão)
+   - TikTok, vídeos brutos: a busca sem login cai em captcha. A pessoa copia os links no app e roda mineracao/tiktok_links.py <links.txt> --saida <pasta>/tiktok.json; depois a mesma triagem_brutos.py
    - Os dois avisam quando o termo JÁ FOI BUSCADO e registram a busca em 07-Ferramentas/referencias/buscas-feitas.csv.
 3. Regras que não se negociam:
    - SEM LOGIN. Nunca use perfil do BitBrowser nem conta logada para minerar (nenhum perfil do Perfil-do-operador é de mineração).

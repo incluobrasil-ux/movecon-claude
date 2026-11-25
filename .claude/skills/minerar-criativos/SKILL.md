@@ -34,6 +34,12 @@ Antes de tudo: leia as pesquisas de `06-Referencias/mineracao/` e use a skill `m
 5. Corte 12 a 15 s a partir do caminhão inteiro, `NN-caminhao-modelo-ano.mp4`, e calcule com `calc_valores.py <preço> --reel`.
 6. No fim, atualize `07-Ferramentas/referencias/lojas-brutos.json`: loja que deu vídeo aprovado vai para "boas"; loja com 3 ou mais analisados e nenhum aprovado vai para "ruins".
 
+## Brutos do TikTok (25/11/2026)
+Sem login, a busca do TikTok cai em captcha. Não contorne. O caminho é por links:
+1. A pessoa procura no app do TikTok, só olhando, sem curtir nem seguir. Ela cola os links dos vídeos bons num `links.txt` na pasta da tarefa (`10-Trabalho/AAAA-MM-DD-brutos-tiktok-<nicho>/`).
+2. `py -3 07-Ferramentas/scripts/mineracao/tiktok_links.py <pasta>/links.txt --saida <pasta>/tiktok.json --termo "<o que buscou no app>"`. Pula link já analisado em qualquer PC. Se aparecer captcha ou pedido de login, ele para.
+3. A mesma peneira e a mesma conferência dos passos 3 a 6 acima: `triagem_brutos.py <pasta>/tiktok.json --pasta <pasta>`.
+
 Entrega: clipes NN-tipo-veiculo.mp4 + planilha + prancha + criativos-prontos.csv, com QA quadro a quadro.
 
 Se uma nota contradiz um pedido, a nota vence: avise o operador e registre em `05-Operacao/Pendencias.md`. Decisão nova: `05-Operacao/Decisoes.md`.
