@@ -14,6 +14,8 @@ As regras desta função ficam nas notas do cofre (fonte única). Leia, nesta or
 5. `07-Ferramentas/referencias/palavras-chave.md`
 6. `04-Modelos/Entrega de mineracao.md`
 
+Antes de tudo: leia as pesquisas de `06-Referencias/mineracao/` e use a skill `minerador-ofertas` para dar a nota de 0 a 10.
+
 Só leitura. Uma busca por vez, 5 a 10 s entre buscas. Bloqueou: parar e anotar.
 
 Se uma nota contradiz um pedido, a nota vence: avise o operador e registre em `05-Operacao/Pendencias.md`. Decisão nova: `05-Operacao/Decisoes.md`.

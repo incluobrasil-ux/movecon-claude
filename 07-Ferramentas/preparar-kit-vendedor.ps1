@@ -1,6 +1,6 @@
 # Cria o cofre de um vendedor a partir deste cofre (padrao MOVECON).
 # Uso: powershell -ExecutionPolicy Bypass -File 07-Ferramentas\preparar-kit-vendedor.ps1 -Destino "C:\MOVECON-Joao" -Nome "Joao"
-# Copia: CLAUDE.md, 00-COMECE-AQUI.md, 01-Regras, 02-Funcoes, 03-Padroes, 04-Modelos, 06-Referencias, 07-Ferramentas, .claude, .obsidian
+# Copia: CLAUDE.md, 00-COMECE-AQUI.md, 01-Regras, 02-Funcoes, 03-Padroes, 04-Modelos, 06-Referencias, 07-Ferramentas, 08-Treinamento, .claude, .obsidian
 # Nao copia: _arquivo-grok, 10-Trabalho, registros e dados do gestor (05-Operacao vem em branco).
 param(
   [Parameter(Mandatory = $true)][string]$Destino,
@@ -13,7 +13,7 @@ if (Test-Path $Destino) {
 } else { New-Item -ItemType Directory -Path $Destino | Out-Null }
 
 foreach ($arq in @("CLAUDE.md", "00-COMECE-AQUI.md")) { Copy-Item (Join-Path $Origem $arq) $Destino }
-foreach ($pasta in @("01-Regras", "02-Funcoes", "03-Padroes", "04-Modelos", "06-Referencias", "07-Ferramentas", ".claude", ".obsidian")) {
+foreach ($pasta in @("01-Regras", "02-Funcoes", "03-Padroes", "04-Modelos", "06-Referencias", "07-Ferramentas", "08-Treinamento", ".claude", ".obsidian")) {
   Copy-Item (Join-Path $Origem $pasta) (Join-Path $Destino $pasta) -Recurse
 }
 # tabela de contas do gestor e scripts com portas fixas de perfis dele nao vao para o vendedor

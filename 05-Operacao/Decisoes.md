@@ -1,6 +1,6 @@
 ---
 tipo: operacao
-atualizado: 2026-11-19
+atualizado: 2026-11-20
 ---
 # Decisões
 
@@ -12,6 +12,7 @@ Fonte das decisões até 19/11/2026: `_arquivo-grok/movecon/ceo/tarefas.md`, `_a
 
 | Data e hora | Decisão (palavras do Samuel quando registradas) | Afeta |
 |---|---|---|
+| 20/11 | "as redes devem ser somente para o nicho mas o marketplace é mais aberto": o perfil nichado vale só para Instagram e TikTok; no Marketplace o vendedor anuncia qualquer veículo da faixa, independente do nicho | [[02-Parte 1 - Perfil nichado]], [[04-Parte 2 - Marketplace organico]] |
 | 19/11 13h45 | Sair do Grok e trabalhar pelo Claude; montar o cofre do zero com tudo | este cofre |
 | 19/11 11h30 | "Pode liberar entrar em grupos em todas as contas"; região "sudoeste da Bahia e norte de Minas". Máx. 5 pedidos por hora e 30 por dia por conta | [[Publicador Marketplace]] |
 | 19/11 11h16 | "tirar o selo tanan intermediaçoes em todas as postagens que forem pro instagram de pedro" | [[Reel Instagram]] |

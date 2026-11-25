@@ -15,12 +15,12 @@ São três minerações diferentes. Todas são **só leitura**: nunca curtir, se
 - faixa de preço e tipos de [[Anuncio Marketplace]];
 - de 6 a 10 fotos boas da mesma unidade, com pelo menos uma externa para a capa;
 - carroceria e versão batendo com as fotos;
-- modelos que vendem na região (ranking em `_arquivo-grok/movecon/mercado/players/ranking-bens-regiao-2026-11-13/`).
+- modelos que vendem na região (ranking em [[Ranking de bens da regiao (13-11)]]).
 
 **Descarta:**
 - anúncio localizado na **praça proibida** ([[Perfil-do-operador]]; hoje, Vitória da Conquista);
 - anúncio que fala em consórcio, carta ou contemplação;
-- loja com logo grande em todas as fotos (lista em `_arquivo-grok/movecon/marketplace/rascunhos-2026-11-19/_work/dealers_bad.txt`);
+- loja com logo grande em todas as fotos (lista em `07-Ferramentas/scripts/edicao/dealers_bad.txt`);
 - foto com rosto (vai para `_descartadas/`);
 - unidade que já está na fila ou no ar (conferir por id, km + preço e placa);
 - 0 km, uso especial e os modelos proibidos.
@@ -63,3 +63,14 @@ São três minerações diferentes. Todas são **só leitura**: nunca curtir, se
 **Ritmo e limites:** uma busca a cada 5 a 10 s, uma coleta por vez. A Meta bloqueia por IP depois de um número variável de buscas (sinal: "Nenhum anúncio corresponde" em termo que tinha resultado). Bloqueou: pare e tente de novo em 1 a 2 horas. Ferramenta paga (Apify, cerca de US$ 0,75 por 1.000 anúncios) só com OK do gestor.
 
 **Entrega:** `10-Trabalho/AAAA-MM-DD-mercado-<tema>/` com `ENTREGA.md`, planilha (abas: Escalados, Anúncios, Riscos, Nichos com pouca concorrência) e print de cada anúncio citado.
+
+## Pesquisas já feitas (leia antes de minerar de novo)
+Ficam em `06-Referencias/mineracao/`:
+- [[Ranking de bens da regiao (13-11)]]: modelos que mais vendem na região.
+- [[Concorrentes no Marketplace (13-11)]] e [[Marketplace por regiao (12-11)]]: como os outros anunciam parcelado no Marketplace.
+- [[Concorrentes regionais VdC (13-11)]] e [[Base de anuncios regionais VdC (13-11)]]: quem anuncia na praça.
+- [[O que replicar (03-11)]] e [[Mineracao Instagram (03-11)]]: formatos que funcionam.
+- [[Criativos Meta de veiculos - leia-me (13-11)]]: como os brutos de veículos foram escolhidos.
+- [[Pacote trator alto ticket (12-11)]]: oferta de trator e máquinas.
+
+Para mineração de mercado com nota 0 a 10, use a skill `minerador-ofertas` (em `.claude/skills/`).

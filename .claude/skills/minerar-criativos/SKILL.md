@@ -13,6 +13,8 @@ As regras desta função ficam nas notas do cofre (fonte única). Leia, nesta or
 4. `04-Modelos/Entrega de mineracao.md`
 5. `07-Ferramentas/referencias/sinais-escala.md`
 
+Antes de tudo: leia as pesquisas de `06-Referencias/mineracao/` e use a skill `minerador-ofertas` para dar a nota.
+
 Entrega: clipes NN-tipo-veiculo.mp4 + planilha + prancha + criativos-prontos.csv, com QA quadro a quadro.
 
 Se uma nota contradiz um pedido, a nota vence: avise o operador e registre em `05-Operacao/Pendencias.md`. Decisão nova: `05-Operacao/Decisoes.md`.

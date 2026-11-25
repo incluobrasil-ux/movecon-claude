@@ -35,6 +35,7 @@ Este cofre substitui os bots do Grok. As mesmas funções (minerar, editar, escr
 - **Operação deste operador:** [[Perfil-do-operador]] · [[Decisoes]] · [[Pendencias]] · pasta `05-Operacao/registros/`
 - **Referências:** [[Playbook do SDR (completo)]] · `06-Referencias/edicao/` · `07-Ferramentas/`
 - **Skills do Claude:** [[Skills do Claude]]
+- **Treinamento do comercial:** [[00-Roteiro do treinamento]] (perfil nichado + Marketplace orgânico)
 - **Arquivo do tempo dos bots:** `_arquivo-grok/` (cópia completa de 19/11/2026; só consulta; o Obsidian não indexa)
 
 ## Como um bot virou uma função

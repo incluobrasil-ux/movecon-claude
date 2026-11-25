@@ -12,6 +12,15 @@ O que depende de decisão de alguém. Quando resolver, mova a linha para [[Decis
 - Decidir: tirar ou corrigir o Reel da SW4 e trocar os arquivos e legendas dos quatro antes de postar.
 - [ ] As legendas do `fila.json` têm 6 hashtags (o limite de `specs.md` era 5) e não trazem "Vídeo ilustrativo", que estava na legenda aprovada em 13/11 17h49. Manter assim ou voltar?
 
+## Treinamento presencial do comercial (abertas em 20/11/2026)
+Material em `08-Treinamento/`. Antes do dia:
+- [ ] Mandar o padrão da parte inicial do perfil (pesquisas antigas) para trocar o bloco 2 de [[02-Parte 1 - Perfil nichado]].
+- [ ] "Carro aberto" = carro em geral? (assumido assim nas fichas)
+- [ ] Retroescavadeira / máquina de obra: confirmar com a Alpha se entra como "máquina". Até lá, só educativo, sem oferta com valor.
+- [ ] Testar os scripts de postagem num PC de vendedor antes do dia (ver "Técnicas").
+- [ ] Nicho de cada vendedor e quem aprova as peças dele.
+- [ ] **SDR depois do Grok:** quem responde o lead no CRM? O bot do Grok recebia pelo webhook e respondia pela API do CRM. No CRM em produção, o módulo `ai-agents` só faz triagem (AGT-01) e resumo diário (AGT-09), e a chave do "Meu Claude" é só de leitura. Falta ligar um SDR que leia as "Regras do meu SDR" de cada vendedor e responda pela API (e a chave da Anthropic no CRM).
+
 ## Decisão do Samuel (abertas em 19/11/2026)
 - [ ] Liberar as levas 05, 06 e 07 do Marketplace (`_arquivo-grok/movecon/marketplace/rascunhos-2026-11-19/`).
 - [ ] OK dos substitutos sem liberação: 016c, 009b e os das levas 05 a 07 (126b, 132b, 136b, 138b, 139b, 167b, 177b, 183b, 185b, 189b).

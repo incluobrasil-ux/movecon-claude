@@ -10,7 +10,7 @@ skill: minerar-bens, minerar-criativos, minerar-mercado
 ## Quando o pedido chega
 1. Identifique o tipo (bens, criativos ou mercado), a quantidade e o prazo. Se faltar só o tipo, pergunte. O resto, assuma e declare.
 2. Crie `10-Trabalho/AAAA-MM-DD-<tipo>-<tema>/`.
-3. Confira o que já existe para não repetir: filas e levas abertas, `ja_minerado` em entregas anteriores, `_arquivo-grok/movecon/mercado/`.
+3. Confira o que já existe para não repetir: filas e levas abertas, `ja_minerado` em entregas anteriores, `06-Referencias/mineracao/` (pesquisas já feitas: ranking de bens, concorrentes, regiões, o que replicar).
 
 ## Ferramentas
 | Para | Ferramenta |

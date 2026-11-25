@@ -25,10 +25,11 @@ Este cofre do Obsidian é a operação comercial da MOVECON, representante da **
 | `03-Padroes/` | como fica o produto pronto: anúncio, Reel, foto, cálculo de valores, mineração |
 | `04-Modelos/` | arquivos-modelo (pasta do bem, entrega, registro, relatório) |
 | `05-Operacao/` | dados deste operador: perfil, contas, decisões, pendências, registros |
-| `06-Referencias/` | playbook do SDR, planos, tabelas |
+| `06-Referencias/` | playbook do SDR, planos, tabelas e `mineracao/` (pesquisas já feitas: ranking de bens, concorrentes, o que replicar) |
+| `08-Treinamento/` | treinamento do comercial: perfil nichado, Marketplace orgânico, SDR, fichas dos nichos |
 | `07-Ferramentas/` | scripts (Meta, Google, BitBrowser) e referências |
 | `10-Trabalho/` | **toda tarefa nova** vai em `10-Trabalho/AAAA-MM-DD-<tarefa>/` |
-| `_arquivo-grok/` | cópia completa do tempo dos bots. Só consulta; nunca escreva lá |
+| `_arquivo-grok/` | cópia completa do tempo dos bots, **só no PC do gestor** (não vai para o GitHub). Só consulta; nunca escreva lá. Se não existir, siga as notas do cofre |
 
 ## Como entregar
 - Toda tarefa termina com: o que foi feito, onde estão os arquivos, o que falta e o que o operador precisa decidir.
