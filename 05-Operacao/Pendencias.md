@@ -10,7 +10,7 @@ O que depende de decisão de alguém. Quando resolver, mova a linha para [[Decis
 - [ ] Os vídeos de Hilux, SW4, Daily e Ducato da pasta "criativos" do PC dos bots são as versões **de antes** do seu ajuste de 14/11, 09h12 (Hilux 35 mil, SW4 40 mil, Daily 35 mil, Ducato 20 mil de entrada). O Reel da **SW4 postado hoje às 09h06 na @tanan_intermediacoes** tem o md5 `b7bf…`, que é da pasta `antes-entrada-0912`.
 - [ ] As legendas do `fila.json` desses quatro mostram 62.400, 76.400, 44.600 e 54.400, e não os valores aprovados.
 - Decidir: tirar ou corrigir o Reel da SW4 e trocar os arquivos e legendas dos quatro antes de postar.
-- [ ] As legendas do `fila.json` têm 6 hashtags (o limite de `specs.md` era 5) e não trazem "Vídeo ilustrativo", que estava na legenda aprovada em 13/11 17h49. Manter assim ou voltar?
+- [x] Hashtags e "Vídeo ilustrativo": resolvido em 24/11 pelo [[Padrao minimo de edicao]] (5 hashtags e última linha "Parcelamento. Vídeo ilustrativo.").
 
 ## Treinamento presencial do comercial (abertas em 20/11/2026)
 Material em `08-Treinamento/`. Antes do dia:
@@ -33,6 +33,10 @@ Material em `08-Treinamento/`. Antes do dia:
 - [ ] "Sem juros": a regra de 23/10 01h20 libera nas peças; a skill de locução antiga dizia "proibido em tudo". Este cofre segue a de 01h20. Confirmar.
 - [ ] Volume do Marketplace: o estudo de 13/11 recomendava 1 anúncio novo por dia por conta; a ordem de 18/11 é 1 por hora por conta. Este cofre segue a ordem de 18/11 nas contas do Samuel e o degrau para vendedor novo. Confirmar para os vendedores.
 - [ ] Aprovador de cada vendedor: o próprio vendedor ou o Samuel?
+
+## Valores fora de veículo (aberta em 24/11/2026)
+- [ ] Imóvel, trator, máquina e barco nos vídeos: 18% / 0,9% como veículo, ou plano da tabela (crédito + entrada + parcela)? A ficha de imóvel diz só "média dos planos (22/10)". Até decidir, esses nichos não saem com valor.
+- [ ] "Hiper 1 e 2" = tabelas MOVECON 1 e 2? (suposição de 22/10, nunca confirmada)
 
 ## Confirmar com a Alpha (bloqueiam respostas do atendimento)
 - [ ] Lance livre de referência do plano de R$ 306 mil.

@@ -8,6 +8,7 @@ skill: editar-fotos-veiculo, editar-reel
 **Um trabalho só:** deixar foto e vídeo com cara de trabalho de editor profissional, não de IA, dentro do padrão. O Editor **não escreve** copy nem roteiro: só edita o que veio.
 
 ## Padrões
+- **Regra absoluta, mínimo obrigatório de todo vídeo:** [[Padrao minimo de edicao]]. Vídeo que não bate volta para edição antes de ir para aprovação.
 - Fotos do Marketplace: [[Fotos de veiculo]].
 - Reels: [[Reel Instagram]].
 - Valores na tela: `calc_valores.py --reel` ([[Calculo de entrada e parcela]]).

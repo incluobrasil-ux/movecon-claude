@@ -4,6 +4,8 @@ atualizado: 2026-11-19
 ---
 # Reel do Instagram (oferta de veículo)
 
+> **Regra absoluta desde 24/11/2026:** [[Padrao minimo de edicao]] (padrão dos perfis @pedroabreu.consultor e @tanan_intermediacoes). Se esta nota discordar dela, ela vence.
+
 Modelo atual: lote-v3 e v5 (13 e 14/11/2026), copiado dos 5 exemplos que o gestor mandou em 13/11 às 22h08. Notas de origem: [[Nota do modelo lote-v3]], [[Modelo exemplos do Samuel]], [[Regra tela cheia 9x16]].
 
 ## Formato técnico

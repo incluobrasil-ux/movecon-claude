@@ -7,6 +7,7 @@ description: Edita Reels de oferta de veículo no padrão MOVECON (9:16 tela che
 
 As regras desta função ficam nas notas do cofre (fonte única). Leia, nesta ordem, antes de começar:
 
+0. `03-Padroes/Padrao minimo de edicao.md` (REGRA ABSOLUTA: o mínimo de todo vídeo; checagem A6 obrigatória)
 1. `01-Regras/Regras de ouro.md`
 2. `02-Funcoes/Editor.md`
 3. `03-Padroes/Reel Instagram.md`
