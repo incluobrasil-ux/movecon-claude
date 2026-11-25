@@ -16,6 +16,8 @@ skill: minerar-bens, minerar-criativos, minerar-mercado
 | Para | Ferramenta |
 |---|---|
 | Bens (Mobiauto) | `07-Ferramentas/scripts/mineracao/miner.py` (ajustar caminhos antes do 1º uso) |
+| Vídeos brutos (Meta) | `07-Ferramentas/scripts/mineracao/brutos_meta.py "termo1" "termo2" --rolagens 4 --saida <pasta>/meta.json` (anúncios de vídeo ativos, preço do texto e link do vídeo em 720p; baixar só os candidatos) |
+| Vídeos brutos (YouTube) | listar: `py -3 -m yt_dlp --flat-playlist --print "%(id)s\|%(duration)s\|%(title)s" "ytsearch25:<termo>"`; baixar: `-f "bv*[height<=1920][ext=mp4]+ba[ext=m4a]/b"` |
 | Biblioteca da Meta | `07-Ferramentas/scripts/biblioteca_meta.py "termo" --pais BR --rolagens 8 --saida <pasta>/x.json` |
 | Google | `07-Ferramentas/scripts/transparencia_google.py dominios.txt saida.json --regiao BR` |
 | Marketplace dos concorrentes | contas do BitBrowser, só leitura ([[Contas e navegador]]) |
@@ -44,3 +46,9 @@ skill: minerar-bens, minerar-criativos, minerar-mercado
 - YouTube pede "não é robô" e cerca de metade das tentativas falha: desacelerar e pular.
 - TikTok: só o Creative Center abre sem login; os dias no ar são estimados pelo id do vídeo e precisam ser marcados como estimativa.
 - Webmotors e OLX: erro 403.
+- Brutos de caminhão (25/11/2026), primeiro teste no Claude:
+  - Na Meta, o player entrega 360p. O link em 720p vem nos dados da página, e o `brutos_meta.py` já pega esse link.
+  - Quase todo anúncio de loja tem legenda, preço ou logo queimados no vídeo inteiro. Os do portal Venda Truck sempre têm. De 26 baixados, 2 passaram.
+  - No YouTube, procure título com o preço de **uma unidade só** ("R$ 325.000,00"). Canais de loja como o da 5001 Caminhões têm vídeo 1080p limpo depois que o apresentador sai. Resultado: 3 aprovados de 9.
+  - Vídeo horizontal só serve em 1080p ou mais, porque o recorte 9:16 amplia 1,78x.
+  - Em vídeo antigo, o preço pode não valer mais: marque na planilha.

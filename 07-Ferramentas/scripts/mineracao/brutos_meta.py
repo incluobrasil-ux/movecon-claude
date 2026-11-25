@@ -59,7 +59,7 @@ def main():
                 trecho = texto[m.end():m.end() + 20000]
                 v = re.search(r'"video_hd_url":"([^"]+)"', trecho)
                 if v and m.group(1) not in hd:
-                    hd[m.group(1)] = v.group(1).encode().decode("unicode_escape").replace("\/", "/")
+                    hd[m.group(1)] = v.group(1).encode().decode("unicode_escape").replace("\\/", "/")
 
         def ao_responder(r):
             try:
