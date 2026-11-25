@@ -6,7 +6,8 @@ Para cada peça do lote.json:
     nome do modelo e @ da conta (layout da @pedro: @ embaixo do modelo), fixos desde o quadro 0;
   - rodapé "CLIQUE NO LINK / E FALE DIRETAMENTE NO WHATSAPP" entrando em 1,2 s;
   - tarja preta nas placas (arquivo de detecta_placas.py, se existir);
-  - música livre (Pixabay) no lugar do áudio original, fade no fim, -14 LUFS.
+  - música livre (Pixabay) no lugar do áudio original, fade no fim, -14 LUFS
+    (lista e links em 06-Referencias/edicao/Musicas liberadas.md; "musica": "original" mantém o som do vídeo).
 
 lote.json: [{"arquivo": "...mp4", "saida": "...mp4", "modelo": "Ford Cargo 1932", "valor": 148800,
              "musica": "...mp3", "musica_in": 6.27, "parcela_vermelha": false, "placas": "...json"}]
@@ -130,9 +131,13 @@ def editar(p, handle, tmp):
             tarjas.append(f"drawbox=x={c['x']}:y={c['y']}:w={c['w']}:h={c['h']}:color=black@1:t=fill:enable='between(t,{c['t0']:.2f},{c['t1']:.2f})'")
     vf = "[0:v]scale=1080:1920:flags=lanczos,setsar=1,fps=30" + ("," + ",".join(tarjas) if tarjas else "") + "[b];"
     vf += "[b][1:v]overlay=0:0[c];[2:v]format=rgba,fade=in:st=1.2:d=0.25:alpha=1[t];[c][t]overlay=0:0:enable='gte(t,1.2)'[v];"
-    vf += f"[3:a]atrim=0:{d:.2f},asetpts=PTS-STARTPTS,afade=t=in:d=0.3,afade=t=out:st={d - 0.7:.2f}:d=0.7,loudnorm=I=-14:TP=-1.5:LRA=11[a]"
+    # "musica": "original" = mantém o som do próprio vídeo (só quando não tem voz de vendedor; Reel Instagram.md)
+    original = str(p.get("musica", "")).strip().lower() == "original"
+    fonte_audio = "[0:a]" if original else "[3:a]"
+    vf += f"{fonte_audio}atrim=0:{d:.2f},asetpts=PTS-STARTPTS,afade=t=in:d=0.3,afade=t=out:st={d - 0.7:.2f}:d=0.7,loudnorm=I=-14:TP=-1.5:LRA=11[a]"
+    entrada_musica = [] if original else ["-ss", str(p.get("musica_in", 0)), "-i", p["musica"]]
     cmd = ["ffmpeg", "-v", "error", "-y", "-i", p["arquivo"], "-loop", "1", "-t", f"{d:.2f}", "-i", str(ov),
-           "-loop", "1", "-t", f"{d:.2f}", "-i", str(ct), "-ss", str(p.get("musica_in", 0)), "-i", p["musica"],
+           "-loop", "1", "-t", f"{d:.2f}", "-i", str(ct), *entrada_musica,
            "-filter_complex", vf, "-map", "[v]", "-map", "[a]", "-t", f"{d:.2f}",
            "-c:v", "libx264", "-preset", "medium", "-crf", "18", "-profile:v", "high", "-pix_fmt", "yuv420p", "-r", "30",
            "-c:a", "aac", "-b:a", "192k", "-ar", "48000", "-movflags", "+faststart", p["saida"]]
