@@ -12,6 +12,7 @@ Uso:
 Linha de comando:
     python bitbrowser.py listar            -> mostra nome, número (seq) e id dos perfis
     python bitbrowser.py fechar "PERFIL"   -> fecha a janela do perfil
+    python bitbrowser.py porta "PERFIL"    -> porta CDP do perfil (para o ig-postar-lote.mjs)
 
 Requisitos: BitBrowser aberto e logado (API local em 127.0.0.1:54345) e `pip install playwright`.
 """
@@ -90,6 +91,11 @@ if __name__ == "__main__":
     if cmd == "listar":
         for b in listar():
             print(f"{b.get('seq', ''):>4}  {b['name']}  ({b['id']})")
+    elif cmd == "porta" and len(sys.argv) > 2:
+        # porta de depuração (CDP) do perfil: se já estiver aberto, só lê; se estiver fechado, abre
+        import re as _re
+        m = _re.search(r":(\d+)/", ws_for(sys.argv[2]))
+        print(m.group(1) if m else "sem porta")
     elif cmd == "fechar" and len(sys.argv) > 2:
         print(close(sys.argv[2]))
     else:

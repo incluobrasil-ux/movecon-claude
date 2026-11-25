@@ -14,7 +14,7 @@ As regras desta função ficam nas notas do cofre (fonte única). Leia, nesta or
 5. `03-Padroes/Reel Instagram.md`
 6. `04-Modelos/Registro de publicacao.md`
 
-**No PC de parceiro ou vendedor, sem BitBrowser:** siga `04-Modelos/Prompt de postagem.md`. Use o Claude in Chrome e agende no Meta Business Suite. Não use o `ig-post-next.mjs`.
+**No PC de parceiro ou vendedor:** siga `04-Modelos/Prompt de postagem.md` (`ig-postar-lote.mjs` no BitBrowser já logado dele). Não use o `ig-post-next.mjs`, que é do PC dos bots.
 
 Conferir md5 e valores da legenda antes. Nunca Turbinar. Aviso ou limite: parar.
 

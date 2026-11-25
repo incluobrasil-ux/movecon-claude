@@ -29,11 +29,8 @@ Pelo navegador do perfil do BitBrowser da conta:
 
 Script do tempo dos bots: `07-Ferramentas/scripts/instagram/ig-post-next.mjs` (`--check` confere sem postar; `--conta pedro`). Ajustar caminhos, portas e ids de aba antes de usar.
 
-## No PC do parceiro (sem BitBrowser), 25/11/2026
-O `ig-post-next.mjs` só roda no PC dos bots. No PC do parceiro, use o [[Prompt de postagem]] (04-Modelos):
-- o Claude in Chrome controla o Chrome onde o parceiro já entrou no Instagram;
-- ele agenda todos os Reels de uma vez no Meta Business Suite, nos horários do parceiro;
-- o login é sempre feito pela pessoa.
+## No PC do parceiro, pelo BitBrowser dele (25/11/2026)
+O `ig-post-next.mjs` só roda no PC dos bots. No PC do parceiro, use o `07-Ferramentas/scripts/instagram/ig-postar-lote.mjs`, que tem a mesma lógica com tudo por parâmetro: conta, porta do perfil (`bitbrowser.py porta "PERFIL"`), pasta dos vídeos e entrega (LEGENDAS.md + md5.txt). Ele faz `--check`, depois `--stop-before-share`, e só então posta no intervalo da agenda. O prompt pronto é o [[Prompt de postagem]] (04-Modelos).
 
 ## Registro
 Linha em `05-Operacao/registros/publicados-AAAA-MM.md`: n, arquivo, md5, hora, conta, link, conferência, OK que liberou.

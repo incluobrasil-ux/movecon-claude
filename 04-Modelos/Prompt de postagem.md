@@ -2,63 +2,53 @@
 tipo: modelo
 atualizado: 2026-11-25
 ---
-# Prompt padrão de postagem no Instagram (parceiros e vendedores, no PC deles)
+# Prompt padrão de postagem no Instagram (parceiros e vendedores, pelo BitBrowser deles)
 
-**Por que existe:** o robô de postagem do cofre (`07-Ferramentas/scripts/instagram/ig-post-next.mjs`) só roda no PC dos bots, porque depende do BitBrowser, de portas e de pastas fixas de lá. No PC do parceiro aparece "sem conector".
-**Decisão do Samuel (25/11/2026):** "a ideia é que poste sozinho sem precisar passar por mim [...] o prompt é pra soltar lá e ele entrar e já postar tudo de vez conforme elas programaram lá".
+**Decisões do Samuel (25/11/2026):**
+- "a ideia é que poste sozinho sem precisar passar por mim";
+- "eu quero que ele poste manual mesmo mexendo pelo bitbrowser delas la que ja ta logado".
 
-**Uma vez só, antes do primeiro uso (feito pela pessoa, não pelo Claude):**
-1. Instalar no Google Chrome a extensão **Claude in Chrome** (oficial da Anthropic) e entrar com a mesma conta do Claude.
-2. No Chrome, entrar no **Instagram** e no **Meta Business Suite** (business.facebook.com) da conta. O login é feito pela própria pessoa: o Claude nunca digita senha nem código.
-3. Abrir o Claude Code na **pasta raiz do cofre** e ligar o Chrome: digitar `/chrome` ou iniciar com `claude --chrome`.
+**Por que existe:** o robô antigo (`ig-post-next.mjs`) só roda no PC dos bots, porque as pastas, portas e abas dele são fixas. Por isso aparecia "sem conector". O `ig-postar-lote.mjs` usa a mesma lógica, validada em 19/11, mas a conta, o perfil, a pasta dos vídeos e a entrega vêm por parâmetro.
 
-**Como usar:** preencha a parte PREENCHA, cole e envie. O Claude agenda todos os Reels de uma vez e devolve a lista com os horários.
+**Antes, uma vez só (feito pela pessoa):**
+- o BitBrowser aberto, com o perfil da conta já logado no Instagram;
+- o cofre atualizado (`git pull`);
+- Node 22 ou mais novo e Python instalados.
+
+**Como usar:** preencha a parte PREENCHA, cole e envie. O Claude confere tudo, faz um teste sem publicar e posta o lote no ritmo da AGENDA.
 
 ```
-POSTAGEM (prompt padrão do cofre MOVECON-Claude)
+POSTAGEM PELO BITBROWSER (prompt padrão do cofre MOVECON-Claude)
 
 === PREENCHA ===
 CONTA: <@conta>
+PERFIL DO BITBROWSER: <nome exato do perfil onde a conta está logada>
 PASTA DA ENTREGA NO COFRE: <ex.: entregas/2026-11-25-caminhao-lais>
 PASTA DOS VÍDEOS NESTE PC: <ex.: a minha pasta de prontos>
-AGENDA: <ex.: 3 por dia, às 9h, 14h e 20h, começando amanhã, na ordem 01, 02, 03...>
+AGENDA: <ex.: 1 por hora, todos de uma vez / 3 hoje, 1 a cada 2 horas>
 === FIM ===
 
 Regras fixas (não altere):
-0. Rode git pull na pasta do cofre. Leia CLAUDE.md, 01-Regras/Regras de ouro.md, 02-Funcoes/Publicador Instagram.md, 05-Operacao/Decisoes.md e, na pasta da entrega, LEGENDAS.md e COMO-POSTAR.md.
-1. Confira que o OK do Samuel para essa lista está em 05-Operacao/Decisoes.md. Se não estiver, PARE e me avise.
-2. Confira o md5 de cada vídeo da minha pasta com o md5.txt da entrega. Vídeo com md5 diferente não é postado.
-3. Use o Chrome pela extensão Claude in Chrome. Se ela não estiver conectada, PARE e me diga os passos de instalação. Não use outro robô e não crie script.
-4. Abra o Meta Business Suite da CONTA e confira que é a conta certa. Para cada vídeo, na ordem:
-   - Criar Reel;
-   - envie o vídeo;
-   - cole a legenda de LEGENDAS.md inteira e sem mudar nada;
-   - confira se os valores da legenda são os mesmos da tela;
-   - publique só no Instagram;
-   - sem música, sem local, sem colaboração;
-   - Agendar no horário da AGENDA.
-   Nunca Turbinar ou Impulsionar. Nunca "Anúncio".
-5. Se o Business Suite não estiver ligado a essa conta, ou não oferecer agendamento de Reel: poste pelo instagram.com só o vídeo do horário atual da AGENDA e me diga que os outros ficam para cada horário.
-6. Se aparecer login, código, captcha, aviso, limite ou verificação: PARE na hora. Eu resolvo e mando continuar. Você nunca digita senha nem código.
-7. Depois de agendar todos: abra a lista de agendados e confira um por um (vídeo, legenda e horário). Tire um print.
-8. Marque [x] e o horário de cada um em LEGENDAS.md.
-9. Registro: crie ou complete 05-Operacao/registros/publicados-AAAA-MM.md com uma linha por vídeo:
-   - n;
-   - arquivo;
-   - md5;
-   - data e hora agendada;
-   - conta;
-   - "agendado no Business Suite";
-   - o OK que liberou.
-   Faça commit + push só desses dois arquivos. Se não tiver permissão de push, me dê a lista para eu mandar ao Samuel.
+0. Na pasta raiz do cofre: git pull. Leia 01-Regras/Regras de ouro.md, 01-Regras/Contas e navegador.md, 02-Funcoes/Publicador Instagram.md e 05-Operacao/Decisoes.md. Confira que o OK do Samuel para essa lista está em Decisoes.md; se não estiver, PARE.
+1. Ache a pasta dos vídeos neste PC. Rode py -3 07-Ferramentas/scripts/bitbrowser.py listar e confirme o PERFIL. Pegue a porta com: py -3 07-Ferramentas/scripts/bitbrowser.py porta "<PERFIL>". Não crie, não apague e não mexa no perfil.
+2. Conferência, sem postar:
+   node 07-Ferramentas/scripts/instagram/ig-postar-lote.mjs --conta <CONTA> --porta <PORTA> --entrega <PASTA DA ENTREGA> --videos "<PASTA DOS VÍDEOS>" --check
+   Ela confere o md5 de cada vídeo, as legendas, a conta logada e o que já está no ar. Se der erro, PARE e me mostre.
+3. Teste do 1º vídeo, sem publicar: o mesmo comando com --stop-before-share em vez de --check. Ele vai até a legenda colada e para. Me mostre o print da pasta ig-prints. Depois feche o diálogo sem publicar.
+4. Postagem: o mesmo comando sem --check, com --intervalo-min e --max conforme a AGENDA (ex.: 1 por hora = --intervalo-min 60). Rode EM SEGUNDO PLANO (pode levar horas) e me avise a cada RESULT. O BitBrowser e o PC precisam ficar ligados até o último.
+5. Se o script sair com código 2 (login, verificação, limite, aviso, termos ou erro): PARE. Não rode de novo. Me mostre o print e o texto. Eu resolvo no BitBrowser e mando continuar; ele pula o que já foi postado.
+6. Você nunca digita senha nem código, nunca turbina, nunca usa "Anúncio" e nunca muda legenda ou vídeo.
+7. No fim:
+   - marque [x] e o link de cada vídeo postado em LEGENDAS.md da entrega;
+   - faça commit + push de LEGENDAS.md e postados.json (só esses dois arquivos);
+   - se não tiver permissão de push, me dê a lista para eu mandar ao Samuel.
 
 REVISÃO OBRIGATÓRIA (responda em português, frases curtas):
-- conta conferida;
-- quantos vídeos foram agendados, com data e hora de cada um;
-- algum vídeo pulado, e por quê (md5, erro, aviso);
-- confirme que nenhuma legenda foi alterada e que nada foi impulsionado;
+- perfil e conta conferidos, e o resultado do --check;
+- quantos vídeos foram postados, com hora e link de cada um;
+- quantos foram pulados (já no ar) ou ficaram faltando, e por quê;
+- se houve qualquer aviso ou parada;
 - se o push foi feito.
 ```
 
-**Ritmo:** vale o de [[Publicador Instagram]], no máximo 3 por dia. Conta com menos de 2 semanas: metade.
-**Exceção registrada (25/11/2026):** a regra do BitBrowser ([[Contas e navegador]]) vale para as contas da operação. A conta do próprio parceiro pode ser usada no Chrome dele, onde ele já entra todo dia, sempre com o login feito por ele.
+**Ritmo:** o padrão é 1 por hora (`--intervalo-min 60`), como na @tanan. Conta com menos de 2 semanas: metade do ritmo ([[Publicador Instagram]]).
