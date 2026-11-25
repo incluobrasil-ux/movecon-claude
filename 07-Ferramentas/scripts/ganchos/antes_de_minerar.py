@@ -37,7 +37,7 @@ def main():
    - bens para o Marketplace             -> skill minerar-bens (seção 1)
 2. Ferramentas prontas (não crie outra):
    - Biblioteca da Meta, concorrentes: py -3 07-Ferramentas/scripts/biblioteca_meta.py "termo" --pais BR --rolagens 8 --prints <pasta>/prints --saida <pasta>/x.json
-   - Biblioteca da Meta, vídeos brutos: 07-Ferramentas/scripts/mineracao/brutos_meta.py e depois triagem_brutos.py (um processo só)
+   - Biblioteca da Meta, vídeos brutos: 07-Ferramentas/scripts/mineracao/brutos_meta.py e depois triagem_brutos.py --palavras "<palavras do nicho>" --min-preco/--max-preco (um processo só; sem --palavras a peneira só aceita caminhão)
    - Os dois avisam quando o termo JÁ FOI BUSCADO e registram a busca em 07-Ferramentas/referencias/buscas-feitas.csv.
 3. Regras que não se negociam:
    - SEM LOGIN. Nunca use perfil do BitBrowser nem conta logada para minerar (nenhum perfil do Perfil-do-operador é de mineração).
@@ -45,6 +45,7 @@ def main():
    - Promessa de contemplação, venda de cota, "crédito na hora" = RISCO: registra e não modela. "Sem entrada", "nome limpo" = ATENÇÃO.
    - Não invente número: tudo vem do JSON da coleta ou de print.
 4. ANTES de buscar: leia 06-Referencias/mineracao/Ja minerado.md e rode `py -3 07-Ferramentas/scripts/mineracao/registro_buscas.py <palavra>`. Reaproveite o que existe; só busque o que falta.
+4b. Mostre o PLANO (tipo, skill, ferramenta, até 15 termos marcando os já buscados, o que vai reaproveitar, formato da entrega) e espere o OK antes de buscar. Modelo de pedido: 04-Modelos/Prompt de mineracao.md.
 5. NO FIM: entrega no modelo 04-Modelos/Entrega de mineracao.md, em 10-Trabalho/AAAA-MM-DD-<tipo>-<tema>/; copie ENTREGA.md e a planilha para 06-Referencias/mineracao/AAAA-MM-DD-<tema>/, ponha uma linha em Ja minerado.md e faça commit + push (se este PC não tiver permissão de push, mande ENTREGA.md e planilha para o Samuel).""")
     idx = COFRE / "06-Referencias" / "mineracao" / "Ja minerado.md"
     if idx.exists():

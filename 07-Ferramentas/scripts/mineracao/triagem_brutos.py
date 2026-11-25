@@ -132,9 +132,12 @@ def main():
     ap.add_argument("--max-preco", type=float, default=900000)
     ap.add_argument("--min-limpo", type=float, default=12)
     ap.add_argument("--sem-preco", action="store_true", help="aceita anúncio sem preço (valor vem da FIPE depois, só com OK do gestor)")
+    ap.add_argument("--palavras", default="", help="palavras do NICHO (expressão regular). Padrão: caminhão. "
+                    "Ex.: carro alto ticket: \"suv|compass|commander|byd|el[ée]trico|hilux|sw4|corolla\"")
     ap.add_argument("--parte", default="1/1", help="só em PC forte: divide a lista entre processos (1/4, 2/4...). Padrão: um processo só")
     a = ap.parse_args()
     k, n = map(int, a.parte.split("/"))
+    nicho = re.compile(a.palavras, re.I) if a.palavras else CAMINHAO
     pasta = Path(a.pasta); pasta.mkdir(parents=True, exist_ok=True)
     saida = pasta / ("triagem.json" if n == 1 else f"triagem-{k}de{n}.json")
     feitos = {r["id"]: r for r in json.loads(saida.read_text(encoding="utf-8"))} if saida.exists() else {}
@@ -155,7 +158,7 @@ def main():
             pulados["já visto"] += 1; continue
         tx = ad["texto"]
         v = preco_unico(tx, a.min_preco, a.max_preco)
-        if PROIBIDO.search(tx) or PRACA.search(tx) or not CAMINHAO.search(tx) or not VENDA.search(tx) or not ad.get("video") or (not v and not a.sem_preco):
+        if PROIBIDO.search(tx) or PRACA.search(tx) or not nicho.search(tx) or not VENDA.search(tx) or not ad.get("video") or (not v and not a.sem_preco):
             pulados["texto/praça/preço"] += 1; continue
         if ad.get("page_id") in ruins or ruins_nome.search((ad.get("page_name") or "") + " " + (ad.get("anunciante") or "")):
             pulados["loja ruim"] += 1; continue
