@@ -8,6 +8,8 @@ atualizado: 2026-11-25
 
 Esta é a lista de tudo o que já foi minerado, do mais novo para o mais antigo. O gancho do Claude Code (`.claude/settings.json` → `07-Ferramentas/scripts/ganchos/antes_de_minerar.py`) mostra esta tabela sozinho quando alguém pede mineração.
 
+**Pedido de mineração de parceiro ou vendedor:** use o [[Prompt de mineracao]] (04-Modelos). Basta preencher nicho, o que quer, região, faixa e quantidade.
+
 **Antes de buscar:**
 1. `git pull`.
 2. Leia a linha do tema aqui e a nota ou pasta dela.
