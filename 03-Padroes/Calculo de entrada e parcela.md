@@ -31,6 +31,7 @@ Todo bem até cerca de R$ 81.971 cai na linha 1 (R$ 1.459,06).
 Origem: "MOVECON 7 com carta = 2x o valor do bem" (12/11, 22h41); entrada de 20% (13/11, 11h43). Tabela em `07-Ferramentas/tabelas/tabela4076.json`; transcrição de todas as tabelas da Alpha em `07-Ferramentas/tabelas/resumo-tabelas-alpha-2026-10-22.md`. As tabelas valem independente do "válida até" impresso (24/10). Não usar as tabelas 4051, 4052, 4168 e 4169 (22/10, 03h52).
 
 ## Vídeos e Reels (regra em vigor desde 14/11/2026, 08h40)
+- **Bruto sem preço no anúncio (25/11/2026):** identifique o modelo, estime o ano pelo vídeo e use a **média de mercado (FIPE)** desse modelo e ano. Não precisa ser o preço exato. Marque "valor médio estimado" na planilha.
 - **Entrada ≈ 18% do valor do bem. Parcela ≈ 0,9% do valor do bem.** Sem tabela e sem número de meses.
 - Exceções aprovadas uma a uma ficam em [[Decisoes]] (ex.: 14/11 09h13: Hilux 35 mil, SW4 40 mil, Ducato 20 mil, Daily 35 mil de entrada).
 - Regras antigas substituídas: "1ª + 50% lance" (12/11), "20% do bem" (13/11 06h51), "parcela 30% abaixo da tabela" (13/11 15h01).

@@ -29,9 +29,12 @@ JS = r"""
 """
 
 
+INATIVOS = [False]
+
+
 def url(termo):
     """termo normal = busca por palavra; "pagina:<id>" = todos os vídeos ativos daquela página."""
-    p = {"active_status": "active", "ad_type": "all", "country": "BR", "media_type": "video"}
+    p = {"active_status": "all" if INATIVOS[0] else "active", "ad_type": "all", "country": "BR", "media_type": "video"}
     if termo.startswith("pagina:"):
         p.update(view_all_page_id=termo.split(":", 1)[1], search_type="page")
     else:
@@ -51,8 +54,10 @@ def main():
     ap.add_argument("termos", nargs="*")
     ap.add_argument("--lojas-boas", action="store_true", help="busca a página inteira de cada loja da lista 'boas' (07-Ferramentas/referencias/lojas-brutos.json)")
     ap.add_argument("--rolagens", type=int, default=4)
+    ap.add_argument("--inativos", action="store_true", help="inclui anúncios encerrados (vídeo antigo de loja costuma ser filmagem crua e ninguém minerou)")
     ap.add_argument("--saida", required=True)
     a = ap.parse_args()
+    INATIVOS[0] = a.inativos
     if a.lojas_boas:
         lj = json.load(open(Path(__file__).resolve().parents[3] / "07-Ferramentas" / "referencias" / "lojas-brutos.json", encoding="utf-8"))
         a.termos += [f"pagina:{pid}" for pid in lj.get("boas", {})]

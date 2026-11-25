@@ -29,9 +29,12 @@ MEMORIA = COFRE / "10-Trabalho" / "_memoria-mineracao.json"
 PROIBIDO = re.compile(r"cons[óo]rcio|carta de cr[ée]dito|contempla|\bcota", re.I)
 PRACA = re.compile(r"vit[óo]ria da conquista", re.I)
 CAMINHAO = re.compile(r"caminh[ãa]o|cavalo|truck|\btoco\b|carreta|ba[úu]\b|basculante|munck|guindaste|scania|volvo\s?(fh|fm|vm|nh|nl)|"
-                      r"accelo|atego|axor|actros|atron|arocs|constellation|delivery|worker|\bcargo\b|tector|stralis|daf\b|"
+                      r"accelo|atego|axor|actros|atron|arocs|(vw|volks\w*)\s?(constellation|delivery|worker)|constellation \d|ford\s?cargo|tector|stralis|daf\b|"
                       r"hi.?road|s.?way|frigor[ií]fico|\bmb\s?\d{4}|\bvw\s?\d{1,2}[\.\-]?\d{3}|\bl\s?1620|"
                       r"\b(vw|volks|volkswagen|mb|mercedes|ford|iveco)\s?\d{1,2}[\.\-]\d{3}\b", re.I)  # número solto pegava km ("122.000 km")
+# anúncio de VENDA de veículo (a busca funda com anúncios antigos traz post qualquer que cita caminhão)
+VENDA = re.compile(r"vend[ae]|seminov|valor|r\$|💲|\bkm\b|quil[ôo]metr|ano\s?/?\s?modelo|\bano\b|[uú]nico dono|estoque|dispon[ií]vel|"
+                   r"financi|aceit[ao] troca|repasse|revisad|pronto para (trabalhar|rodar)", re.I)
 # preço: "R$ 169.000", "R$: 169.000", "💲169.000,00", "💲🇧🇷 279.000,00", "Valor 169.000,00"
 PRECO = re.compile(r"(?:R\$|💲|valor:?)\s?(?:🇧🇷)?\s?:?\s?([\d\.]{5,})(?:,\d{2})?", re.I)
 UA = {"User-Agent": "Mozilla/5.0"}
@@ -89,7 +92,8 @@ class Olho:
 
 def analisar(olho, fr):
     cx = [olho.caixas(im) for im in fr]
-    sujo = [olho.rostos(im) > 0 for im in fr]
+    # rosto = apresentador; quadro preto ou de cor chapada = tela final / vinheta (não é filmagem)
+    sujo = [olho.rostos(im) > 0 or ImageStat.Stat(im.convert("L")).stddev[0] < 12 for im in fr]
     for i in range(1, len(fr)):
         mudou = ImageStat.Stat(ImageChops.difference(fr[i].convert("L").resize((64, 114)),
                                                      fr[i - 1].convert("L").resize((64, 114)))).mean[0] > 10
@@ -99,16 +103,34 @@ def analisar(olho, fr):
             for b in cx[i - 1]:
                 if abs(a[0] - b[0]) < 0.05 and abs(a[1] - b[1]) < 0.03 and abs(a[2] - b[2]) < 0.4 * max(a[2], b[2]):
                     sujo[i] = sujo[i - 1] = True
-    melhor, ini = (0.0, 0.0, 0.0), None
+    melhor, ini, trechos = (0.0, 0.0, 0.0), None, []
     for i, s in enumerate(sujo + [True]):
         if not s and ini is None:
             ini = i
         if s and ini is not None:
             a, b = ini * PASSO, (i - 1) * PASSO + PASSO
+            if b - a >= 3:  # tomada curta aproveitável (decisão de 25/11: pode juntar tomadas)
+                trechos.append([a, round(b, 1)])
             if b - a > melhor[0]:
                 melhor = (b - a, a, b)
             ini = None
-    return {"quadros": len(fr), "sujos": sum(sujo), "limpo_s": round(melhor[0], 1), "limpo_de": melhor[1], "limpo_ate": round(melhor[2], 1)}
+    return {"quadros": len(fr), "sujos": sum(sujo), "limpo_s": round(melhor[0], 1), "limpo_de": melhor[1], "limpo_ate": round(melhor[2], 1),
+            "trechos": trechos, "soma_trechos": round(sum(b - a for a, b in trechos), 1)}
+
+
+def gravar_memoria(novos):
+    """Junta com o que está no disco e troca o arquivo de uma vez (vários processos não se atropelam)."""
+    MEMORIA.parent.mkdir(parents=True, exist_ok=True)
+    for _ in range(5):
+        try:
+            atual = json.loads(MEMORIA.read_text(encoding="utf-8")) if MEMORIA.exists() else {}
+            atual.update(novos)
+            tmp = MEMORIA.with_suffix(f".{os.getpid()}.tmp")
+            tmp.write_text(json.dumps(atual, ensure_ascii=False), encoding="utf-8")
+            os.replace(tmp, MEMORIA)
+            return
+        except (OSError, ValueError):
+            import time; time.sleep(0.3)
 
 
 def main():
@@ -118,9 +140,12 @@ def main():
     ap.add_argument("--min-preco", type=float, default=60000)
     ap.add_argument("--max-preco", type=float, default=900000)
     ap.add_argument("--min-limpo", type=float, default=12)
+    ap.add_argument("--sem-preco", action="store_true", help="aceita anúncio sem preço (valor vem da FIPE depois, só com OK do gestor)")
+    ap.add_argument("--parte", default="1/1", help="só em PC forte: divide a lista entre processos (1/4, 2/4...). Padrão: um processo só")
     a = ap.parse_args()
+    k, n = map(int, a.parte.split("/"))
     pasta = Path(a.pasta); pasta.mkdir(parents=True, exist_ok=True)
-    saida = pasta / "triagem.json"
+    saida = pasta / ("triagem.json" if n == 1 else f"triagem-{k}de{n}.json")
     feitos = {r["id"]: r for r in json.loads(saida.read_text(encoding="utf-8"))} if saida.exists() else {}
     memoria = json.loads(MEMORIA.read_text(encoding="utf-8")) if MEMORIA.exists() else {}
     lojas = json.loads(LOJAS.read_text(encoding="utf-8")) if LOJAS.exists() else {}
@@ -131,12 +156,14 @@ def main():
             ads.setdefault(ad["id"], ad)
     olho = None
     pulados = {"já visto": 0, "texto/praça/preço": 0, "loja ruim": 0}
-    for ad in ads.values():
+    for idx, ad in enumerate(ads.values()):
+        if idx % n != k - 1:
+            continue
         if ad["id"] in feitos or ad["id"] in memoria:
             pulados["já visto"] += 1; continue
         tx = ad["texto"]
         v = preco_unico(tx, a.min_preco, a.max_preco)
-        if PROIBIDO.search(tx) or PRACA.search(tx) or not CAMINHAO.search(tx) or not ad.get("video") or not v:
+        if PROIBIDO.search(tx) or PRACA.search(tx) or not CAMINHAO.search(tx) or not VENDA.search(tx) or not ad.get("video") or (not v and not a.sem_preco):
             pulados["texto/praça/preço"] += 1; continue
         if ad.get("page_id") in ruins or ruins_nome.search((ad.get("page_name") or "") + " " + (ad.get("anunciante") or "")):
             pulados["loja ruim"] += 1; continue
@@ -162,16 +189,15 @@ def main():
                     r.update(analisar(olho, fr))
                 else:
                     r["motivo"] = "não é 9:16"
-            r["passou"] = bool(r.get("vertical") and r.get("limpo_s", 0) >= a.min_limpo)
+            r["passou"] = bool(r.get("vertical") and (r.get("limpo_s", 0) >= a.min_limpo or r.get("soma_trechos", 0) >= 10))
         except Exception as e:
             r.update(erro=str(e)[:120], passou=False)
         feitos[ad["id"]] = r
         if "erro" not in r:
             memoria[ad["id"]] = {"passou": r["passou"], "page_id": r["page_id"]}
-            MEMORIA.parent.mkdir(parents=True, exist_ok=True)
-            MEMORIA.write_text(json.dumps(memoria, ensure_ascii=False), encoding="utf-8")
+            gravar_memoria({ad["id"]: memoria[ad["id"]]})
         saida.write_text(json.dumps(list(feitos.values()), ensure_ascii=False, indent=1), encoding="utf-8")
-        print(ad["id"], r["anunciante"][:20], int(v), r.get("motivo") or r.get("erro") or f"limpo {r.get('limpo_s')} s",
+        print(ad["id"], r["anunciante"][:20], int(v or 0), r.get("motivo") or r.get("erro") or f"limpo {r.get('limpo_s')} s",
               "PASSOU" if r["passou"] else "-", flush=True)
     print("pulados sem baixar:", pulados)
     print("passaram:", sum(1 for x in feitos.values() if x["passou"]), "de", len(feitos), "analisados")

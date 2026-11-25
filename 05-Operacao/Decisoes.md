@@ -12,6 +12,7 @@ Fonte das decisões até 19/11/2026: `_arquivo-grok/movecon/ceo/tarefas.md`, `_a
 
 | Data e hora | Decisão (palavras do Samuel quando registradas) | Afeta |
 |---|---|---|
+| 25/11 | Bruto sem preço no anúncio: "Sim, usar FIPE" + "olha você o caminhão e imagina qual o ano, põe uma média, não precisa ser exatamente o mesmo preço do veículo, só uma média está ótimo com a entrada". Valor = média de mercado do modelo e ano estimado; marcar "valor médio estimado" | [[Calculo de entrada e parcela]], [[Mineracao - o que procurar]] |
 | 25/11 | "o formato do vídeo 3 4 5 estão incorretos" + "quero agora 20 videos só que todos no padrão já acertado do 1 2 6": bruto só vertical nativo, com o veículo inteiro, de loja, com preço | [[Mineracao - o que procurar]], [[Minerador]] |
 | 24/11 | "pegue os padrões e coloque como regra absoluta de edição do projeto, principalmente os que já são da empresa nossa, esse é o padrão mínimo de edição": @pedroabreu.consultor e @tanan_intermediacoes = mínimo obrigatório; @representacaomaranata = modelar. Legenda preferida = padrão novo da @pedro, terminando em "Parcelamento. Vídeo ilustrativo." | [[Padrao minimo de edicao]], [[Reel Instagram]], [[Editor]] |
 | 20/11 | "as redes devem ser somente para o nicho mas o marketplace é mais aberto": o perfil nichado vale só para Instagram e TikTok; no Marketplace o vendedor anuncia qualquer veículo da faixa, independente do nicho | [[02-Parte 1 - Perfil nichado]], [[04-Parte 2 - Marketplace organico]] |

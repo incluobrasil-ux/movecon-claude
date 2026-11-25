@@ -54,3 +54,14 @@ skill: minerar-bens, minerar-criativos, minerar-mercado
   - No YouTube, procure título com o preço de **uma unidade só** ("R$ 325.000,00"). Canais de loja como o da 5001 Caminhões têm vídeo 1080p limpo depois que o apresentador sai. Resultado: 3 aprovados de 9.
   - ~~Vídeo horizontal só serve em 1080p ou mais.~~ **Substituído em 25/11:** o Samuel reprovou os horizontais recortados ("o formato do vídeo 3 4 5 estão incorretos"). Bruto só **vertical nativo**. Ver [[Mineracao - o que procurar]].
   - Em vídeo antigo, o preço pode não valer mais: marque na planilha.
+- Mineração de 20 brutos de caminhão (25/11/2026). De onde vieram os 13 primeiros aprovados (cerca de 2.000 anúncios coletados):
+  - **Página inteira de loja boa** (`--lojas-boas`): 3 (Russo Motors x2, Pátio 201). Foi o que mais rendeu por anúncio analisado.
+  - **Palavra genérica do nicho** ("cavalo mecânico", "caminhão 3/4 seminovo", "caminhão truck seminovo", "ford cargo seminovo", "basculante seminovo valor"): 5.
+  - **Termo de anúncio de unidade única** ("caminhão único dono cautelar", "caminhão km original valor", "caminhão pronto para trabalhar valor"): 3.
+  - **Busca funda com anúncios antigos** (`--inativos --rolagens 20`, palavra do modelo, ex.: "constellation"): 1, e trouxe 5 vezes mais matéria-prima. É o método do Samuel: "procuramos pelas palavras-chave de cada nicho e descemos até encontrar algo no padrão".
+  - **Busca pelo nome da loja:** 1 (Anderson Veículos).
+- O que mais reprovou, em ordem: apresentador ou vendedor no vídeo; legenda, preço ou logo por cima; letreiro grande da loja ao fundo; vídeo que não é 9:16; tela final ou vinheta.
+- A busca funda com anúncios antigos traz muito anúncio que não é de venda (perfume, impermeabilizante, suspensão). Por isso a peneira exige palavra de caminhão **e** sinal de venda.
+- **Limite do servidor de vídeo da Meta:** com mais de 6 downloads ao mesmo tempo, ele passa a recusar conexão ("vídeo não abriu") por cerca de 20 minutos. Em PC forte, no máximo 4 a 6 processos de peneira. O link do vídeo expira em algumas horas: peneire no mesmo dia da coleta.
+- A detecção de texto (OCR) não enxerga toda faixa de texto (ex.: branco sobre azul na parte de baixo da tela), e a conferência no olho continua obrigatória. Ela também não lê logo.
+- Tomadas curtas valem (Samuel, 25/11: "pode ser take dos vídeos, uma quantidade curta de tempo dá pra aproveitar"): a peneira aceita vídeo com 10 s ou mais somando trechos limpos de 3 s ou mais.

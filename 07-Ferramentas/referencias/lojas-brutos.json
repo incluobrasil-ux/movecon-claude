@@ -1,22 +1,28 @@
 {
- "_leia": "Lojas da Biblioteca de Anúncios da Meta para mineração de brutos (caminhão). 'boas' = filmam só o veículo, vertical, sem texto por cima: buscar a página inteira primeiro. 'ruins' = apresentador, legenda, preço ou logo queimados: a triagem pula. Chave = page_id. Atualize depois de cada mineração (quem aprovou e quem não aprovou). Origem: mineração de 25/11/2026.",
+ "_leia": "Lojas da Biblioteca de Anúncios da Meta para mineração de brutos (caminhão). 'boas' = filmam só o veículo, vertical, sem texto por cima: buscar a página inteira primeiro. 'ruins' = apresentador, legenda, preço ou logo queimados: a triagem pula. Chave = page_id. Atualize depois de cada mineração (quem aprovou e quem não aprovou). Origem: mineração de 25/11/2026. Atualizado em 25/11/2026 depois da mineração de 20 caminhões.",
  "boas": {
-  "408062299065894": "Russo Motors (Cuiabá/MT) - 3 aprovados de 8; também tem carro e picape",
+  "408062299065894": "Russo Motors (Cuiabá/MT) - 3 aprovados (Ford Cargo 1419, Axor 2831, Worker 13-180, Atego 2428); também tem carro e picape",
   "762181780314043": "Pro Caminhões - Iveco S-Way 480 aprovado",
   "101641282744702": "Cipriani Multimarcas (Agrolândia/SC) - VW Delivery aprovado (vídeo 576x1024)",
   "105702766799338": "Pátio 201 Caminhões e Carretas (Curitiba/PR) - Axor 2041 aprovado",
-  "357992608705757": "João Lima Caminhões - Accelo 1016 aprovado; FH 500 tinha @ no rodapé"
+  "357992608705757": "João Lima Caminhões - Accelo 1016 aprovado; FH 500 tinha @ no rodapé",
+  "174473855745137": "Willian Tukinha - VW Constellation 24-250 aprovado (tem vídeo com apresentador também: conferir)"
  },
- "boas_sem_page_id": ["LC Caminhões (Ford Cargo 1932 aprovado)", "Anderson Veículos, Gravataí/RS (Ford Cargo 1415, reserva)"],
+ "boas_sem_page_id": [
+  "LC Caminhões (Ford Cargo 1932 aprovado)",
+  "Anderson Veículos, Gravataí/RS (Ford Cargo 1415, reserva)"
+ ],
  "ruins": {
   "100378679320564": "Venda Truck - legenda, preço e logo em todo vídeo (0 de 15)",
   "628811783648486": "Venda Truck Ofertas - idem (0 de 18)",
-  "1219701521517754": "5001 Caminhões - apresentador e texto (0 de 6); no YouTube tem trecho limpo",
+  "1219701521517754": "5001 Caminhões - quase sempre apresentador e texto (1 aprovado de cerca de 10: DAF XF 480); no YouTube tem trecho limpo",
   "104918587797769": "Rodolima Caminhões - vendedor na cabine o vídeo todo",
   "518171761389280": "Cleber Caminhões SC - legenda",
   "100962494654220": "Silvério Veículos - 0 de 6",
   "825048404025715": "Mendes Caminhões - apresentador e legenda",
   "853103918103316": "Marka Caminhões Usados - apresentadora, vídeo 4:5"
  },
- "ruins_por_nome": ["venda ?truck"]
+ "ruins_por_nome": [
+  "venda ?truck"
+ ]
 }
