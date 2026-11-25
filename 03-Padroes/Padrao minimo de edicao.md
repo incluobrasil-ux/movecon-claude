@@ -50,7 +50,8 @@ Medidas em % da altura do quadro (1920 px):
 - **Os valores da tela e da legenda são os mesmos.** Calcule com `calc_valores.py <valor> --reel`.
 
 ## A3. Imagem limpa
-- **Placa e nome ou telefone de outra loja apagados de forma imperceptível** (decisão de 25/11/2026): a área é preenchida com o entorno (inpainting), seguindo a placa quadro a quadro, sem caixa preta. Ferramenta: `07-Ferramentas/scripts/edicao/cobre_placas.py`. A tarja preta sólida continua valendo nas **fotos** do Marketplace.
+- **Placa, plaqueta, adesivo e letreiro de outra loja tampados de forma discreta, em todos os quadros** (decisão de 25/11/2026): a área vira uma placa lisa na cor do fundo dela, seguindo o movimento quadro a quadro, sem caixa preta, sem borrão e sem distorcer o resto da imagem. Ferramenta: `07-Ferramentas/scripts/edicao/tampa_plaquetas.py`. Letreiro grande de fachada: **corte o trecho** em vez de tampar. A tarja preta sólida continua valendo nas **fotos** do Marketplace.
+- Conferência obrigatória: recorte da área tampada a cada ~0,2 s e os quadros de entrada e saída de cada tomada (transição, clarão, corte). O OCR sozinho não basta.
 - Nenhum rosto, nome de loja, letreiro, telefone ou marca d'água.
 - **Nenhum texto que sobrou do vídeo de origem.** Erro achado em 24/11: a L200 da @pedro abre com um preço do vídeo original aparecendo por trás das pílulas no quadro 0. Confira o **quadro 0** e corte o começo se precisar.
 

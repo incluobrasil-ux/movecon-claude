@@ -19,7 +19,7 @@ from rapidocr_onnxruntime import RapidOCR
 PLACA = re.compile(r"^[A-Z]{3}\d[A-Z0-9]\d{2}$")
 # telefone, site, @ e nome de loja (plaqueta da revenda no para-choque, adesivo): também levam tarja
 LOJA = re.compile(r"\(?\d{2}\)?\s?\d{4,5}[\s\-\.]?\d{4}|@|www|\.com|caminh|ve[ií]cul|truck|motors|seminov|ltda|lima|multimarcas|p[aá]tio", re.I)
-FPS = 10  # 10 quadros/s: o OCR perde a placa em muitos quadros, quanto mais leituras melhor o rastreio
+FPS = int(sys.argv[3]) if len(sys.argv) > 3 else 10  # 30 = todos os quadros (análise quadro a quadro)
 
 
 def quadros(arq):
