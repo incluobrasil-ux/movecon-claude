@@ -16,6 +16,8 @@ skill: editar-fotos-veiculo, editar-reel
 ## Ferramentas (`07-Ferramentas/scripts/edicao/`)
 | Ferramenta | Para |
 |---|---|
+| **`editar_reel.py lote.json --handle @conta`** | **caminho principal (Windows, 25/11/2026):** edita no [[Padrao minimo de edicao]]: 1080x1920, pílulas, colchete, modelo, @, rodapé em 1,2 s, música livre −14 LUFS e tarjas. Valores pelo `calc_valores.py`. Fontes em `edicao/fontes/` (Poppins e Barlow Condensed, licença livre) |
+| `detecta_placas.py <clipe> <saida.json>` | acha placa, telefone e nome de loja (plaqueta da revenda) com OCR para a tarja. **Confira no olho:** quando o OCR deixa de ler a plaqueta por mais de 3 s, a tarja some (aconteceu com "Pátio 201") |
 | ffmpeg / ffprobe | corte, junção, escala, áudio |
 | `render_v1.py` | tarja de placa nas fotos |
 | `render_v3.py` + `generate_overlays.py` | montagem do Reel com pílulas, rodapé e @ (não usar o fundo desfocado de reserva) |
