@@ -50,7 +50,7 @@ Medidas em % da altura do quadro (1920 px):
 - **Os valores da tela e da legenda são os mesmos.** Calcule com `calc_valores.py <valor> --reel`.
 
 ## A3. Imagem limpa
-- **Placa com tarja preta sólida**, que acompanha a placa o vídeo inteiro.
+- **Placa e nome ou telefone de outra loja apagados de forma imperceptível** (decisão de 25/11/2026): a área é preenchida com o entorno (inpainting), seguindo a placa quadro a quadro, sem caixa preta. Ferramenta: `07-Ferramentas/scripts/edicao/cobre_placas.py`. A tarja preta sólida continua valendo nas **fotos** do Marketplace.
 - Nenhum rosto, nome de loja, letreiro, telefone ou marca d'água.
 - **Nenhum texto que sobrou do vídeo de origem.** Erro achado em 24/11: a L200 da @pedro abre com um preço do vídeo original aparecendo por trás das pílulas no quadro 0. Confira o **quadro 0** e corte o começo se precisar.
 

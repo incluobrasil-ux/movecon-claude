@@ -19,7 +19,7 @@ from rapidocr_onnxruntime import RapidOCR
 PLACA = re.compile(r"^[A-Z]{3}\d[A-Z0-9]\d{2}$")
 # telefone, site, @ e nome de loja (plaqueta da revenda no para-choque, adesivo): também levam tarja
 LOJA = re.compile(r"\(?\d{2}\)?\s?\d{4,5}[\s\-\.]?\d{4}|@|www|\.com|caminh|ve[ií]cul|truck|motors|seminov|ltda|lima|multimarcas|p[aá]tio", re.I)
-FPS = 5
+FPS = 10  # 10 quadros/s: o OCR perde a placa em muitos quadros, quanto mais leituras melhor o rastreio
 
 
 def quadros(arq):
@@ -48,9 +48,13 @@ def main():
     for t, im in quadros(arq):
         res, _ = ocr(im)
         for box, txt, conf in res or []:
-            if float(conf) > 0.5 and (PLACA.match(limpa(txt)) or LOJA.search(txt)):
-                xs = [p[0] for p in box]; ys = [p[1] for p in box]
+            xs = [p[0] for p in box]; ys = [p[1] for p in box]
+            if float(conf) > 0.3 and (PLACA.match(limpa(txt)) or LOJA.search(txt)):
                 achados.append([t, min(xs), min(ys), max(xs), max(ys)])
+            elif float(conf) > 0.3 and re.search(r"bras[il1]l", txt, re.I):
+                # faixa "BRASIL" da placa Mercosul: a placa fica logo abaixo, ~3x a altura da faixa
+                hh = max(ys) - min(ys)
+                achados.append([t, min(xs) - hh, min(ys), max(xs) + hh, max(ys) + hh * 3])
     caixas = []
     for t, x0, y0, x1, y1 in achados:
         mx, my = (x1 - x0) * 0.25, (y1 - y0) * 0.6
