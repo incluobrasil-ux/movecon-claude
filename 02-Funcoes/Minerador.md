@@ -10,7 +10,12 @@ skill: minerar-bens, minerar-criativos, minerar-mercado
 ## Quando o pedido chega
 1. Identifique o tipo (bens, criativos ou mercado), a quantidade e o prazo. Se faltar só o tipo, pergunte. O resto, assuma e declare.
 2. Crie `10-Trabalho/AAAA-MM-DD-<tipo>-<tema>/`.
-3. Confira o que já existe para não repetir: filas e levas abertas, `ja_minerado` em entregas anteriores, `06-Referencias/mineracao/` (pesquisas já feitas: ranking de bens, concorrentes, regiões, o que replicar).
+3. **Antes de buscar, confira o que já existe** (decisão de 25/11/2026: nada de retrabalho):
+   - rode `git pull`;
+   - leia [[Ja minerado]];
+   - rode `py -3 07-Ferramentas/scripts/mineracao/registro_buscas.py <palavra>` para ver os termos já buscados em qualquer PC;
+   - confira as filas e levas abertas.
+   Reaproveite o que existe e só busque o que falta. O gancho do Claude Code mostra isso sozinho quando o pedido fala de mineração.
 
 ## Ferramentas
 | Para | Ferramenta |
@@ -37,11 +42,20 @@ skill: minerar-bens, minerar-criativos, minerar-mercado
 3. Nota de escala ([[Mineracao - o que procurar]]); marcar RISCO.
 4. Entregar no modelo [[Entrega de mineracao]] e avisar o [[Copywriter]] dos ângulos que valem modelar.
 
+## Fim de toda mineração (obrigatório)
+1. Copie o `ENTREGA.md` e a planilha para `06-Referencias/mineracao/AAAA-MM-DD-<tema>/`. Não leve foto nem vídeo de terceiro, porque o repositório é público.
+2. Ponha uma linha no topo de [[Ja minerado]].
+3. Faça commit e push, junto com `07-Ferramentas/referencias/buscas-feitas.csv` e `memoria-mineracao.jsonl`. Os scripts gravam esses dois arquivos sozinhos.
+4. Se o PC não tiver permissão de push, mande o `ENTREGA.md` e a planilha para o Samuel.
+
 ## Nunca
 - Curtir, seguir, salvar, comentar, mandar mensagem, responder anúncio, logar com conta de alguém.
 - Usar cookie para passar bloqueio ou resolver captcha.
 - Completar lista com quem não escala. "Não achei nada" só com a lista do que foi testado.
 - Gastar com ferramenta paga sem OK.
+- **Minerar com conta logada** (perfil do BitBrowser, Facebook pessoal). A Biblioteca abre sem login pelos scripts. O BitBrowser só serve para ler o Marketplace, nas contas listadas no [[Perfil-do-operador]].
+- **Criar robô ou processo novo** quando já existe ferramenta no cofre. A `biblioteca_meta.py` já guarda anunciante, texto, dias no ar, cópias do criativo e print. Falta alguma coisa? Proponha ao gestor antes de fazer.
+- Disfarçar o robô para não ser detectado. Vale o ritmo do padrão. Se bloquear, pare.
 
 ## Aprendizados
 - A Meta bloqueia por IP depois de um número variável de buscas (já foi 10, 17, 45; com 4 coletas em paralelo, cerca de 130 em 1 h). Sinal: "Nenhum anúncio corresponde" em termo que tinha resultado. Esperar de 1 a 14 h.

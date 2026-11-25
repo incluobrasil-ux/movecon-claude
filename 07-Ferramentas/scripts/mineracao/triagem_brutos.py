@@ -8,7 +8,8 @@ está na lista "ruins" (07-Ferramentas/referencias/lojas-brutos.json):
   4. marca o quadro como sujo se tiver rosto ou "texto sobreposto" (caixa de texto que fica parada no mesmo
      lugar da tela enquanto a imagem muda: legenda, preço, logo, @). Texto físico anda com a câmera e não conta;
   5. aprova se tiver um trecho limpo de pelo menos --min-limpo segundos.
-Nunca analisa duas vezes o mesmo anúncio: a memória fica em 10-Trabalho/_memoria-mineracao.json.
+Nunca analisa duas vezes o mesmo anúncio, em nenhum PC: a memória fica em 07-Ferramentas/referencias/memoria-mineracao.jsonl
+(vai para o GitHub; ver registro_buscas.py). Faça git pull antes e commit + push no fim.
 O aprovado ainda passa pela conferência no olho: caminhão INTEIRO no começo do trecho e versão batendo com o texto.
 
 Uso (de dentro da pasta do cofre):
@@ -24,7 +25,8 @@ from PIL import Image, ImageChops, ImageStat
 AQUI = Path(__file__).resolve().parent
 COFRE = AQUI.parents[2]
 LOJAS = COFRE / "07-Ferramentas" / "referencias" / "lojas-brutos.json"
-MEMORIA = COFRE / "10-Trabalho" / "_memoria-mineracao.json"
+import sys; sys.path.insert(0, str(AQUI))
+import registro_buscas  # noqa: E402  memória compartilhada entre os PCs
 
 PROIBIDO = re.compile(r"cons[óo]rcio|carta de cr[ée]dito|contempla|\bcota", re.I)
 PRACA = re.compile(r"vit[óo]ria da conquista", re.I)
@@ -119,18 +121,7 @@ def analisar(olho, fr):
 
 
 def gravar_memoria(novos):
-    """Junta com o que está no disco e troca o arquivo de uma vez (vários processos não se atropelam)."""
-    MEMORIA.parent.mkdir(parents=True, exist_ok=True)
-    for _ in range(5):
-        try:
-            atual = json.loads(MEMORIA.read_text(encoding="utf-8")) if MEMORIA.exists() else {}
-            atual.update(novos)
-            tmp = MEMORIA.with_suffix(f".{os.getpid()}.tmp")
-            tmp.write_text(json.dumps(atual, ensure_ascii=False), encoding="utf-8")
-            os.replace(tmp, MEMORIA)
-            return
-        except (OSError, ValueError):
-            import time; time.sleep(0.3)
+    registro_buscas.gravar_memoria(novos)
 
 
 def main():
@@ -147,7 +138,8 @@ def main():
     pasta = Path(a.pasta); pasta.mkdir(parents=True, exist_ok=True)
     saida = pasta / ("triagem.json" if n == 1 else f"triagem-{k}de{n}.json")
     feitos = {r["id"]: r for r in json.loads(saida.read_text(encoding="utf-8"))} if saida.exists() else {}
-    memoria = json.loads(MEMORIA.read_text(encoding="utf-8")) if MEMORIA.exists() else {}
+    memoria = registro_buscas.ler_memoria()
+    print(f"memória compartilhada: {len(memoria)} anúncios já analisados (não serão vistos de novo)", flush=True)
     lojas = json.loads(LOJAS.read_text(encoding="utf-8")) if LOJAS.exists() else {}
     ruins = set(lojas.get("ruins", {})); ruins_nome = re.compile("|".join(lojas.get("ruins_por_nome", ["$^"])), re.I)
     ads = {}

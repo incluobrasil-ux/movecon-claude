@@ -1,0 +1,3 @@
+# Memória compartilhada da mineração: só recebe linhas no fim; o pull junta as linhas dos PCs sem conflito
+07-Ferramentas/referencias/buscas-feitas.csv merge=union
+07-Ferramentas/referencias/memoria-mineracao.jsonl merge=union

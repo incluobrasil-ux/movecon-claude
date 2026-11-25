@@ -7,7 +7,9 @@ Uso:
   py -3 brutos_meta.py "caminhão seminovo" "scania à venda" --rolagens 4 --saida <pasta>/meta.json
 Regra: uma busca por vez, 5 a 10 s entre buscas. "Nenhum anúncio" em termo que tinha resultado = bloqueio: parar.
 """
-import argparse, json, re, time, urllib.parse
+import argparse, json, re, sys, time, urllib.parse
+sys.path.insert(0, __import__("os").path.dirname(__import__("os").path.abspath(__file__)))
+import registro_buscas  # noqa: E402  avisa termo já buscado e registra a busca (vai para o GitHub)
 from datetime import date
 from pathlib import Path
 from playwright.sync_api import sync_playwright
@@ -114,14 +116,17 @@ def main():
         for t in a.termos:
             termo_atual[0] = t
             antes = len(dados)
+            registro_buscas.avisar(t, "brutos_meta")
             pg.goto(url(t), wait_until="domcontentloaded", timeout=60000)
             pg.wait_for_timeout(7000)
             if "Nenhum anúncio corresponde" in pg.inner_text("body"):
                 print(f"[{t}] nenhum anúncio (se o termo tinha resultado antes, é bloqueio: parar)")
+                registro_buscas.registrar("brutos_meta", t, "BR", "vazio", 0, a.saida)
                 continue
             for _ in range(a.rolagens):
                 pg.mouse.wheel(0, 6000); pg.wait_for_timeout(2500)
             print(f"[{t}] {len(dados) - antes} vídeos novos (total {len(dados)})", flush=True)
+            registro_buscas.registrar("brutos_meta", t, "BR", "inativos" if a.inativos else "ativos", len(dados) - antes, a.saida)
             time.sleep(8)
         br.close()
     for ad in dados.values():

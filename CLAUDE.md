@@ -31,6 +31,12 @@ Este cofre do Obsidian é a operação comercial da MOVECON, representante da **
 | `10-Trabalho/` | **toda tarefa nova** vai em `10-Trabalho/AAAA-MM-DD-<tarefa>/` |
 | `_arquivo-grok/` | cópia completa do tempo dos bots, **só no PC do gestor** (não vai para o GitHub). Só consulta; nunca escreva lá. Se não existir, siga as notas do cofre |
 
+## Mineração sem retrabalho (25/11/2026)
+- Quando o pedido fala de mineração, o gancho de `.claude/settings.json` injeta sozinho o caminho validado, a lista de [[Ja minerado]] e as buscas já feitas.
+- Antes de minerar: `git pull`, leia `06-Referencias/mineracao/Ja minerado.md` e rode `registro_buscas.py <palavra>`.
+- No fim: registre em `Ja minerado.md` e faça commit e push.
+- Minerar é sempre **sem login** e com as ferramentas do cofre. Não crie robô novo.
+
 ## Como entregar
 - Toda tarefa termina com: o que foi feito, onde estão os arquivos, o que falta e o que o operador precisa decidir.
 - Decisão nova do operador ou do gestor: registre em `05-Operacao/Decisoes.md` (data, hora, palavras exatas, o que muda) e, se mudar um padrão, atualize a nota do padrão e diga que atualizou.

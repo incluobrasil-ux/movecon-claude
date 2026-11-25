@@ -66,7 +66,9 @@ São três minerações diferentes. Todas são **só leitura**: nunca curtir, se
 **Entrega:** `10-Trabalho/AAAA-MM-DD-mercado-<tema>/` com `ENTREGA.md`, planilha (abas: Escalados, Anúncios, Riscos, Nichos com pouca concorrência) e print de cada anúncio citado.
 
 ## Pesquisas já feitas (leia antes de minerar de novo)
+**Comece por [[Ja minerado]]:** a lista de tudo o que já foi feito, com as buscas registradas e os anúncios já analisados em qualquer PC.
 Ficam em `06-Referencias/mineracao/`:
+- [[Brutos de caminhao (25-11)]]: como foram achados os 18 brutos de caminhão aprovados.
 - [[Ranking de bens da regiao (13-11)]]: modelos que mais vendem na região.
 - [[Concorrentes no Marketplace (13-11)]] e [[Marketplace por regiao (12-11)]]: como os outros anunciam parcelado no Marketplace.
 - [[Concorrentes regionais VdC (13-11)]] e [[Base de anuncios regionais VdC (13-11)]]: quem anuncia na praça.

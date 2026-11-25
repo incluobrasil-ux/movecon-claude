@@ -5,6 +5,13 @@ description: Minera vídeos brutos de veículos sem texto na tela e criativos pr
 
 # minerar-criativos
 
+**Passo zero (decisão de 25/11/2026, para não refazer trabalho):**
+- rode `git pull`;
+- leia `06-Referencias/mineracao/Ja minerado.md`;
+- rode `py -3 07-Ferramentas/scripts/mineracao/registro_buscas.py <palavra do tema>`.
+
+Sem login e sem robô novo: use só as ferramentas do `02-Funcoes/Minerador.md`. No fim, registre a mineração em `Ja minerado.md` e faça commit e push.
+
 As regras desta função ficam nas notas do cofre (fonte única). Leia, nesta ordem, antes de começar:
 
 1. `01-Regras/Regras de ouro.md`

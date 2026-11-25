@@ -1,0 +1,15 @@
+{
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "py -3 \"$CLAUDE_PROJECT_DIR/07-Ferramentas/scripts/ganchos/antes_de_minerar.py\" 2>/dev/null || python \"$CLAUDE_PROJECT_DIR/07-Ferramentas/scripts/ganchos/antes_de_minerar.py\" 2>/dev/null || true",
+            "timeout": 15
+          }
+        ]
+      }
+    ]
+  }
+}

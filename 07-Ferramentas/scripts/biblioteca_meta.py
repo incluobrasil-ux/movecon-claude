@@ -14,6 +14,9 @@ from collections import Counter, defaultdict
 from datetime import date
 from playwright.sync_api import sync_playwright
 
+sys.path.insert(0, str(Path(__file__).resolve().parent / "mineracao"))
+import registro_buscas  # noqa: E402  avisa termo já buscado e registra a busca (vai para o GitHub)
+
 MESES = {"jan": 1, "fev": 2, "mar": 3, "abr": 4, "mai": 5, "jun": 6,
          "jul": 7, "ago": 8, "set": 9, "out": 10, "nov": 11, "dez": 12}
 LIXO = {"​", "", "Plataformas", "Abrir menu suspenso", "Ver detalhes do anúncio",
@@ -104,6 +107,8 @@ def main():
     ap.add_argument("--prefixo", default="", help="início do nome do arquivo (ex.: o concorrente)")
     a = ap.parse_args()
     url = montar_url(a)
+    chave = a.termo or f"pagina:{a.pagina}"
+    registro_buscas.avisar(chave, "biblioteca_meta")
 
     with sync_playwright() as p:
         b = p.chromium.launch(channel="chrome", headless=not a.ver)
@@ -124,6 +129,8 @@ def main():
     saida = a.saida or f"biblioteca_{re.sub(r'\W+', '_', a.termo or a.pagina)}.json"
     with open(saida, "w", encoding="utf-8") as f:
         json.dump({"url": url, "total": total, "ads": ads}, f, ensure_ascii=False, indent=1)
+    registro_buscas.registrar("biblioteca_meta", chave, a.pais, ("inativos" if a.inativos else "ativos") if ads else "vazio",
+                              len(ads), saida)
 
     por = defaultdict(list)
     for ad in ads:
