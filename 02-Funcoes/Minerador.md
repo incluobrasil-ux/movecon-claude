@@ -50,5 +50,5 @@ skill: minerar-bens, minerar-criativos, minerar-mercado
   - Na Meta, o player entrega 360p. O link em 720p vem nos dados da página, e o `brutos_meta.py` já pega esse link.
   - Quase todo anúncio de loja tem legenda, preço ou logo queimados no vídeo inteiro. Os do portal Venda Truck sempre têm. De 26 baixados, 2 passaram.
   - No YouTube, procure título com o preço de **uma unidade só** ("R$ 325.000,00"). Canais de loja como o da 5001 Caminhões têm vídeo 1080p limpo depois que o apresentador sai. Resultado: 3 aprovados de 9.
-  - Vídeo horizontal só serve em 1080p ou mais, porque o recorte 9:16 amplia 1,78x.
+  - ~~Vídeo horizontal só serve em 1080p ou mais.~~ **Substituído em 25/11:** o Samuel reprovou os horizontais recortados ("o formato do vídeo 3 4 5 estão incorretos"). Bruto só **vertical nativo**. Ver [[Mineracao - o que procurar]].
   - Em vídeo antigo, o preço pode não valer mais: marque na planilha.

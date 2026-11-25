@@ -35,6 +35,7 @@ São três minerações diferentes. Todas são **só leitura**: nunca curtir, se
 **Fontes:** Biblioteca de Anúncios da Meta (`07-Ferramentas/scripts/biblioteca_meta.py`, sem login), TikTok Creative Center (perfil e tag não abrem sem login), YouTube (bloqueia com "não é robô" e cerca de metade falha: desacelerar, não usar cookie), Dailymotion. Instagram sem login não rende.
 
 **Vídeo bruto bom:**
+- **vertical nativo 9:16 (720x1280 ou mais), filmado em pé, com o caminhão INTEIRO aparecendo no começo**, de loja, de uma unidade com preço no anúncio. É o padrão aprovado pelo Samuel em 25/11/2026 (brutos 01, 02 e R1 da mineração de caminhão). **Horizontal é reprovado**: recortado para 9:16, só mostra pedaço do veículo ("o formato do vídeo 3 4 5 estão incorretos", 25/11);
 - **só o veículo**: sem pessoa em destaque, apresentador, fachada de loja ou cartaz (13/11);
 - **sem texto na tela**, preço, legenda ou marca d'água sobreposta (13/11, 22h08). Texto físico (emblema, adesivo) é aceito e anotado;
 - real, não filme de estúdio (13/11, 21h34: "mais realistas");
