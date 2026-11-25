@@ -78,18 +78,24 @@ async function waitFor(fn, ms = 60000, step = 1500) { const t0 = Date.now(); whi
 
 async function conferirConta() {
   await c.nav(`https://www.instagram.com/${HANDLE}/`, 7000);
-  const a = await c.ev(`(() => { const t = document.body.innerText; return { edit: /Editar perfil|Edit profile/.test(t), handle: !!document.querySelector('header') && document.querySelector('header').innerText.includes(${JSON.stringify(HANDLE)}) }; })()`);
+  // 25/11: o perfil às vezes leva mais de 7 s para mostrar o "Editar perfil" -> espera até 20 s antes de concluir
+  const Q = `(() => { const t = document.body.innerText; return { edit: /Editar perfil|Edit profile/.test(t), handle: !!document.querySelector('header') && document.querySelector('header').innerText.includes(${JSON.stringify(HANDLE)}) }; })()`;
+  const a = await waitFor(async () => { const x = await c.ev(Q); return x && x.edit && x.handle ? x : null; }, 20000, 2000) || await c.ev(Q);
   if (!a.edit || !a.handle) await fim(2, { ok: false, erro: 'a conta logada neste perfil não é @' + HANDLE, a });
   await guard('00-perfil');
 }
 async function listarReels() {
   await c.nav(`https://www.instagram.com/${HANDLE}/reels/`, 6000);
   const Q = `[...new Set([...document.querySelectorAll('a[href*="/reel/"]')].map(a => (a.getAttribute('href').match(/\\/reel\\/([^/]+)/)||[])[1]).filter(Boolean))]`;
-  let codes = await waitFor(async () => { const x = await c.ev(Q); return x && x.length ? x : null; }, 12000, 2000);
+  // 25/11: em janela baixa a grade fica abaixo da parte visível e o Instagram só carrega rolando -> rola um pouco a cada tentativa
+  let passo = 0;
+  const tenta = async () => { await c.ev(`window.scrollTo(0, ${Math.min(passo++, 8)} * 400)`); await sleep(800); const x = await c.ev(Q); return x && x.length ? x : null; };
+  let codes = await waitFor(tenta, 15000, 1500);
   if (!codes) {
     const vazio = await c.ev(`/ainda n[aã]o (publicou|h[aá] publica[cç][oõ]es)|when you share|no (posts|reels) yet|0 (publica[cç][oõ]es|posts)/i.test(document.body.innerText || '')`);
     if (vazio) return [];
-    codes = await waitFor(async () => { const x = await c.ev(Q); return x && x.length ? x : null; }, 18000, 2000);
+    passo = 0;
+    codes = await waitFor(tenta, 25000, 1500);
     if (!codes) await fim(2, { ok: false, erro: 'aba Reels do perfil não carregou (não dá para checar repetição)' });
   }
   return codes;
