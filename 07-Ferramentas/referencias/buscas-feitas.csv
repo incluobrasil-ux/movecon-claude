@@ -87,3 +87,37 @@ data;ferramenta;termo;pais;status;coletados;pc;saida
 2026-11-25;brutos_meta;Anderson Veículos caminhão;BR;sem dado;1;DESKTOP-QBB3SNO;10-Trabalho/2026-11-25-brutos-caminhao/meta-hd-lojas.json
 2026-11-25;brutos_meta;caminhão toco seminovo;BR;sem dado;1;DESKTOP-QBB3SNO;10-Trabalho/2026-11-25-brutos-caminhao/nova-B.json
 2026-11-25;brutos_meta;seminovos caminhões revenda;BR;sem dado;1;DESKTOP-QBB3SNO;10-Trabalho/2026-11-25-brutos-caminhao/nova-G.json
+2026-11-25 23:00;brutos_meta;suv seminovo;BR;ativos;55;DESKTOP-QBB3SNO;10-Trabalho/2026-11-25-brutos-carros/meta.json
+2026-11-25 23:00;brutos_meta;picape seminova;BR;ativos;68;DESKTOP-QBB3SNO;10-Trabalho/2026-11-25-brutos-carros/meta.json
+2026-11-25 23:01;brutos_meta;carro seminovo único dono;BR;ativos;57;DESKTOP-QBB3SNO;10-Trabalho/2026-11-25-brutos-carros/meta.json
+2026-11-25 23:01;brutos_meta;hilux seminova;BR;ativos;30;DESKTOP-QBB3SNO;10-Trabalho/2026-11-25-brutos-carros/meta.json
+2026-11-25 23:02;brutos_meta;compass seminovo;BR;ativos;45;DESKTOP-QBB3SNO;10-Trabalho/2026-11-25-brutos-carros/meta.json
+2026-11-25 23:02;brutos_meta;ranger seminova;BR;ativos;11;DESKTOP-QBB3SNO;10-Trabalho/2026-11-25-brutos-carros/meta.json
+2026-11-25 23:03;brutos_meta;s10 seminova;BR;ativos;39;DESKTOP-QBB3SNO;10-Trabalho/2026-11-25-brutos-carros/meta.json
+2026-11-25 23:03;brutos_meta;sw4 seminova;BR;ativos;1;DESKTOP-QBB3SNO;10-Trabalho/2026-11-25-brutos-carros/meta.json
+2026-11-25 23:04;brutos_meta;corolla cross seminovo;BR;ativos;52;DESKTOP-QBB3SNO;10-Trabalho/2026-11-25-brutos-carros/meta.json
+2026-11-25 23:04;brutos_meta;toro seminova;BR;ativos;7;DESKTOP-QBB3SNO;10-Trabalho/2026-11-25-brutos-carros/meta.json
+2026-11-25 23:04;brutos_meta;carro km original valor;BR;ativos;39;DESKTOP-QBB3SNO;10-Trabalho/2026-11-25-brutos-carros/meta.json
+2026-11-25 23:05;brutos_meta;seminovos multimarcas;BR;ativos;67;DESKTOP-QBB3SNO;10-Trabalho/2026-11-25-brutos-carros/meta.json
+2026-11-25 23:09;brutos_meta;pagina:1143037512223350;BR;ativos;2;DESKTOP-QBB3SNO;10-Trabalho/2026-11-25-brutos-carros/meta-2.json
+2026-11-25 23:10;brutos_meta;pagina:654460711368886;BR;ativos;31;DESKTOP-QBB3SNO;10-Trabalho/2026-11-25-brutos-carros/meta-2.json
+2026-11-25 23:10;brutos_meta;pagina:104944708093099;BR;ativos;5;DESKTOP-QBB3SNO;10-Trabalho/2026-11-25-brutos-carros/meta-2.json
+2026-11-25 23:11;brutos_meta;amarok seminova;BR;ativos;1;DESKTOP-QBB3SNO;10-Trabalho/2026-11-25-brutos-carros/meta-2.json
+2026-11-25 23:11;brutos_meta;l200 triton seminova;BR;vazio;0;DESKTOP-QBB3SNO;10-Trabalho/2026-11-25-brutos-carros/meta-2.json
+2026-11-25 23:11;brutos_meta;commander seminovo;BR;ativos;22;DESKTOP-QBB3SNO;10-Trabalho/2026-11-25-brutos-carros/meta-2.json
+2026-11-25 23:12;brutos_meta;tiggo 7 seminovo;BR;ativos;29;DESKTOP-QBB3SNO;10-Trabalho/2026-11-25-brutos-carros/meta-2.json
+2026-11-25 23:12;brutos_meta;creta seminovo;BR;ativos;46;DESKTOP-QBB3SNO;10-Trabalho/2026-11-25-brutos-carros/meta-2.json
+2026-11-25 23:13;brutos_meta;hr-v seminovo;BR;ativos;68;DESKTOP-QBB3SNO;10-Trabalho/2026-11-25-brutos-carros/meta-2.json
+2026-11-25 23:13;brutos_meta;tracker seminovo;BR;ativos;48;DESKTOP-QBB3SNO;10-Trabalho/2026-11-25-brutos-carros/meta-2.json
+2026-11-25 23:14;brutos_meta;frontier seminova;BR;ativos;7;DESKTOP-QBB3SNO;10-Trabalho/2026-11-25-brutos-carros/meta-2.json
+2026-11-25 23:14;brutos_meta;taos seminovo;BR;ativos;28;DESKTOP-QBB3SNO;10-Trabalho/2026-11-25-brutos-carros/meta-2.json
+2026-11-25 23:21;brutos_meta;pagina:102475976035881;BR;ativos;6;DESKTOP-QBB3SNO;10-Trabalho/2026-11-25-brutos-carros/meta-3.json
+2026-11-25 23:21;brutos_meta;pagina:127954753945273;BR;ativos;25;DESKTOP-QBB3SNO;10-Trabalho/2026-11-25-brutos-carros/meta-3.json
+2026-11-25 23:22;brutos_meta;pagina:113301474899644;BR;ativos;4;DESKTOP-QBB3SNO;10-Trabalho/2026-11-25-brutos-carros/meta-3.json
+2026-11-25 23:22;brutos_meta;pagina:1010137415506599;BR;ativos;19;DESKTOP-QBB3SNO;10-Trabalho/2026-11-25-brutos-carros/meta-3.json
+2026-11-25 23:23;brutos_meta;pagina:608568355671861;BR;ativos;22;DESKTOP-QBB3SNO;10-Trabalho/2026-11-25-brutos-carros/meta-3.json
+2026-11-25 23:23;brutos_meta;caminhonete seminova;BR;ativos;70;DESKTOP-QBB3SNO;10-Trabalho/2026-11-25-brutos-carros/meta-3.json
+2026-11-25 23:23;brutos_meta;picape à venda;BR;ativos;70;DESKTOP-QBB3SNO;10-Trabalho/2026-11-25-brutos-carros/meta-3.json
+2026-11-25 23:24;brutos_meta;suv à venda;BR;ativos;64;DESKTOP-QBB3SNO;10-Trabalho/2026-11-25-brutos-carros/meta-3.json
+2026-11-25 23:24;brutos_meta;hilux à venda;BR;ativos;53;DESKTOP-QBB3SNO;10-Trabalho/2026-11-25-brutos-carros/meta-3.json
+2026-11-25 23:25;brutos_meta;seminovo abaixo da fipe;BR;ativos;65;DESKTOP-QBB3SNO;10-Trabalho/2026-11-25-brutos-carros/meta-3.json

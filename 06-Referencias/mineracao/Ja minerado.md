@@ -23,6 +23,7 @@ Esta é a lista de tudo o que já foi minerado, do mais novo para o mais antigo.
 
 | Data | Tipo | Tema | O que achou | Onde está |
 |---|---|---|---|---|
+| 2026-11-25 | brutos (seção 2) | carros de R$ 100 mil a R$ 300 mil (picape, SUV, sedã), vídeo vertical de loja para Reel | 1.047 anúncios de vídeo em 34 buscas; 194 na peneira; 10 aprovados no olho + 1 reserva (6 SUVs, 4 picapes). O que mais rendeu: página inteira da Wcar Veículos BH (6 dos 10) | `2026-11-25-brutos-carros/` |
 | 2026-11-25 | brutos (seção 2) | caminhão, vídeo vertical de loja para Reel | 3.650 anúncios coletados em 88 termos; 882 analisados pela peneira; 18 aprovados, 15 editados e aprovados (@lais.iconsorcio). O que mais rendeu: palavra genérica do nicho e página inteira de loja boa | [[Brutos de caminhao (25-11)]], `2026-11-25-brutos-caminhao/` |
 | 2026-11-13 | criativos (seção 2) | consórcio de carro, caminhonete e caminhão, Meta BR ativos | 319 anúncios únicos em 15 buscas, lote de 10 para modelar | [[Criativos Meta de veiculos - leia-me (13-11)]] |
 | 2026-11-13 | mercado (seção 3) | concorrentes no Marketplace, Vitória da Conquista e região | 177 anúncios abertos, 66 válidos, 29 com RISCO | [[Concorrentes no Marketplace (13-11)]], [[Concorrentes regionais VdC (13-11)]], [[Base de anuncios regionais VdC (13-11)]] |
