@@ -24,6 +24,7 @@ skill: editar-fotos-veiculo, editar-reel
 | `render_v3.py` + `generate_overlays.py` | montagem do Reel com pílulas, rodapé e @ (não usar o fundo desfocado de reserva) |
 | `tarja_boxes.py` | tarja acompanhando a placa no vídeo |
 | `srcsheet.sh` | grade de quadros do vídeo-fonte para marcar onde vai a tarja |
+| **`musicas.py conferir / baixar / por`** | **músicas (26/11/2026):** confere as 6 faixas liberadas, abre a página das que faltam para a pessoa clicar em Baixar e já renomeia, e põe a faixa no vídeo (`por <video> --faixa N`). No `lote.json`, `"musica": N` |
 | `loudnorm-2pass.sh` | áudio em −14 LUFS |
 | `check_oferta.sh` | quadros de conferência, volume e md5 |
 | `validate.py`, `checklista.py` | conferência da leva do Marketplace |

@@ -1,6 +1,6 @@
 ---
 tipo: referencia
-atualizado: 2026-11-25
+atualizado: 2026-11-26
 ---
 # Músicas liberadas para os Reels
 
@@ -14,6 +14,13 @@ São as 6 faixas usadas nos 15 Reels de caminhão aprovados em 25/11/2026 ("fico
 3. Salve na pasta de músicas da pessoa, por exemplo `Documentos\MOVECON-musicas`, com o nome da coluna "Arquivo".
 
 **Quem baixa é a pessoa, com um clique.** O Claude não baixa por robô.
+
+### Jeito fácil (26/11/2026): `musicas.py`
+Rode na pasta do cofre:
+1. `py -3 07-Ferramentas/scripts/edicao/musicas.py conferir`: mostra as 6 faixas numeradas (1 a 6, na ordem da tabela) e quais faltam.
+2. `py -3 07-Ferramentas/scripts/edicao/musicas.py baixar`: abre a página de cada faixa que falta. **Você clica em Baixar.** O script acha o arquivo em Downloads, põe o nome certo e move para `Documentos\MOVECON-musicas`.
+3. `py -3 07-Ferramentas/scripts/edicao/musicas.py por <video.mp4> --faixa 4`: põe a faixa no vídeo (só o som; a imagem não muda), no ponto de entrada da tabela, em -14 LUFS. Bom para ouvir antes de editar e para bruto sem som (os de agro de 26/11 vêm sem som).
+4. No `lote.json` do `editar_reel.py`, basta `"musica": 4` (o número). O script acha o arquivo e o ponto de entrada sozinho. Se faltar a faixa ou o vídeo não tiver som com `"original"`, ele para com o erro explicado.
 
 | Arquivo | Página na Pixabay | Clima | `musica_in` (onde começa) | Uso |
 |---|---|---|---|---|

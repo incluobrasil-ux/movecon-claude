@@ -117,7 +117,49 @@ def dur(arq):
                                 capture_output=True, text=True).stdout)
 
 
+def tem_audio(arq):
+    r = subprocess.run(["ffprobe", "-v", "error", "-select_streams", "a", "-show_entries", "stream=index", "-of", "csv=p=0", arq],
+                       capture_output=True, text=True)
+    return bool(r.stdout.strip())
+
+
+def resolver_musica(p):
+    """Aceita "musica": 1..6 (número da tabela) ou o caminho do mp3. Para com mensagem clara se não achar."""
+    m = p.get("musica")
+    if m is None or str(m).strip() == "":
+        sys.exit(f"ERRO: falta \"musica\" para {p['arquivo']}. Use um número de 1 a 6 (veja: py -3 07-Ferramentas/scripts/edicao/musicas.py conferir)")
+    if str(m).strip().isdigit():
+        # a pasta edicao saiu do caminho de import (copy.py antigo): carrega musicas.py direto pelo arquivo
+        import importlib.util
+        spec = importlib.util.spec_from_file_location("musicas", AQUI / "musicas.py")
+        musicas = importlib.util.module_from_spec(spec); spec.loader.exec_module(musicas)
+        lista = musicas.faixas()
+        n = int(m)
+        if not 1 <= n <= len(lista):
+            sys.exit(f"ERRO: \"musica\": {n} não existe. Vai de 1 a {len(lista)}.")
+        f = lista[n - 1]
+        arq = musicas.achar(f, Path(p.get("pasta_musicas") or musicas.pasta_padrao()))
+        if not arq:
+            sys.exit(f"ERRO: a faixa {n} ({f['arquivo']}) não está na pasta de músicas. Rode: py -3 07-Ferramentas/scripts/edicao/musicas.py baixar")
+        p["musica"] = str(arq)
+        p.setdefault("musica_in", f["inicio"])
+    elif not Path(m).exists():
+        sys.exit(f"ERRO: música não encontrada: {m}. Confira com: py -3 07-Ferramentas/scripts/edicao/musicas.py conferir")
+
+
+def conferir_entrada(p):
+    """Para antes de editar, com mensagem clara, se o vídeo ou a música não estiverem certos."""
+    if not Path(p["arquivo"]).exists():
+        sys.exit(f"ERRO: vídeo não encontrado: {p['arquivo']}. Confira o caminho no lote.json (use / ou \\\\ no Windows).")
+    if str(p.get("musica", "")).strip().lower() == "original":
+        if not tem_audio(p["arquivo"]):
+            sys.exit(f"ERRO: {p['arquivo']} não tem som, então \"musica\": \"original\" não funciona. Use uma faixa, ex.: \"musica\": 4")
+    else:
+        resolver_musica(p)
+
+
 def editar(p, handle, tmp):
+    conferir_entrada(p)
     base = Path(p["saida"]).stem
     ov, ct = tmp / f"{base}-ov.png", tmp / "cta.png"
     v = overlay(p["modelo"], p["valor"], handle, p.get("parcela_vermelha", False), ov)
@@ -132,6 +174,7 @@ def editar(p, handle, tmp):
     vf = "[0:v]scale=1080:1920:flags=lanczos,setsar=1,fps=30" + ("," + ",".join(tarjas) if tarjas else "") + "[b];"
     vf += "[b][1:v]overlay=0:0[c];[2:v]format=rgba,fade=in:st=1.2:d=0.25:alpha=1[t];[c][t]overlay=0:0:enable='gte(t,1.2)'[v];"
     # "musica": "original" = mantém o som do próprio vídeo (só quando não tem voz de vendedor; Reel Instagram.md)
+    # "musica": 4 (número de 1 a 6) = faixa da tabela de Musicas liberadas.md, achada na pasta de músicas (musicas.py)
     original = str(p.get("musica", "")).strip().lower() == "original"
     fonte_audio = "[0:a]" if original else "[3:a]"
     vf += f"{fonte_audio}atrim=0:{d:.2f},asetpts=PTS-STARTPTS,afade=t=in:d=0.3,afade=t=out:st={d - 0.7:.2f}:d=0.7,loudnorm=I=-14:TP=-1.5:LRA=11[a]"

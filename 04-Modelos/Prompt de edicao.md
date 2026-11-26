@@ -40,7 +40,7 @@ Regras fixas (não altere):
 2. Preparar o PC (só na 1ª vez):
    - confira ffmpeg e ffprobe; se faltar: winget install Gyan.FFmpeg, depois feche e abra o terminal;
    - py -3 -m pip install pillow opencv-python-headless numpy;
-   - músicas: veja quais da tabela de Musicas liberadas.md já estão na minha pasta de músicas. As que faltarem, me passe os links para EU baixar com um clique (você não baixa por robô). Sem música, só vale "musica": "original" em vídeo sem voz.
+   - músicas: rode py -3 07-Ferramentas/scripts/edicao/musicas.py conferir. Se faltar alguma, rode musicas.py baixar: ele abre a página e EU clico em Baixar (você não baixa por robô); o script renomeia e guarda sozinho. No lote.json use "musica": <número de 1 a 6>. "musica": "original" só em vídeo com som e sem voz.
    - Use só as ferramentas do cofre (editar_reel.py, tampa_plaquetas.py, calc_valores.py, checar-midia.py, check_oferta.sh). Nunca crie editor novo. Se uma ferramenta der erro, PARE e me mostre o erro.
 3. Trabalhe em 10-Trabalho/AAAA-MM-DD-edicao-<nicho>/. Nunca mexa nos brutos originais.
 4. Para cada bruto, nesta ordem:
