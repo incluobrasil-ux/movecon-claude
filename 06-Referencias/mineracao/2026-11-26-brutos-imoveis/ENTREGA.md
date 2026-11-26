@@ -46,6 +46,22 @@
   - todos têm som: ouça na edição e troque por música se tiver voz.
 - **03:** o anúncio diz "Cuiá / Geisel", sem a cidade. Não anotei cidade para não inventar.
 
+## Casas extras (26/11/2026): "quero que você acha mais 5 casas para complementarmos pra ela"
+3ª rodada: 12 buscas (páginas inteiras da LondrinaCred, Rafael Rodrigues e Imobiliária das Novidades + casa térrea nova, 3 quartos com suíte, com edícula, condomínio fechado, zona sul, bairro tranquilo, área gourmet, com garagem, aceita FGTS). 463 vídeos, 80 analisados na peneira (só casa), 29 passaram, 5 aprovados no olho:
+
+| # | Arquivo (em `casas-extra/`) | Imóvel | Valor do anúncio | Trecho | Anunciante |
+|---|---|---|---|---|---|
+| 11 | `11-sobrado-zona-norte-londrina-pr-403mil.mp4` | Sobrado, Zona Norte de Londrina/PR | R$ 403.000 | 6 a 48 s | LondrinaCred |
+| 12 | `12-sobrado-piscina-caieiras-sp-650mil.mp4` | Sobrado com piscina, Caieiras/SP (mobiliado) | R$ 650.000 | 1,5 a 46,5 s | welton.andrade.corretor |
+| 13 | `13-casa-cidade-morumbi-695mil.mp4` | Casa térrea, Cidade Morumbi (mobiliada) | R$ 695.000 | 1 a 46 s | Marketing Imobiliário |
+| 14 | `14-casa-piscina-mangabeira-780mil.mp4` | Casa com piscina, Mangabeira | R$ 780.000 | 6 a 14,3 s + 24 a 59,7 s | Imobiliária das Novidades |
+| 15 | `15-sobrado-piscina-condominio-cambe-pr-850mil.mp4` | Sobrado com piscina em condomínio, Cambé/PR | R$ 850.000 | 8 a 50 s | LondrinaCred |
+
+- **14:** de 14,8 a 22,5 s aparece uma pessoa ao fundo e o reflexo de quem filma; esse pedaço foi cortado e as duas tomadas foram juntadas.
+- **12 e 13** estão mobiliadas, com objetos do dono (quarto de criança no 13): confira na edição se aparece foto de família.
+- A LondrinaCred tem mais 13 casas que passaram na peneira (tour limpo, título só nos primeiros segundos): é a fonte para o próximo lote.
+- **Total para o representante: 11 casas** em `entregas/2026-11-26-brutos-casas/`.
+
 ## Reserva (`reserva/`, só em 360x640, baixa resolução)
 - **R3:** casa moderna, Parque Bellaville, Hortolândia/SP, R$ 600.000 (Juninho Valle, há 216 dias no ar: o anúncio mais antigo da lista). Tour limpo de 2 a 33 s.
 - **R4:** sobrado com área gourmet, Vila Granada, R$ 995.000 (Ponto Chave Imóveis). Tour limpo, começa na área gourmet.

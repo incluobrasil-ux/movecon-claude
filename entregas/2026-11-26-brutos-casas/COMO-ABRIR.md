@@ -1,8 +1,8 @@
-# Entrega: 6 vídeos brutos de casa (tour), 26/11/2026
+# Entrega: 11 vídeos brutos de casa (tour), 26/11/2026
 
-Decisão do Samuel (26/11/2026): "eu quero foco nas casas, os apartamentos foram reprovados e as casas aprovadas".
+Decisão do Samuel (26/11/2026): "eu quero foco nas casas, os apartamentos foram reprovados e as casas aprovadas" + "quero que você acha mais 5 casas para complementarmos pra ela" (casas 11 a 15).
 
-São 6 tours de casa, em pé (9:16, 720x1280), **já cortados no trecho limpo** (33 a 45 s cada), sem edição. Não têm corretor, legenda nem marca d'água.
+São 11 tours de casa (8 casas e 3 sobrados; 3 deles com piscina), em pé (9:16, 720x1280), **já cortados no trecho limpo** (33 a 45 s cada), sem edição. Não têm corretor, legenda nem marca d'água.
 
 Os vídeos estão trancados com senha (AES-256). A senha **não fica no GitHub**: ela vem no prompt que o Samuel manda.
 
