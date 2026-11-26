@@ -1,0 +1,10 @@
+2dd6261569e90db11e8216a6083c9fe9  01-picape-nissan-frontier-s-2021.mp4
+18dfd6f449930466cb582311527c7a0a  02-suv-toyota-corolla-cross-xre-2022.mp4
+9c6c236a0a48bdd5a90b8c2b449a2418  03-suv-vw-t-cross-highline-2020.mp4
+42109611c3acde200e320a6a4f451d5b  04-suv-vw-taos-highline-2022.mp4
+85e388aa5cf6a7bb2420245dc850b11c  05-suv-jeep-commander-limited-td380-2023.mp4
+4512f9836b7ba569a228f0e969b9e96d  06-suv-fiat-fastback-audace-hybrid-2026.mp4
+fe9d8ef789ff56d059adda249095eaaa  07-picape-mitsubishi-l200-triton-hpe-s-2024.mp4
+c7f75bb1b44883b8f3e81e6085a50c85  08-suv-nissan-kicks-sense-2025.mp4
+98b7ab099555f4df51226196101e1935  09-picape-mitsubishi-triton-hpe-s-2025.mp4
+d33d5a3bdb41b9294508650723470d74  10-picape-chevrolet-s10-high-country-2026.mp4
