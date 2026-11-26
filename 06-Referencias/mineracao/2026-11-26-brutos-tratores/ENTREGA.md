@@ -49,3 +49,12 @@ Os dois são da Sul Máquinas (página 710315245980633), com preço no anúncio.
 
 - Reprovado: New Holland T7.205 2021, R$ 550.000 (Sucatão Soluções Agrícolas): apresentador e logo.
 - **O que funcionou para trator:** hashtag do Instagram de modelo grande (#johndeere7230j trouxe 87 posts). Vai para o representante em `entregas/2026-11-26-brutos-tratores/`.
+
+### Leitura completa (terminou depois): mais 3 aprovados
+| # | Trator | Valor | Anunciante |
+|---|---|---|---|
+| 02 | John Deere 7230J 2020, 2.881 h (1080x1920) | R$ 680.000 | Classificados Agrícola (#johndeere7230j) |
+| 03 | John Deere 7230J (576x1024) | R$ 680.000 | AGRONEXUS (#johndeere7230j) |
+| 04 | John Deere 7230J 2018, 5.500 h | R$ 500.000 | Zanquetta Agromáquinas (#tratorjohndeere) |
+
+Reprovado: John Deere 7200J 2022, R$ 680.000 (Naiara Rodio): selfie com legenda. Total: 222 vídeos lidos, 6 na faixa com preço, **4 aprovados**. #johndeere7230j deu 2 dos 4: a hashtag de modelo é a que mais rende.

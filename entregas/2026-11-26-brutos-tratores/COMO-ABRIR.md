@@ -1,6 +1,15 @@
-# Entrega: trator de R$ 500 mil a R$ 1 milhão, 26/11/2026
+# Entrega: 4 tratores de R$ 500 mil a R$ 1 milhão, 26/11/2026
 
-1 vídeo bruto, em pé (720x1280), **já cortado no trecho limpo** (14,5 s), sem edição: **New Holland T7.260 2023, 234 cv, 1.711 h, R$ 580.000** (valor do anúncio da Zanquetta Agromáquinas no Instagram: https://www.instagram.com/p/DWoVbHgmSE5/). Ainda tem a placa ou a plaqueta da loja, se aparecer, para tampar na edição.
+4 vídeos brutos, em pé, **já cortados no trecho limpo** (14,5 s cada), sem edição. Valor = o do anúncio no Instagram:
+
+| # | Trator | Valor | Anunciante | Post |
+|---|---|---|---|---|
+| 01 | New Holland T7.260 2023, 234 cv, 1.711 h | R$ 580.000 | Zanquetta Agromáquinas | https://www.instagram.com/p/DWoVbHgmSE5/ |
+| 02 | John Deere 7230J 2020, 230 cv, 2.881 h | R$ 680.000 | Classificados Agrícola | https://www.instagram.com/p/DUqYHeIDVLI/ |
+| 03 | John Deere 7230J, 230 cv (576x1024, ampliado para 720x1280) | R$ 680.000 | AGRONEXUS | https://www.instagram.com/p/DdY4ovBRaEm/ |
+| 04 | John Deere 7230J 2018, 230 cv, 5.500 h | R$ 500.000 | Zanquetta Agromáquinas | https://www.instagram.com/p/DPfLrJziSs0/ |
+
+Se aparecer placa ou plaqueta de loja, tampe na edição.
 
 Trancado com senha (AES-256). A senha **não fica no GitHub**: ela vem no prompt do Samuel.
 ```
