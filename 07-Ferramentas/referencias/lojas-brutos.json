@@ -1,5 +1,5 @@
 {
- "_leia": "Lojas da Biblioteca de Anúncios da Meta para mineração de brutos (caminhão). 'boas' = filmam só o veículo, vertical, sem texto por cima: buscar a página inteira primeiro. 'ruins' = apresentador, legenda, preço ou logo queimados: a triagem pula. Chave = page_id. Atualize depois de cada mineração (quem aprovou e quem não aprovou). Origem: mineração de 25/11/2026. Atualizado em 25/11/2026 depois da mineração de 20 caminhões.",
+ "_leia": "Lojas da Biblioteca de Anúncios da Meta para mineração de brutos (caminhão). 'boas' = filmam só o veículo, vertical, sem texto por cima: buscar a página inteira primeiro. 'ruins' = apresentador, legenda, preço ou logo queimados: a triagem pula. Chave = page_id. Atualize depois de cada mineração (quem aprovou e quem não aprovou). Origem: mineração de 25/11/2026. Atualizado em 25/11/2026 depois da mineração de 20 caminhões. Chave 'instagram:<perfil>' = perfil do Instagram (agro, 26/11/2026).",
  "boas": {
   "408062299065894": "Russo Motors (Cuiabá/MT) - 3 aprovados (Ford Cargo 1419, Axor 2831, Worker 13-180, Atego 2428); também tem carro e picape",
   "762181780314043": "Pro Caminhões - Iveco S-Way 480 aprovado",
@@ -17,7 +17,12 @@
   "409171162282939": "Imobiliária das Novidades - imóvel (26/11): casa térrea aprovada; título só até 4,5 s",
   "529613873815235": "Imobiliária São Judas Tadeu (Piracicaba/SP) - imóvel (26/11): apartamento alto padrão aprovado",
   "104533065737260": "welton.andrade.corretor (Caieiras/SP) - imóvel (26/11): sobrado com piscina aprovado, tour sem texto (só um cartão no 1º segundo)",
-  "146754375190939": "Marketing Imobiliário - imóvel (26/11): casa térrea aprovada, tour sem texto"
+  "146754375190939": "Marketing Imobiliário - imóvel (26/11): casa térrea aprovada, tour sem texto",
+  "instagram:classi.agricola": "Classificados Agrícola (PR) - agro (26/11): 5 aprovados (Case Axial-Flow 5150 2023, JD 7215J, 6190M, 7230J 2022, NH T8 325) + 7230J 2020 na entrega de tratores. Volta limpa em torno da máquina no campo, sem texto, 1080x1920 ou 1440x2560. PERFIL INSTAGRAM: comece por ele",
+  "instagram:zanquettaagromaquinas": "Zanquetta Agromáquinas - agro (26/11): 2 tratores na entrega de tratores (T7.260 2023, 7230J 2018). Preço na legenda",
+  "instagram:agronexus_maquinas": "AGRONEXUS - agro (26/11): 7230J aprovado (576x1024); muita plantadeira pequena (fora da faixa)",
+  "instagram:tracanmaquinas": "Tracan Máquinas (concessionária Case, MG) - agro (26/11): Axial-Flow 4150 colhendo milho aprovado; cartão final da marca depois de ~22 s",
+  "instagram:m.a_agronegocios": "M.A Agronegócios - agro (26/11): T7.260 plantando aprovado (trecho 20-35 s; começo tem caminhonete com adesivo)"
  },
  "boas_sem_page_id": [
   "LC Caminhões (Ford Cargo 1932 aprovado)",
@@ -31,7 +36,9 @@
   "518171761389280": "Cleber Caminhões SC - legenda",
   "100962494654220": "Silvério Veículos - 0 de 6",
   "825048404025715": "Mendes Caminhões - apresentador e legenda",
-  "853103918103316": "Marka Caminhões Usados - apresentadora, vídeo 4:5"
+  "853103918103316": "Marka Caminhões Usados - apresentadora, vídeo 4:5",
+  "instagram:fg_maquinasagricolas": "FG Máquinas Agrícolas - agro (26/11): JD 7200J com texto grande por cima o vídeo todo + cartão final (reprovado)",
+  "instagram:silonio_5smaquinas": "Silônio 5S Máquinas - agro (26/11): Valtra T230 em vídeo deitado com tarja e legenda (reprovado)"
  },
  "ruins_por_nome": [
   "venda ?truck"

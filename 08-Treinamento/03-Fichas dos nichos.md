@@ -57,6 +57,7 @@ Uma ficha por nicho. O que está aqui vem do cofre e do tempo dos bots; o que de
 - **Cuidado:** a parcela é **mensal** (não falar em parcela na safra). Pivô, drone, armazém e silo: [CONFIRMAR]. Preferir trator de marca nacional nas imagens; estrangeiro só se não houver brasileiro.
 - **Busca de bruto:** `tractor field`, `combine harvester`, `farm tractor plowing`.
 - **Hashtags:** #agro #trator #maquinaagricola #produtorrural
+- **Alto ticket (R$ 500 mil a R$ 1 milhão), 26/11/2026:** o que postar, quem compra, preço real e calendário em `06-Referencias/mineracao/2026-11-26-agro-alto-ticket/CATALOGO-o-que-postar.md`. Vídeos prontos em `entregas/2026-11-26-agro-alto-ticket/` e `entregas/2026-11-26-brutos-tratores/`.
 
 ## 6. Marítimo (lancha, barco, jet ski)
 - **Público:** quem mora no litoral ou perto de represa, empresário, quem já aluga barco.
