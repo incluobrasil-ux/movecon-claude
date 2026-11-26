@@ -31,6 +31,8 @@ Regras fixas (não altere):
 4. Adapte do modelo validado mais próximo, sem inventar:
    - A: o método dos brutos de caminhão (06-Referencias/mineracao/Brutos de caminhao (25-11).md). Termos na ordem que mais rendeu: palavra genérica do nicho, página inteira de loja boa, termo de unidade única ("único dono", "km original valor"), busca funda com --inativos pela palavra do modelo. Coleta com brutos_meta.py (Meta) ou, se o pedido for TikTok, com tiktok_links.py sobre os links que eu colar (a busca no TikTok sem login cai em captcha; não contorne). Peneira com triagem_brutos.py --palavras "<palavras do meu nicho>" --min-preco <mín> --max-preco <máx>. Só vertical nativo 9:16, veículo inteiro, sem texto, sem pessoa.
    - B: biblioteca_meta.py "termo" --pais BR --rolagens 8 --prints <pasta>/prints --saida <pasta>/<termo>.json. Nota de escala, RISCO (promessa de contemplação, venda de cota, "crédito na hora": registra, não modela) e ATENÇÃO ("sem entrada", "nome limpo": modela a ideia, sem copiar).
+     A busca por termo é só uma amostra (de 40 a 120 anúncios). Para os 5 maiores anunciantes, faça a busca da página inteira: biblioteca_meta.py --pagina <ID da página> --rolagens 20. O "Total na biblioteca" dessa busca é o número real de anúncios ativos, e é com ele que se dá a nota de volume. O ID está no JSON do brutos_meta.py (page_id). Se não estiver, peça para eu clicar no nome do anunciante na Biblioteca e copiar o número que aparece depois de view_all_page_id= no endereço.
+     Para procurar um anunciante, use a página dele (--pagina), não o nome como termo: nome de empresa como termo costuma vir vazio.
    - C: miner.py (Mobiauto), 6 a 10 fotos da mesma unidade, fora da praça proibida.
 5. ANTES de buscar, me mostre o PLANO em até 12 linhas e ESPERE meu OK:
    - tipo e skill;
@@ -44,6 +46,7 @@ Regras fixas (não altere):
    - só leitura;
    - uma busca por vez, 5 a 10 s entre elas, no máximo cerca de 15 buscas;
    - "Nenhum anúncio corresponde" num termo que tinha resultado = bloqueio: pare e avise; não disfarce nem contorne;
+   - termo novo vazio (ex.: nome de empresa) não prova bloqueio. Faça 1 busca de controle com um termo que já deu resultado hoje, com --rolagens 1. Se vier resultado, não há bloqueio: siga. Se vier vazio, é bloqueio: pare e volte em 1 a 2 h;
    - não invente número: tudo vem do JSON da coleta ou de print; o que faltar vira "sem dado".
 7. Valores de entrada e parcela só com py -3 07-Ferramentas/scripts/calc_valores.py <valor> (--reel no caso A).
 8. Entrega em 10-Trabalho/AAAA-MM-DD-<tipo>-<nicho>/ no modelo 04-Modelos/Entrega de mineracao.md.
@@ -51,7 +54,8 @@ Regras fixas (não altere):
    - copie o ENTREGA.md e a planilha (sem foto nem vídeo de terceiro) para 06-Referencias/mineracao/AAAA-MM-DD-<nicho>/;
    - ponha uma linha no topo de Ja minerado.md;
    - faça commit + push, junto com 07-Ferramentas/referencias/buscas-feitas.csv e memoria-mineracao.jsonl;
-   - se não tiver permissão de push, diga que eu preciso mandar o ENTREGA.md e a planilha para o Samuel.
+   - se não tiver permissão de push, rode git format-patch origin/main -o <pasta da tarefa>/para-o-samuel e diga que eu preciso mandar ao Samuel os arquivos .patch dessa pasta. Eles levam tudo do commit, inclusive buscas-feitas.csv e memoria-mineracao.jsonl. Assim os outros não repetem as buscas;
+   - nunca faça commit de mudança em 05-Operacao/Decisoes.md que não seja palavra do Samuel.
 
 REVISÃO OBRIGATÓRIA (responda em português, frases curtas):
 - commit puxado e se o gancho de mineração apareceu;

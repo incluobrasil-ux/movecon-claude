@@ -42,7 +42,7 @@ def main():
    - Os dois avisam quando o termo JÁ FOI BUSCADO e registram a busca em 07-Ferramentas/referencias/buscas-feitas.csv.
 3. Regras que não se negociam:
    - SEM LOGIN. Nunca use perfil do BitBrowser nem conta logada para minerar (nenhum perfil do Perfil-do-operador é de mineração).
-   - Só leitura. 1 busca a cada 5 a 10 s, uma coleta por vez, no máximo ~15 buscas. "Nenhum anúncio corresponde" em termo que tinha resultado = bloqueio: pare e volte em 1 a 2 h. Não disfarce nem contorne.
+   - Só leitura. 1 busca a cada 5 a 10 s, uma coleta por vez, no máximo ~15 buscas. "Nenhum anúncio corresponde" em termo que tinha resultado = bloqueio: pare e volte em 1 a 2 h. Termo novo vazio (nome de empresa) não é bloqueio: confirme com 1 busca de controle de termo que já deu resultado; anunciante se busca pela página (--pagina). Não disfarce nem contorne.
    - Promessa de contemplação, venda de cota, "crédito na hora" = RISCO: registra e não modela. "Sem entrada", "nome limpo" = ATENÇÃO.
    - Não invente número: tudo vem do JSON da coleta ou de print.
 4. ANTES de buscar: leia 06-Referencias/mineracao/Ja minerado.md e rode `py -3 07-Ferramentas/scripts/mineracao/registro_buscas.py <palavra>`. Reaproveite o que existe; só busque o que falta.
