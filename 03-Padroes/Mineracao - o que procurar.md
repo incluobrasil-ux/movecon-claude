@@ -50,6 +50,13 @@ São três minerações diferentes. Todas são **só leitura**: nunca curtir, se
 
 **Entrega:** clipes `NN-tipo-veiculo.mp4`, planilha (arquivo, veículo, ano, tipo, link de origem, perfil, duração, proporção, áudio, marcar rosto/placa, trecho usado, observação), prancha `.jpg` e, para criativos prontos, planilha com plataforma, anunciante, link, início, dias no ar, formato, CTA, mostra entrada, mostra parcela, classificação (modelo/risco) e motivo. Modelo: [[Entrega de mineracao]].
 
+### Vídeos brutos de imóvel (decisão de 26/11/2026)
+- **Só casa.** "eu quero foco nas casas, os apartamentos foram reprovados e as casas aprovadas". Não minerar apartamento sem pedido.
+- **O que serve:** um tour andando pela casa, com um trecho limpo de 25 a 45 s, de preferência começando por fora (portão, fachada ou quintal). Sem corretor, sem legenda, sem marca d'água e sem mão na frente da câmera. Mínimo de 720x1280 (360x640 só de reserva).
+- **Como achar:** `brutos_meta.py` + `triagem_brutos.py --palavras "casa|sobrado|resid[êe]ncia|condom[ií]nio|quartos?"`. A peneira só olha os primeiros 30 s: confira o vídeo inteiro no olho, porque há tours de 2 minutos.
+- **O que mais rendeu:** "casa geminada à venda", "casa à venda com quintal" e as imobiliárias da lista de lojas boas (LondrinaCred, Rafael Rodrigues, Imobiliária das Novidades). Detalhe em `06-Referencias/mineracao/2026-11-26-brutos-imoveis/`.
+- **Valores:** entrada e parcela de imóvel estão pendentes (ver [[Pendencias]]).
+
 ## 3. Mercado e concorrentes (consórcio)
 **Objetivo:** quem está escalado, que padrão modelar e quais nichos têm pouca concorrência. Também: possíveis parceiros em outras praças.
 

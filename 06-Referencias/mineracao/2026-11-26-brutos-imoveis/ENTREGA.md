@@ -19,6 +19,8 @@
 - 52 passaram na peneira;
 - **10 aprovados no olho**, mais 2 de reserva em baixa resolução.
 
+> **Decisão do Samuel (26/11/2026):** "eu quero foco nas casas, os apartamentos foram reprovados e as casas aprovadas". Valem as 6 casas (01, 02, 03, 04, 05 e 08). Os apartamentos 06, 07, 09 e 10 foram reprovados.
+
 ## Aprovados (pasta `aprovados/`, 720x1280, 9:16; trechos já cortados em `previa-trechos/`)
 
 | # | Arquivo | Imóvel | Valor do anúncio | Trecho | Duração | Anunciante |
