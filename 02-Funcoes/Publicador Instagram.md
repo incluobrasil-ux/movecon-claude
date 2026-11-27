@@ -32,6 +32,9 @@ Script do tempo dos bots: `07-Ferramentas/scripts/instagram/ig-post-next.mjs` (`
 ## No PC do parceiro, pelo BitBrowser dele (25/11/2026)
 O `ig-post-next.mjs` só roda no PC dos bots. No PC do parceiro, use o `07-Ferramentas/scripts/instagram/ig-postar-lote.mjs`, que tem a mesma lógica com tudo por parâmetro: conta, porta do perfil (`bitbrowser.py porta "PERFIL"`), pasta dos vídeos e entrega (LEGENDAS.md + md5.txt). Ele faz `--check`, depois `--stop-before-share`, e só então posta no intervalo da agenda. O prompt pronto é o [[Prompt de postagem]] (04-Modelos).
 
+## Reel com música em alta, do PC (26/11/2026, aguardando OK do Samuel)
+`07-Ferramentas/scripts/instagram/ig_musica.py` publica pela API oficial do Instagram com a música anexada pela Meta. Guia e limites em [[Musica em alta pela API]]. Até o OK do Samuel, a postagem continua pelo BitBrowser, sem música.
+
 ## Registro
 Linha em `05-Operacao/registros/publicados-AAAA-MM.md`: n, arquivo, md5, hora, conta, link, conferência, OK que liberou.
 
