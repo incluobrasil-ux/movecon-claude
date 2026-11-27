@@ -39,6 +39,7 @@ Lista da contagem de 19/11/2026. O número é o usado nos registros. O nome do p
 ## Instagram e TikTok
 | Conta | Onde | Ritmo | Situação em 19/11 |
 |---|---|---|---|
+| **@tananconsorcio** (perfil do Samuel) | BitBrowser da Incluo Brasil, perfil 1 "insta samuel tanan" (27/11) | cronograma de 27/11: 4 ofertas/dia + 1 educativo nas 2 primeiras semanas (a confirmar) | teste A x HP1, veículos de R$ 200 mil a 1 milhão |
 | @tanan_intermediacoes | BitBrowser, conta 2 | 1 Reel por hora | ativa (pasta "criativos") |
 | @pedroabreu.consultor | BitBrowser, conta 8 | 3 por dia: manhã, tarde, noite | ativa |
 | @planejeseucredito | Buffer | — | parada desde 14/11 ("Não poste nada no Instagram nem tiktok") |
