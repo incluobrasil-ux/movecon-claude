@@ -2,7 +2,7 @@
 Pedido: Roberto (conta @beto.cred), 26/11/2026, prompt padrão de mineração tipo A, com as palavras "agora comece criar os 12 videos". Nicho: carros 100% elétricos, os mais vendidos (ranking ABVE de outubro de 2026: Dolphin Mini, Dolphin, Ora 5, EX2, Spark EUV, Aion UT, EX5, B10, Yuan Pro). Brasil todo, com prioridade para a Bahia. Faixa de R$ 60 mil a R$ 300 mil. 12 vídeos, no máximo 2 por modelo.
 Fontes: Biblioteca de Anúncios da Meta, sem login, com `brutos_meta.py` (15 buscas, contando 1 de controle).
 Bloqueios e limites no caminho: nenhum bloqueio. "dolphin mini salvador" veio vazio, e a busca de controle ("byd dolphin", com 1 rolagem) trouxe 48 vídeos, então não era bloqueio.
-Resultado em uma linha: **2 aprovados no QA**, os 2 de BYD Dolphin Mini GS, que é o limite por modelo, mais **3 reservas** do mesmo modelo. **Faltaram 10.**
+Resultado em uma linha: **2 aprovados no QA**, os 2 de BYD Dolphin Mini GS, que é o limite por modelo, mais **3 reservas** do mesmo modelo. **Faltaram 10.** **Atualização da rodada 3 (27/11): 4 aprovados (+ Geely EX5 EM-i 0 km e BYD Seal 2025); faltam 8.**
 
 ## Números
 - 1.271 anúncios de vídeo únicos coletados em 15 buscas.
@@ -105,13 +105,47 @@ Reprovados na rodada 2 (pasta `rodada2-shorts/`, prancha `_prancha-r2a.jpg`):
 
 **Para chegar aos 12:** o caminho que funciona sem login é **link colado**. O Roberto (ou alguém) procura no app do TikTok/Instagram/Kwai, só olhando, copia os links de vídeos de loja mostrando o carro sem pessoa e sem texto, e cola num .txt; o cofre baixa com `tiktok_links.py` (TikTok) ou yt-dlp (Reels/Kwai públicos) e passa pela peneira e pelo olho.
 
+## Rodada 3 — 0 km liberado (27/11, madrugada)
+Pedido novo do Roberto, nesta ordem: 1) "pode ser novo também, mas sem pessoas, só mostrando o carro"; 2) vale qualquer carro 100% elétrico vendido no Brasil, não só os mais vendidos; 3) "pode ser híbrido também" (HEV, PHEV, DM-i, EM-i, e-Power). A combustão pura continua fora. O critério visual não mudou: sem pessoa nem mãos, nada por cima, sem letreiro nem nome de loja.
+Fonte: Biblioteca da Meta, sem login, `brutos_meta.py`, **15 buscas**, sem bloqueio. Peneira `triagem_brutos.py` (de 60 mil a 300 mil). Os híbridos reprovados na rodada 1 só por serem híbridos (os 5 anúncios do Geely EX5 EM-i da Jorlan-ev) foram conferidos de novo no olho.
+
+**Resultado: 2 aprovados novos. Total 4 de 12, faltam 8.**
+
+| # | arquivo | carro | motorização | 0 km/seminovo | loja | valor | entrada | parcela | áudio | trecho | marcar |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| 03 | `aprovados/03-carro-geely-ex5-em-i-0km-2027.mp4` | Geely EX5 EM-i | híbrido plug-in (EM-i) | 0 km | Geely Jorlan-ev Brasília | R$ 211.490 (oferta oficial do EX5 EM-i Max, geelybrasil.com.br/ofertas, consultada em 27/11/2026; a versão do vídeo não aparece, usei a de menor preço do EM-i na página de ofertas) | R$ 38.100 | R$ 1.903 | música/ambiente, sem fala | 0–13 s (carro inteiro em 0,5 s e 12 s; de novo aos 18 s) | vinheta azul "JORLAN-ev / GEELY" a partir de ~21 s (fora do corte); placa sem número; trecho de árvores de 14 a 17 s |
+| 04 | `aprovados/04-carro-byd-seal-2025.mp4` | BYD Seal (AWD, 531 cv) | 100% elétrico | seminovo, 12 mil km | Motion Motors | R$ 225.900 (preço do anúncio) | R$ 40.700 | R$ 2.033 | **voz do vendedor em off** → trocar por música | 0–15 s (pátio aberto, carro inteiro o tempo todo) | plaqueta da loja na placa (tampar) |
+
+Valores pelo `calc_valores.py <valor> --reel`. Os dois são 720x1280, vertical nativo.
+
+Buscas da rodada 3: página inteira da Elite Car (`pagina:483688041644435`, 110 vídeos) e da JL Car Trade (`pagina:107910295545418`, 20), carro elétrico 0km (81), song pro (87), song plus (43), byd king (61), haval h6 (99), corolla cross hybrid (65), kicks e-power (4), byd seal (66), yuan plus (27), jaecoo 7 (59), tiggo 7 hybrid (24), mg4 (65), kwid e-tech (4). Na peneira, 579 anúncios analisados.
+
+Reprovados na rodada 3 (conferidos no olho; pastas `r3/` e `rever-hibridos/`):
+- Geely EX5 EM-i, Jorlan-ev (4 dos 5 vídeos): apresentador com legenda; modelo/influenciadora no carro; só detalhes de interior; carro inteiro quase não aparece.
+- BYD Seal AWD, Elite Car (3 anúncios, mesmo vídeo): apresentador andando em volta do carro.
+- Toyota Corolla Cross XRX Hybrid, Elite Car: só 10,5 s, giro de imagem e faixas pretas.
+- Omoda 5 Luxury 2027 híbrido 0 km, Elite Car (3 vídeos): letreiro "Elite Car" grande ao fundo, mãos abrindo portas, apresentador em um deles.
+- Omoda E5 (elétrico), Elite Car: mãos o tempo todo e letreiro.
+- Chery Tiggo 7, Elite Car: letreiro e mão no painel.
+- BYD King GL híbrido plug-in 2026, Vip Car: letreiro "VIP CAR" na parede do fundo e mão abrindo a porta aos 9 s.
+- Haval H6 HEV/PHEV19/PHEV35 (GWM Brasil e GWM Caminho, 7 anúncios): arte animada com preço e texto o vídeo todo (campanha Black GWM).
+- Toyota Corolla Cross XRX Hybrid 2024, ADR Premium: adesivo "24 HÍBRIDO" no para-brisa e apresentador falando.
+- Chery Tiggo 7 Pro Hybrid 2023, Araca Veículos: logo da loja no tapete e na parede; o trecho limpo só tem interior.
+- Porsche Cayenne 2019 (GrandPrix): combustão.
+- Os demais que passaram na peneira eram combustão (Toro, Ranger, Scudo, Kicks, Taos, HB20, Creta) ou Dolphin Mini (modelo já com 2).
+
+Lojas atualizadas em `lojas-brutos.json`: boas + Motion Motors e Geely Jorlan-ev Brasília (com nota); ruins + GWM Brasil, GWM Caminho e ADR Premium.
+
+**Próximos termos (não couberam nesta rodada):** página inteira da Motion Motors (`pagina:644982622805736`) e da Geely Jorlan-ev Brasília (`pagina:691189374071371`); song pro seminovo, byd king seminovo, seal u, sealion 7, yuan pro 0km, dolphin gs seminovo, aion y, aion ut, leapmotor, ora 5 0km, ex30, captiva ev, omoda e5, kicks e-power seminovo, corolla hybrid, haval h6 seminovo, tiggo 8 phev; e busca funda (`--inativos`) de song pro, byd king e seal. E links colados de TikTok/Reels (é o caminho que mais rende fora da Meta).
+
 ## Onde estão os arquivos
 - Clipes, planilha (`planilha-brutos-2026-11-26.csv`) e prancha (`prancha-brutos-2026-11-26.jpg`): esta pasta.
 - Cópia para o Roberto: `C:\Users\ro--2\Desktop\beto.cred - Videos eletricos\`.
 - Coletas (`meta-*.json`), peneira (`triagem.json`) e vídeos originais conferidos (`conferir/`): esta pasta. Os originais não vão para o GitHub.
-- Lojas atualizadas em `07-Ferramentas/referencias/lojas-brutos.json`: 2 boas e 24 ruins. A cópia de antes está em `.bak-20261126-2330`.
+- Lojas atualizadas em `07-Ferramentas/referencias/lojas-brutos.json` (rodada 3: +2 boas, +3 ruins). A cópia de antes está em `.bak-20261126-2330`.
 
 ## Pendente
 - OK do aprovador para usar os clipes (rascunho → aguardando OK).
 - Decidir se libera mais de 2 Dolphin Mini (as reservas R1 a R3).
+- Faltam 8 para 12: ver "Próximos termos" na rodada 3.
 - Nenhum dado pessoal de anunciante neste arquivo.
