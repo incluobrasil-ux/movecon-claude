@@ -12,6 +12,21 @@ Desde **01/06/2026** a Meta tem a **API de áudio do Instagram**: ela lista as m
 
 Ferramenta do cofre: `07-Ferramentas/scripts/instagram/ig_musica.py`. Usa só Python e ffprobe, sem programa novo.
 
+## Caminho mais simples: sem Meta Developers (agendador pronto)
+O `ig_musica.py` exige criar app no Meta Developers. Para **não** passar por isso, use um agendador que já tem o app aprovado pela Meta: você só conecta a conta e escolhe a música na tela.
+| Agendador | O que diz | Observação |
+|---|---|---|
+| **Buffer** (já usado na operação, @planejeseucredito) | "Search and preview Instagram audio in the composer, attach a track to your reel, and Buffer publishes it with the sound in place" (blog do Buffer, 03/11/2026) | plano que libera: **sem dado** (testar no grátis) |
+| **Metricool** | Reels agendados com áudio em alta desde 18/05/2026; precisa da conta ligada pelo Facebook | plano que libera: **sem dado** |
+
+Como fazer (1 conta primeiro, de teste):
+1. Conta do Instagram **profissional** e ligada a uma **Página do Facebook** (passos 1 e 2 abaixo).
+2. Abra o Buffer (ou o Metricool) **no perfil do BitBrowser da conta** e conecte o Instagram pelo Facebook. É a pessoa quem clica; o Claude não digita senha.
+3. Novo post → Reel → envie o vídeo editado com `"musica": "app"` → escolha o áudio em alta na tela → agende.
+4. Confira o Reel no ar: nome da música aparece e o som toca.
+
+Os limites são os mesmos da API (a lista é a liberada para terceiros e o trecho pode não ser escolhível), porque esses agendadores usam essa mesma API por trás.
+
 ## Por que as outras formas não servem
 | Forma | Problema |
 |---|---|
@@ -56,6 +71,8 @@ Ferramenta do cofre: `07-Ferramentas/scripts/instagram/ig_musica.py`. Usa só Py
 - Um post por vez, no ritmo da agenda. Erro de limite, verificação ou conta: **pare e avise**.
 
 ## Pendências (dependem do Samuel)
+- [ ] Caminho escolhido: **agendador** (Buffer ou Metricool, sem Meta Developers) ou **script** (`ig_musica.py`, com app no Meta Developers).
+- [ ] Teste no Buffer com 1 conta: o plano grátis mostra o áudio em alta?
 - [ ] OK para usar a API na postagem (hoje a regra é postar pelo BitBrowser, `ig-postar-lote.mjs`).
 - [ ] Contas como **criador** ou **comercial**.
 - [ ] Ligar as contas a Páginas do Facebook e criar o app e o token (passos 1 a 5).
@@ -66,4 +83,5 @@ Ferramenta do cofre: `07-Ferramentas/scripts/instagram/ig_musica.py`. Usa só Py
 - Meta, Instagram Audio API: https://developers.facebook.com/docs/instagram-platform/content-publishing/audio-api/
 - Meta, changelog (01/06/2026): https://developers.facebook.com/documentation/instagram-platform/changelog
 - Meta, envio de vídeo do computador: https://developers.facebook.com/documentation/instagram-platform/content-publishing/resumable-uploads
+- Buffer, áudio em alta no composer (03/11/2026): https://buffer.com/resources/trending-audio-instagram/
 - Metricool, áudio em Reels agendados: https://help.metricool.com/how-to-add-audio-to-your-instagram-reels-from-metricool-2o2ks

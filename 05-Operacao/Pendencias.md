@@ -22,7 +22,7 @@ Material em `08-Treinamento/`. Antes do dia:
 - [ ] **SDR depois do Grok:** quem responde o lead no CRM? O bot do Grok recebia pelo webhook e respondia pela API do CRM. No CRM em produção, o módulo `ai-agents` só faz triagem (AGT-01) e resumo diário (AGT-09), e a chave do "Meu Claude" é só de leitura. Falta ligar um SDR que leia as "Regras do meu SDR" de cada vendedor e responda pela API (e a chave da Anthropic no CRM).
 
 ## Música em alta pelo PC (aberta em 26/11/2026)
-- [ ] OK para postar Reel com música pela API oficial do Instagram (`ig_musica.py`). Hoje a postagem é pelo BitBrowser, sem música.
+- [ ] Escolher o caminho da música em alta: **agendador** (Buffer ou Metricool, sem Meta Developers; testar 1 conta no plano grátis) ou **script** `ig_musica.py` (precisa de app no Meta Developers). Hoje a postagem é pelo BitBrowser, sem música.
 - [ ] Contas como criador ou comercial; Páginas do Facebook ligadas; app e token (passo a passo em [[Musica em alta pela API]]).
 - [ ] 1º teste sem publicar numa conta; depois decidir se posta só do PC do Samuel ou de cada vendedora.
 
