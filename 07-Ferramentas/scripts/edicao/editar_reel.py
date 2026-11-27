@@ -7,7 +7,8 @@ Para cada peça do lote.json:
   - rodapé "CLIQUE NO LINK / E FALE DIRETAMENTE NO WHATSAPP" entrando em 1,2 s;
   - tarja preta nas placas (arquivo de detecta_placas.py, se existir);
   - música livre (Pixabay) no lugar do áudio original, fade no fim, -14 LUFS
-    (lista e links em 06-Referencias/edicao/Musicas liberadas.md; "musica": "original" mantém o som do vídeo).
+    (lista e links em 06-Referencias/edicao/Musicas liberadas.md; "musica": "original" mantém o som do vídeo;
+    "musica": "app" sai sem som para pôr a música viral no app do Instagram; "musica": 4 = faixa 4 da tabela).
 
 lote.json: [{"arquivo": "...mp4", "saida": "...mp4", "modelo": "Ford Cargo 1932", "valor": 148800,
              "musica": "...mp3", "musica_in": 6.27, "parcela_vermelha": false, "placas": "...json"}]
@@ -151,6 +152,8 @@ def conferir_entrada(p):
     """Para antes de editar, com mensagem clara, se o vídeo ou a música não estiverem certos."""
     if not Path(p["arquivo"]).exists():
         sys.exit(f"ERRO: vídeo não encontrado: {p['arquivo']}. Confira o caminho no lote.json (use / ou \\\\ no Windows).")
+    if str(p.get("musica", "")).strip().lower() == "app":
+        return  # sai sem som: a música viral entra no app do Instagram, na hora de postar
     if str(p.get("musica", "")).strip().lower() == "original":
         if not tem_audio(p["arquivo"]):
             sys.exit(f"ERRO: {p['arquivo']} não tem som, então \"musica\": \"original\" não funciona. Use uma faixa, ex.: \"musica\": 4")
@@ -175,10 +178,16 @@ def editar(p, handle, tmp):
     vf += "[b][1:v]overlay=0:0[c];[2:v]format=rgba,fade=in:st=1.2:d=0.25:alpha=1[t];[c][t]overlay=0:0:enable='gte(t,1.2)'[v];"
     # "musica": "original" = mantém o som do próprio vídeo (só quando não tem voz de vendedor; Reel Instagram.md)
     # "musica": 4 (número de 1 a 6) = faixa da tabela de Musicas liberadas.md, achada na pasta de músicas (musicas.py)
-    original = str(p.get("musica", "")).strip().lower() == "original"
-    fonte_audio = "[0:a]" if original else "[3:a]"
-    vf += f"{fonte_audio}atrim=0:{d:.2f},asetpts=PTS-STARTPTS,afade=t=in:d=0.3,afade=t=out:st={d - 0.7:.2f}:d=0.7,loudnorm=I=-14:TP=-1.5:LRA=11[a]"
-    entrada_musica = [] if original else ["-ss", str(p.get("musica_in", 0)), "-i", p["musica"]]
+    # "musica": "app" = sai com faixa de áudio muda; a música viral é escolhida no app do Instagram ao postar
+    modo = str(p.get("musica", "")).strip().lower()
+    original, app = modo == "original", modo == "app"
+    if app:
+        vf += f"[3:a]atrim=0:{d:.2f},asetpts=PTS-STARTPTS[a]"
+        entrada_musica = ["-f", "lavfi", "-t", f"{d:.2f}", "-i", "anullsrc=r=48000:cl=stereo"]
+    else:
+        fonte_audio = "[0:a]" if original else "[3:a]"
+        vf += f"{fonte_audio}atrim=0:{d:.2f},asetpts=PTS-STARTPTS,afade=t=in:d=0.3,afade=t=out:st={d - 0.7:.2f}:d=0.7,loudnorm=I=-14:TP=-1.5:LRA=11[a]"
+        entrada_musica = [] if original else ["-ss", str(p.get("musica_in", 0)), "-i", p["musica"]]
     cmd = ["ffmpeg", "-v", "error", "-y", "-i", p["arquivo"], "-loop", "1", "-t", f"{d:.2f}", "-i", str(ov),
            "-loop", "1", "-t", f"{d:.2f}", "-i", str(ct), *entrada_musica,
            "-filter_complex", vf, "-map", "[v]", "-map", "[a]", "-t", f"{d:.2f}",

@@ -37,3 +37,21 @@ Rode na pasta do cofre:
 - **Vídeo só com som ambiente ou motor:** pode manter o som original com `"musica": "original"` no `lote.json` ([[Reel Instagram]]).
 - **Música de sucesso ou viral:** só pelo app do Instagram, na hora de postar. **Nunca** baixe para editar.
 - **Música nova:** só da Pixabay, sem o selo "AI generated" nem o selo "Content ID Registered". Antes de usar, inclua na tabela com o link (e commit).
+
+
+## Música viral (trecho de música famosa) — como fazer do jeito certo (26/11/2026)
+**Nunca extraia o áudio de outro vídeo** (YouTube, TikTok, Reel de outra pessoa) para pôr dentro do arquivo. O Instagram reconhece a música sozinho (Rights Manager): o Reel fica mudo, sai do alcance ou cai, e a conta pode levar aviso. Em anúncio, a Meta exige licença da música; sem ela, o anúncio é reprovado.
+
+O jeito que funciona e é permitido: **a música entra pelo próprio app do Instagram, na hora de postar.** O Instagram já paga a licença, você escolhe só o pedaço que quer, e o Reel ainda aparece na página daquele áudio (mais alcance).
+1. Edite com `"musica": "app"` no `lote.json`. O vídeo sai pronto, só que sem som.
+2. Ache o áudio: no Instagram, abra um Reel que está bombando, toque no nome da música (embaixo) e em **Salvar áudio**. Na biblioteca de músicas do app, a setinha ↗ ao lado do nome marca áudio em alta.
+3. Poste pelo **celular**: Reel → escolha o vídeo → ícone de música → **Salvos** → escolha a música → arraste a barra para escolher o **trecho** (até o tamanho do vídeo, 12 a 15 s).
+4. Volume: música no máximo; som do vídeo em zero.
+
+**Limites:**
+- Só para Reel **orgânico** (sem impulsionar). Reel com música da biblioteca licenciada não pode ser impulsionado: para anúncio, use as faixas desta tabela ou a Sound Collection da Meta.
+- Conta **comercial** costuma ver só a Sound Collection (músicas livres). Conta de **criador** costuma ver a biblioteca completa. Se a música não aparecer, veja o tipo de conta em Configurações → Tipo de conta (decisão de trocar é do Samuel).
+- Postagem por script no computador não põe música: Reel com música viral é postado à mão, no celular.
+- Música com palavrão ou letra que prometa algo (dinheiro fácil, aprovação): não use.
+
+**Para variar mais nos anúncios pagos:** ampliar esta tabela com novas faixas da Pixabay (sem selo de IA e sem "Content ID") ou usar a Sound Collection da Meta, que já vem liberada para anúncio no Gerenciador.
