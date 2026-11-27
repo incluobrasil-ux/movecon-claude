@@ -27,6 +27,19 @@ Como fazer (1 conta primeiro, de teste):
 
 Os limites são os mesmos da API (a lista é a liberada para terceiros e o trecho pode não ser escolhível), porque esses agendadores usam essa mesma API por trás.
 
+**Planos do Buffer** (página de preços lida em 26/11/2026, em dólar, por canal = por conta):
+| Plano | Custo | Usuários | Posts agendados por canal |
+|---|---|---|---|
+| Grátis | US$ 0 (até 3 canais) | 1 | 10 (repõe quando sai) |
+| Essentials | US$ 5/mês no anual (US$ 60/ano) | 1 | sem limite |
+| Team | US$ 10/mês no anual (US$ 120/ano) | sem limite, com aprovação antes de publicar | sem limite |
+
+- **Cada vendedora com o Buffer dela**, logado no perfil do BitBrowser dela. No Grátis e no Essentials só cabe 1 usuário: ela não entra no Buffer do Samuel (e senha não se compartilha). O Team é o único em que o Samuel convida e aprova cada post dentro do Buffer.
+- **Comece pelo Grátis:** se a música em alta aparecer nele, o custo é zero. Se não aparecer, decidir entre Essentials e o script (abaixo).
+- O Buffer publica sozinho, no horário, pelos servidores dele: **o PC pode ficar desligado**.
+- O OK escrito do Samuel continua antes de agendar (lista numerada).
+- Use a publicação **automática**. A "notificação no celular" do Buffer obriga a terminar o post no app: não serve.
+
 ## Por que as outras formas não servem
 | Forma | Problema |
 |---|---|
@@ -40,6 +53,8 @@ Os limites são os mesmos da API (a lista é a liberada para terceiros e o trech
 - **Postiz** (`gitroomhq/postiz-app`, agendador de código aberto): já põe a música no Reel por essa API (`audio_configuration`). Funciona, mas precisa de servidor próprio: pesado para nós.
 - **makethevideoandpost** (`AdarshJ173`): publicou Reels com música por essa API. Lições que entraram no nosso script: envio pelo link público é o mais garantido; subcódigo **2207065** = música não liberada para a conta (escolher outra); áudio tem que ser 44,1 ou 48 kHz.
 - **kame-space** (`sprmke`, pesquisa de 22/11/2026): confirma que sem palavra de busca a API devolve a lista **em alta**, que **não dá para escolher o trecho** e que a lista pode ser menor que a do app.
+- **Todo repositório que faz o que o Buffer faz precisa de app próprio no Meta Developers.** O Postiz (42 mil estrelas, licença AGPL, atualizado em 24/11/2026) pede `FACEBOOK_APP_ID` e as permissões `pages_show_list` e `instagram_content_publish`. O Buffer cobra justamente por já ter esse app aprovado.
+- **O único jeito de repositório sem Meta Developers é o "celular falso"** (`instagrapi`, que tem `clip_upload_as_reel_with_music`): entra com a senha da conta e é fora das regras do Instagram. Proibido no cofre (senha e risco de bloqueio).
 - **Metricool** (agendador pronto, desde 18/05/2026): mostra o áudio em alta ao agendar o Reel. Usa a mesma API. Não confirmamos se o plano grátis inclui isso.
 
 ## O que precisa (uma vez só, feito pelo Samuel)
