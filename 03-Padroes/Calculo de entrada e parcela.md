@@ -40,9 +40,9 @@ Origem: "MOVECON 7 com carta = 2x o valor do bem" (12/11, 22h41); entrada de 20%
 - Tabela **4659** (MOVECON 1, hiper 1, 80 meses), em `07-Ferramentas/tabelas/tabela4659.json`.
 - `py -3 07-Ferramentas/scripts/calc_valores.py <valor do bem> --hp1` → pílulas "1ª parcela de R$ X" e "Lance de R$ Y".
 - A maior carta é R$ 163.943,64: junta o menor número de cartas iguais que cobre o bem, na menor linha que fecha a conta.
-- 1ª parcela = cartas x "Pcls 1 a 1". Lance do bolso = 60% da carta somada (média do grupo informada pelo Samuel). `--embutido 0.30` calcula com lance embutido, se a Alpha confirmar que o hiper 1 aceita.
+- Grupos **0030 e 0031** (lance de 30%). 1ª parcela = cartas x "Pcls 1 a 1". **Lance do bolso = 30% da carta somada** (correção do Samuel, 27/11/2026).
 - Na tela, arredondado ao real; o valor exato fica na planilha.
-- Exemplo: bem de R$ 300 mil = 2 cartas de R$ 153.014,06; 1ª parcela de R$ 11.635; lance de R$ 183.617.
+- Exemplo: bem de R$ 300 mil = 2 cartas de R$ 153.014,06 (R$ 306.028,12); 1ª parcela de R$ 11.635; lance de R$ 91.808.
 
 ## Planos de alto ticket (funil BMW e máquinas; status "a confirmar com a Alpha")
 | Crédito | 1ª parcela | Demais | Lance do bolso | Lance livre |

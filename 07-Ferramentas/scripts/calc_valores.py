@@ -3,7 +3,7 @@
 Uso:
   py -3 calc_valores.py 66900            -> padrao Marketplace (tabela 4076)
   py -3 calc_valores.py 66900 --reel     -> padrao dos videos (18% / 0,9%)
-  py -3 calc_valores.py 300000 --hp1 [--lance 0.60] [--embutido 0]
+  py -3 calc_valores.py 300000 --hp1 [--lance 0.30] [--embutido 0]
                                          -> teste HP1 (hiper 1, tabela 4659): 1a parcela + lance do bolso
 
 Regras (ver 03-Padroes/Calculo de entrada e parcela.md):
@@ -15,7 +15,8 @@ Regras (ver 03-Padroes/Calculo de entrada e parcela.md):
                N = menor numero de cartas que cobre o bem; linha = menor linha em que N x credito cobre o bem
                (com lance embutido E, o bem precisa caber em N x credito x (1 - E)).
                1a parcela = N x "Pcls 1 a 1"; lance do bolso = (lance - E) x N x credito.
-               Lance padrao 0,60 = media do grupo informada pelo Samuel (27/11/2026). Sem garantia de contemplacao.
+               Lance padrao 0,30 = grupos 0030 e 0031 (lance de 30%): o cliente poe 30% do proprio bolso sobre o
+               credito (correcao do Samuel, 27/11/2026). Sem garantia de contemplacao.
 """
 import json
 import math
@@ -55,7 +56,7 @@ def reel(valor):
     return {"valor_bem": valor, "entrada": int(round(valor * 0.18 / 100.0) * 100), "parcela": int(round(valor * 0.009))}
 
 
-def hp1(valor, lance=0.60, embutido=0.0):
+def hp1(valor, lance=0.30, embutido=0.0):
     linhas = json.load(open(TABELA_HP1, encoding="utf-8"))["linhas"]
     util = 1.0 - embutido
     maior = linhas[-1]["credito"]
@@ -86,7 +87,7 @@ if __name__ == "__main__":
         sys.exit(1)
     valor = float(sys.argv[1].replace(".", "").replace(",", ".")) if "," in sys.argv[1] else float(sys.argv[1])
     if "--hp1" in sys.argv:
-        r = hp1(valor, _arg("--lance", 0.60), _arg("--embutido", 0.0))
+        r = hp1(valor, _arg("--lance", 0.30), _arg("--embutido", 0.0))
         print(f"Bem {brl(valor)} | {r['cartas']} carta(s) de {brl(r['credito_por_carta'])} (linha {r['linha_tabela']}) = {brl(r['carta_total'])}")
         print(f"  TELA: 1a parcela de {brl(round(r['primeira_parcela']), False)} | Lance de {brl(round(r['lance_do_bolso']), False)}")
         print(f"  exato: 1a {brl(r['primeira_parcela'])} | 2a a 8a {brl(r['parcelas_2_a_8'])} | 9a a 80a {brl(r['parcelas_9_a_80'])} | "
