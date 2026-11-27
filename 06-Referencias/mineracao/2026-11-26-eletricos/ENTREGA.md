@@ -82,6 +82,29 @@ A busca funda com anúncios antigos deu 3 dos 5 vídeos aproveitados.
   2. página inteira das lojas boas novas (Elite Car e JL Car Trade);
   3. buscas funda de "spark euv", "geely ex2" e "ora 5" em outro dia.
 
+## Rodada 2 — fora da Meta (26/11, noite)
+Pedido do Roberto: "pode pesquisar tiktok, reels, kwai, shorts youtube". Tudo sem login, sem script novo.
+
+**Resultado: 0 aprovados novos.** Continua em 2 aprovados + 3 reservas (todos Dolphin Mini).
+
+| Plataforma | Como | O que deu |
+|---|---|---|
+| YouTube Shorts | `shorts_youtube.py`, 12 termos ("byd dolphin seminovo à venda", "gwm ora 03 seminovo", "chevrolet spark euv à venda", "geely ex2 à venda", "byd yuan pro seminovo", "byd seal seminovo", "volvo ex30 seminovo", "gac aion y seminovo", "byd dolphin chegou na loja", "dolphin gs estoque seminovos", "gwm ora estoque loja", "spark euv chegou na loja") | 0 em pé. A busca do YouTube devolve review longo; o curto de loja que apareceu (KD Automóveis, Dolphin GS 2024) é horizontal 1908x1080 |
+| YouTube (yt-dlp, páginas públicas) | hashtags #byddolphin, #dolphinmini, #carroeletrico; aba Shorts dos canais KD Automóveis e Maia Cars Oficial | 8 vídeos baixados e conferidos no olho, **todos reprovados** (abaixo) |
+| TikTok | busca na web por links (`site:tiktok.com`) | o buscador não indexa vídeo do TikTok; sem login a busca/perfil do TikTok dá captcha. **Só funciona com links colados** (`tiktok_links.py`) |
+| Kwai | página pública `kwai.com/discover/dolphin` | abre sem login, mas mostra 1 vídeo por vez e só carrega mais rolando (precisaria de robô: proibido). Sem resultado |
+| Instagram Reels | — | descobrir Reels sem login não dá (perfil e hashtag pedem login). **Só com links colados** |
+
+Reprovados na rodada 2 (pasta `rodada2-shorts/`, prancha `_prancha-r2a.jpg`):
+- yt40X7Wlx9ka8 — Volvo XC40 Recharge 2022 (KD Automóveis): logo "KD" por cima o vídeo todo; quase só detalhes, carro inteiro não aparece.
+- yt6MaV0KMrSX8, yteQzlV3Qgv-4 — BYD Seal (Maia Cars): pessoa abrindo o porta-malas.
+- ytCJCorvNWvSM — BYD Seal: mãos e interior, pessoa no fim.
+- ytLElKUtjsdpo — BYD Seal: carro de test-drive adesivado "SEAL BYD Original", mão na câmera; não é unidade à venda.
+- ytPZ90Q5Io82c — texto por cima o vídeo todo (e não é elétrico do nicho).
+- ytohRi1mZdafE, ytonLn8l_exJ8 — apresentador falando (Dolphin / Seal), legenda.
+
+**Para chegar aos 12:** o caminho que funciona sem login é **link colado**. O Roberto (ou alguém) procura no app do TikTok/Instagram/Kwai, só olhando, copia os links de vídeos de loja mostrando o carro sem pessoa e sem texto, e cola num .txt; o cofre baixa com `tiktok_links.py` (TikTok) ou yt-dlp (Reels/Kwai públicos) e passa pela peneira e pelo olho.
+
 ## Onde estão os arquivos
 - Clipes, planilha (`planilha-brutos-2026-11-26.csv`) e prancha (`prancha-brutos-2026-11-26.jpg`): esta pasta.
 - Cópia para o Roberto: `C:\Users\ro--2\Desktop\beto.cred - Videos eletricos\`.
