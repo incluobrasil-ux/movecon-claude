@@ -1,6 +1,6 @@
 ---
 tipo: padrao
-atualizado: 2026-11-19
+atualizado: 2026-11-27
 ---
 # Mineração: o que procuramos
 
@@ -41,6 +41,13 @@ São três minerações diferentes. Todas são **só leitura**: nunca curtir, se
 - real, não filme de estúdio (13/11, 21h34: "mais realistas");
 - 2 trechos de 15 s ou mais por bem; 720p ou mais (abaixo disso, só reserva);
 - placa legível, pessoa ao longe e logo de transportadora: aceito, mas **marcado** para o Editor tratar.
+
+**Um vídeo por lugar** (Samuel, 27/11/2026: "não quero nada do mesmo lugar, só um vídeo de um lugar depois vai atrás de outro"):
+- numa mineração, no máximo 1 vídeo de cada loja, concessionária ou pátio. Depois, vá para outro lugar;
+- perfil que filma cada vídeo num lugar diferente pode dar mais de um, desde que o fundo mude de um vídeo para o outro;
+- duas lojas com o mesmo pátio ou o mesmo showroom contam como um lugar só;
+- quando der, prefira lugares que ainda não apareceram no perfil.
+Substitui o "no máximo 2 da mesma loja" de 27/11 04h50.
 
 **QA antes de entregar:** conferir quadro a quadro (a cada 1 a 2 s) se tem texto, rosto ou marca d'água. Reprovou: `_rejeitados/qa/`, com o motivo.
 
