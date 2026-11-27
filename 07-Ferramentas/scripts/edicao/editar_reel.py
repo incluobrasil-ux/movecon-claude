@@ -11,7 +11,8 @@ Para cada peça do lote.json:
     "musica": "app" sai sem som para pôr a música viral no app do Instagram; "musica": 4 = faixa 4 da tabela).
 
 lote.json: [{"arquivo": "...mp4", "saida": "...mp4", "modelo": "Ford Cargo 1932", "valor": 148800,
-             "musica": "...mp3", "musica_in": 6.27, "parcela_vermelha": false, "placas": "...json"}]
+             "musica": "...mp3", "musica_in": 6.27, "parcela_vermelha": false, "placas": "...json",
+             "pilulas": ["1ª parcela de R$ 11.635", "Lance de R$ 183.617"]  (opcional: teste HP1)}]
 Uso: py -3 editar_reel.py lote.json --handle @lais.iconsorcio
 """
 import os as _os, sys as _sys
@@ -48,15 +49,19 @@ def pilula(d, x, y, texto, f, fundo, cor, px=26, py=12, raio=16):
     return w, h
 
 
-def overlay(modelo, valor, handle, parcela_vermelha, saida):
+def overlay(modelo, valor, handle, parcela_vermelha, saida, pilulas=None):
     v = reel(valor)
+    # "pilulas": ["1ª parcela de R$ X", "Lance de R$ Y"] troca o texto das duas pílulas (teste HP1, 27/11/2026);
+    # os valores vêm de calc_valores.py --hp1, nunca de cabeça
+    t1, t2 = pilulas if pilulas else (f"Entrada de {brl(v['entrada'])}", f"Parcelas de {brl(v['parcela'])}")
+    v["texto"] = [t1, t2]
     im = Image.new("RGBA", (W, H), (0, 0, 0, 0)); d = ImageDraw.Draw(im)
     fv = fonte("Poppins-ExtraBold.ttf", 54)
     x0, y0 = 112, 360
-    w1, h1 = pilula(d, x0, y0, f"Entrada de {brl(v['entrada'])}", fv, (255, 255, 255, 255), (0, 0, 0, 255))
+    w1, h1 = pilula(d, x0, y0, t1, fv, (255, 255, 255, 255), (0, 0, 0, 255))
     y1 = y0 + h1 + 14
     fundo2, cor2 = ((VERMELHO_PILULA, (255, 255, 255, 255)) if parcela_vermelha else ((255, 255, 255, 255), (0, 0, 0, 255)))
-    w2, h2 = pilula(d, x0, y1, f"Parcelas de {brl(v['parcela'])}", fv, fundo2, cor2)
+    w2, h2 = pilula(d, x0, y1, t2, fv, fundo2, cor2)
     # colchete vermelho
     xb, yt, yb = x0 - 34, y0 - 8, y1 + h2 + 8
     d.rectangle([xb, yt, xb + 10, yb], fill=VERMELHO)
@@ -165,7 +170,10 @@ def editar(p, handle, tmp):
     conferir_entrada(p)
     base = Path(p["saida"]).stem
     ov, ct = tmp / f"{base}-ov.png", tmp / "cta.png"
-    v = overlay(p["modelo"], p["valor"], handle, p.get("parcela_vermelha", False), ov)
+    pil = p.get("pilulas")
+    if pil is not None and (not isinstance(pil, list) or len(pil) != 2 or not all(str(x).strip() for x in pil)):
+        sys.exit(f"ERRO: \"pilulas\" precisa de 2 textos, ex.: [\"1ª parcela de R$ 11.635\", \"Lance de R$ 183.617\"] ({p['arquivo']})")
+    v = overlay(p["modelo"], p["valor"], handle, p.get("parcela_vermelha", False), ov, pil)
     if not ct.exists():
         cta(ct)
     d = min(dur(p["arquivo"]), 15.0)
@@ -194,7 +202,7 @@ def editar(p, handle, tmp):
            "-c:v", "libx264", "-preset", "medium", "-crf", "18", "-profile:v", "high", "-pix_fmt", "yuv420p", "-r", "30",
            "-c:a", "aac", "-b:a", "192k", "-ar", "48000", "-movflags", "+faststart", p["saida"]]
     subprocess.run(cmd, check=True)
-    print(Path(p["saida"]).name, f"{d:.1f}s", brl(v["entrada"]), "/", brl(v["parcela"]), f"tarjas={len(tarjas)}")
+    print(Path(p["saida"]).name, f"{d:.1f}s", " / ".join(v["texto"]), f"tarjas={len(tarjas)}")
 
 
 def main():

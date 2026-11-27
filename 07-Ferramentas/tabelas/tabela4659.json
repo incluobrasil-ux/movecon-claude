@@ -1,0 +1,185 @@
+{
+ "tabela": 4659,
+ "nome": "MOVECON 1 AUT 0030 - 0031 - A0032 - U2010 (hiper 1)",
+ "administradora": "Alpha Administradora de Consórcio Ltda.",
+ "prazo_meses": 80,
+ "taxa_administracao_pct": 20.0,
+ "fundo_reserva_pct": 1.0,
+ "grupos": [
+  {
+   "grupo": "0030",
+   "lance_fixo_pct": 30
+  },
+  {
+   "grupo": "0031",
+   "lance_fixo_pct": 30
+  },
+  {
+   "grupo": "A0032",
+   "lance_fixo_pct": 50
+  },
+  {
+   "grupo": "U2010",
+   "lance_fixo_pct": 50
+  }
+ ],
+ "lance_embutido": "a tabela não informa",
+ "valida_ate_impresso": "11/08/2026 (as tabelas valem independente do 'válida até', decisão de 24/10/2026)",
+ "fonte": "4659 - MOVECON 1 AUT 0030 - 0031 - A0032 - U2010.pdf (enviado de novo pelo Samuel em 27/11/2026)",
+ "linhas": [
+  {
+   "linha": 1,
+   "credito": 43718.3,
+   "parcela_1": 1662.07,
+   "parcela_2_a_8": 695.68,
+   "parcela_9_a_80": 695.72
+  },
+  {
+   "linha": 2,
+   "credito": 49183.09,
+   "parcela_1": 1869.84,
+   "parcela_2_a_8": 782.64,
+   "parcela_9_a_80": 782.69
+  },
+  {
+   "linha": 3,
+   "credito": 54647.88,
+   "parcela_1": 2077.6,
+   "parcela_2_a_8": 869.6,
+   "parcela_9_a_80": 869.66
+  },
+  {
+   "linha": 4,
+   "credito": 60112.67,
+   "parcela_1": 2285.35,
+   "parcela_2_a_8": 956.56,
+   "parcela_9_a_80": 956.62
+  },
+  {
+   "linha": 5,
+   "credito": 65577.45,
+   "parcela_1": 2493.11,
+   "parcela_2_a_8": 1043.53,
+   "parcela_9_a_80": 1043.59
+  },
+  {
+   "linha": 6,
+   "credito": 71042.24,
+   "parcela_1": 2700.87,
+   "parcela_2_a_8": 1130.48,
+   "parcela_9_a_80": 1130.56
+  },
+  {
+   "linha": 7,
+   "credito": 76507.03,
+   "parcela_1": 2908.62,
+   "parcela_2_a_8": 1217.43,
+   "parcela_9_a_80": 1217.51
+  },
+  {
+   "linha": 8,
+   "credito": 81971.82,
+   "parcela_1": 3116.38,
+   "parcela_2_a_8": 1304.4,
+   "parcela_9_a_80": 1304.48
+  },
+  {
+   "linha": 9,
+   "credito": 87436.61,
+   "parcela_1": 3324.14,
+   "parcela_2_a_8": 1391.36,
+   "parcela_9_a_80": 1391.45
+  },
+  {
+   "linha": 10,
+   "credito": 92901.39,
+   "parcela_1": 3531.9,
+   "parcela_2_a_8": 1478.32,
+   "parcela_9_a_80": 1478.41
+  },
+  {
+   "linha": 11,
+   "credito": 98366.18,
+   "parcela_1": 3739.67,
+   "parcela_2_a_8": 1565.29,
+   "parcela_9_a_80": 1565.38
+  },
+  {
+   "linha": 12,
+   "credito": 103830.97,
+   "parcela_1": 3947.43,
+   "parcela_2_a_8": 1652.24,
+   "parcela_9_a_80": 1652.35
+  },
+  {
+   "linha": 13,
+   "credito": 109295.76,
+   "parcela_1": 4155.18,
+   "parcela_2_a_8": 1739.2,
+   "parcela_9_a_80": 1739.31
+  },
+  {
+   "linha": 14,
+   "credito": 114760.55,
+   "parcela_1": 4362.95,
+   "parcela_2_a_8": 1826.17,
+   "parcela_9_a_80": 1826.28
+  },
+  {
+   "linha": 15,
+   "credito": 120225.33,
+   "parcela_1": 4570.71,
+   "parcela_2_a_8": 1913.13,
+   "parcela_9_a_80": 1913.25
+  },
+  {
+   "linha": 16,
+   "credito": 125690.12,
+   "parcela_1": 4778.46,
+   "parcela_2_a_8": 2000.07,
+   "parcela_9_a_80": 2000.2
+  },
+  {
+   "linha": 17,
+   "credito": 131154.91,
+   "parcela_1": 4986.21,
+   "parcela_2_a_8": 2087.03,
+   "parcela_9_a_80": 2087.16
+  },
+  {
+   "linha": 18,
+   "credito": 136619.7,
+   "parcela_1": 5193.98,
+   "parcela_2_a_8": 2174.0,
+   "parcela_9_a_80": 2174.14
+  },
+  {
+   "linha": 19,
+   "credito": 142084.49,
+   "parcela_1": 5401.74,
+   "parcela_2_a_8": 2260.96,
+   "parcela_9_a_80": 2261.1
+  },
+  {
+   "linha": 20,
+   "credito": 147549.27,
+   "parcela_1": 5609.5,
+   "parcela_2_a_8": 2347.92,
+   "parcela_9_a_80": 2348.07
+  },
+  {
+   "linha": 21,
+   "credito": 153014.06,
+   "parcela_1": 5817.26,
+   "parcela_2_a_8": 2434.89,
+   "parcela_9_a_80": 2435.04
+  },
+  {
+   "linha": 22,
+   "credito": 163943.64,
+   "parcela_1": 6232.78,
+   "parcela_2_a_8": 2608.8,
+   "parcela_9_a_80": 2608.97
+  }
+ ]
+}

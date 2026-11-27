@@ -1,6 +1,6 @@
 ---
 tipo: operacao
-atualizado: 2026-11-25
+atualizado: 2026-11-27
 ---
 # Decisões
 
@@ -12,6 +12,8 @@ Fonte das decisões até 19/11/2026: `_arquivo-grok/movecon/ceo/tarefas.md`, `_a
 
 | Data e hora | Decisão (palavras do Samuel quando registradas) | Afeta |
 |---|---|---|
+| 27/11 | "meu bitbrowser venceu vamos usar o bitbrowser da incluo brasil ai vcs vejam por la agr guia 01 to abrindo meu instagram lá e as coisas que rodavam antes por la vou por aqui por enquanto". O que muda:<br>• o BitBrowser em uso passa a ser o da Incluo Brasil; nele só existe o perfil 1 "insta samuel tanan" (lido em 27/11), com o Instagram do Samuel;<br>• os perfis antigos (contas 1 a 11 do Marketplace, @tanan_intermediacoes, @pedroabreu.consultor) ficaram no BitBrowser vencido: rodadas e postagens dessas contas ficam paradas até o Samuel reabrir;<br>• o que rodava nesses perfis, o Samuel faz por conta própria por enquanto | [[Perfil-do-operador]], [[Contas e navegador]] |
+| 27/11 | "quero fazer algo nichado para veiculos de 200.000 a 1.000.000 [...] dividir metade dos posts no modelo ja validado e quero postar hp 1 com o valor da primeira parcela ai da tabela mais o lance do bolso que a pessoa teria que dar também seguindo esse mesmo template"; "a média desse grupo ai é 60%". O que muda:<br>• no perfil do Samuel, metade dos Reels de oferta usa o modelo validado (entrada 18% / parcelas 0,9%) e metade o **HP1** (tabela 4659, hiper 1): pílulas "1ª parcela de R$ X" e "Lance de R$ Y", com lance do bolso de 60% da carta e cartas somadas até cobrir o bem;<br>• **exceção só para o teste HP1:** "lance" pode aparecer na tela (no resto continua proibido);<br>• valores sempre por `calc_valores.py <valor> --hp1`; cronograma em `10-Trabalho/2026-11-27-cronograma-perfil-veiculos-200k-1m/` | [[Calculo de entrada e parcela]], [[Padrao minimo de edicao]] |
 | 26/11 | "quero que você faça uma mineração pesada de trator/maquina agricola/maquinarios [...] atue como agronomo e liste tudo que podemos postar dentro do ticket" + "pode procurar pelo instagram, pelo meta ads, pelo google shorts, onde vc achar melhor vc tem autonomia total resolva a meta que pedi e econtre o melhor processo de mineração para o nicho": para a mineração agro de R$ 500 mil a R$ 1 milhão, o Claude do Samuel pode usar o Instagram logado (perfil 91), **só leitura** (hashtags e Reels de perfis), parando no 1º aviso. A regra de minerar sem login continua para vendedores e parceiros | [[Minerador]], [[Contas e navegador]] |
 | 26/11 | "vamos minerar de outra forma então, vamos pro instagram anquela conta que ja está logada, procure por lá" + resposta "Sim, só leitura" e perfil "halvveny insta (91)": **exceção só para esta mineração de tratores** à regra de minerar sem login. Só leitura (hashtags e Reels), sem curtir, seguir nem comentar, parar no 1º aviso. A regra continua valendo para vendedores e parceiros | [[Minerador]], [[Contas e navegador]] |
 | 26/11 | "antes de enviar na verdade quero que você acha mais 5 casas para complementarmos pra ela": mais 5 casas mineradas (11 a 15). A entrega `entregas/2026-11-26-brutos-casas/` passa a ter 11 casas | [[Publicador Instagram]] |

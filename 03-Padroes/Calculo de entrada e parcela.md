@@ -36,6 +36,14 @@ Origem: "MOVECON 7 com carta = 2x o valor do bem" (12/11, 22h41); entrada de 20%
 - Exceções aprovadas uma a uma ficam em [[Decisoes]] (ex.: 14/11 09h13: Hilux 35 mil, SW4 40 mil, Ducato 20 mil, Daily 35 mil de entrada).
 - Regras antigas substituídas: "1ª + 50% lance" (12/11), "20% do bem" (13/11 06h51), "parcela 30% abaixo da tabela" (13/11 15h01).
 
+## Teste HP1 no perfil do Samuel (27/11/2026)
+- Tabela **4659** (MOVECON 1, hiper 1, 80 meses), em `07-Ferramentas/tabelas/tabela4659.json`.
+- `py -3 07-Ferramentas/scripts/calc_valores.py <valor do bem> --hp1` → pílulas "1ª parcela de R$ X" e "Lance de R$ Y".
+- A maior carta é R$ 163.943,64: junta o menor número de cartas iguais que cobre o bem, na menor linha que fecha a conta.
+- 1ª parcela = cartas x "Pcls 1 a 1". Lance do bolso = 60% da carta somada (média do grupo informada pelo Samuel). `--embutido 0.30` calcula com lance embutido, se a Alpha confirmar que o hiper 1 aceita.
+- Na tela, arredondado ao real; o valor exato fica na planilha.
+- Exemplo: bem de R$ 300 mil = 2 cartas de R$ 153.014,06; 1ª parcela de R$ 11.635; lance de R$ 183.617.
+
 ## Planos de alto ticket (funil BMW e máquinas; status "a confirmar com a Alpha")
 | Crédito | 1ª parcela | Demais | Lance do bolso | Lance livre |
 |---|---|---|---|---|

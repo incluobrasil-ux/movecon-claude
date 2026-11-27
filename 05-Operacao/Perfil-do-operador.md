@@ -15,6 +15,8 @@ atualizado: 2026-11-19
 - **Região dos grupos do Facebook:** sudoeste da Bahia e norte de Minas (19/11/2026, 11h30).
 - **Praça proibida como origem de fotos:** Vitória da Conquista. Nunca pegar foto de anúncio da própria praça (18/11/2026, 22h40).
 
+> **27/11/2026: o BitBrowser destas contas venceu.** Em uso agora: o BitBrowser da Incluo Brasil, só com o perfil 1 "insta samuel tanan" (Instagram do Samuel). As contas abaixo ficam paradas até o Samuel reabrir o BitBrowser antigo ([[Decisoes]], 27/11).
+
 ## Contas do Marketplace (BitBrowser, máquina dos bots DESKTOP-V2I66AK)
 Lista da contagem de 19/11/2026. O número é o usado nos registros. O nome do perfil no BitBrowser vem do script `07-Ferramentas/scripts/marketplace/publish-auto.mjs` (18–19/11). **Confirmar com `python 07-Ferramentas/scripts/bitbrowser.py listar`** antes da primeira execução: as portas e abas mudam a cada vez que o perfil abre.
 

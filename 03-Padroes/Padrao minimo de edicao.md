@@ -47,6 +47,7 @@ Medidas em % da altura do quadro (1920 px):
 
 - O rodapé **entra entre 1,0 e 1,5 s** (pop) e fica até o fim. Os outros textos já estão no primeiro quadro.
 - **Proibido na tela:** número de meses, crédito, porcentagem, lance, "sem juros", MOVECON, logo, aviso legal e "vídeo ilustrativo".
+- **Exceção (27/11/2026):** no teste HP1 do perfil do Samuel, as pílulas são "1ª parcela de R$ X" e "Lance de R$ Y" (`"pilulas"` no `lote.json`, valores de `calc_valores.py --hp1`). Só nesse teste.
 - **Os valores da tela e da legenda são os mesmos.** Calcule com `calc_valores.py <valor> --reel`.
 
 ## A3. Imagem limpa
