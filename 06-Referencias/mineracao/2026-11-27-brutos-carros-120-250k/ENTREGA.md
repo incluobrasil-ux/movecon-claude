@@ -115,7 +115,18 @@ Com 1 vídeo por lugar, cada rodada de 25 buscas rendeu de 4 a 6 aprovados. Este
 - Coleta e peneira: `meta.json`, `meta-2.json`, `meta-3.json`, `shorts*.json` e `triagem-*.json`.
 - Conferência: `folhas/` com os quadros. Vídeos inteiros: `cand/` (360p) e `hd/` (720p).
 
+## Depois da edição (27/11, noite)
+- **12, Tiggo 7 Pro (Mil Milhas): saiu.** Na conferência da edição apareceram o reflexo de quem filmava na lataria e as bandeirinhas do banco Safra no teto da loja.
+- **No lugar entrou a reserva R2:** Hilux SRV 2.8 Diesel 2019 (Egon Schweigert, Blumenau), R$ 188.800, entrada R$ 34.000 e parcelas de R$ 1.699.
+- **A leva editada ficou com 7 SUVs e 5 picapes.** Os vídeos prontos estão em `10-Trabalho/2026-11-27-edicao-carros-120-250k/editados/`, com `LEIA-ME.md`, `LEGENDAS.md` e `md5.txt`.
+- **Ajustes de corte na edição:**
+  - 03: tirados as tomadas com a faixa de cerveja ao fundo e um trecho em que a plaqueta entrava pela borda;
+  - 05: a 2ª tomada começa depois que a plaqueta sai;
+  - 06: tomadas reordenadas para abrir com a traseira inteira;
+  - 08: tiradas a caixa de preço que sobrava no 1º corte e as transições de efeito;
+  - 12: tirado o escurecimento até o preto.
+
 ## Próximo passo
-1. Edição no modelo A (entrada e parcela da tabela acima), com o [[Padrao minimo de edicao]].
+1. Edição no modelo A (entrada e parcela da tabela acima), com o [[Padrao minimo de edicao]]. **Feita em 27/11 à noite** (ver acima).
 2. Ao postar, a oferta fica **só na aba Reels**, fora da grade do perfil (decisão de 27/11, ~17h).
 3. Antes do 08, confirme a idade máxima do carro.
