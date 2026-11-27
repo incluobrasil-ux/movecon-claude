@@ -44,6 +44,12 @@ Origem: "MOVECON 7 com carta = 2x o valor do bem" (12/11, 22h41); entrada de 20%
 - Na tela, arredondado ao real; o valor exato fica na planilha.
 - Exemplo: bem de R$ 300 mil = 2 cartas de R$ 153.014,06 (R$ 306.028,12); 1ª parcela de R$ 11.635; lance de R$ 91.808.
 
+### Demais parcelas depois do lance (modelo "passo a passo", 27/11/2026)
+- 1ª parcela e lance: os mesmos do `--hp1` (tabela 4659, lance do bolso de 30% da carta somada).
+- **Demais parcelas depois do lance = (7 × parcela da 2ª à 8ª + 72 × parcela da 9ª à 80ª − lance) ÷ 79**, com as cartas somadas. Mantém os 80 meses e baixa o valor das parcelas.
+- Ex.: bem de R$ 249.990 = 2 cartas de R$ 125.690,12; 1ª parcela de R$ 9.557; lance de R$ 75.414; demais de R$ 4.000 sem lance e de **R$ 3.046 depois do lance**.
+- **A confirmar com a Alpha:** se o lance abate o valor das parcelas (esta conta) ou o prazo.
+
 ## Planos de alto ticket (funil BMW e máquinas; status "a confirmar com a Alpha")
 | Crédito | 1ª parcela | Demais | Lance do bolso | Lance livre |
 |---|---|---|---|---|
