@@ -147,5 +147,75 @@ Lojas atualizadas em `lojas-brutos.json`: boas + Motion Motors e Geely Jorlan-ev
 ## Pendente
 - OK do aprovador para usar os clipes (rascunho → aguardando OK).
 - Decidir se libera mais de 2 Dolphin Mini (as reservas R1 a R3).
-- Faltam 8 para 12: ver "Próximos termos" na rodada 3.
+- 12 de 12 completos em 27/11 (rodadas 4 e 4B). Pendente só o OK do Roberto e a edição.
 - Nenhum dado pessoal de anunciante neste arquivo.
+
+## Rodada 4B — fora da Meta (27/11, madrugada)
+Agente paralelo ao da Meta. Pedido do Roberto: urgência para chegar aos 12; elétrico OU híbrido, 0 km ou seminovo, R$ 60–300 mil, Dolphin/Dolphin Mini sem limite, só o carro (sem pessoa), nada por cima. Sem login, sem captcha, sem script novo (yt-dlp sem cookies, ffmpeg, faster-whisper para conferir fala).
+
+**Resultado: 2 aprovados (21, 22) + 2 reservas (R21, R22).**
+
+| # | arquivo | carro | motorização | 0 km/seminovo | loja / link | valor (fonte) | entrada | parcela | áudio | trecho | marcar |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| 21 | aprovados/21-carro-byd-dolphin-gs-seminovo.mp4 | BYD Dolphin GS (4.000 km) | 100% elétrico | seminovo | Naxter Veículos — https://www.youtube.com/shorts/GhFwmrH_1ts | R$ 126.530 — **valor médio estimado** (média de 3 anúncios reais de Dolphin GS seminovo coletados na Meta: 4F Motors 2023/24 R$ 115.800; Global Motors 2026 R$ 135.900; Careca Motors 2026 R$ 127.890) | R$ 22.800 | R$ 1.139 | sem fala (transcrição vazia) — manter | 2–29 s do original (37 s) | mão no 1º segundo e letreiro "NAXTER" na parede a partir de ~30 s: fora do corte; plaqueta "Naxter" na placa dianteira e traseira (tampar); folha de papel pequena no para-brisa |
+| 22 | aprovados/22-carro-gwm-haval-h6-phev19-2025.mp4 | GWM Haval H6 PHEV19 2025 | híbrido plug-in | seminovo | Veicar Multimarcas, Curitiba/PR — https://www.youtube.com/shorts/VqORaIUDwG4 | R$ 189.990 — **valor médio estimado** (anúncio real do mesmo modelo/ano: Carrera Seminovos, H6 PHEV19 2025, 29.250 km, R$ 189.990, https://www.youtube.com/shorts/RqLoz2iFieA) | R$ 34.200 | R$ 1.710 | **voz do vendedor em off** (narração; ninguém aparece) → trocar por música | 2–5 s + 13–27 s do original (30,7 s) | plaqueta "VEICAR" na frente e atrás (tampar); letreiro "VEICAR" no alto do galpão em 0–1 s, 6–8 s, 11–12 s (cortar ou tampar) |
+
+Reservas (baixa resolução — só se faltar):
+- R21 — GWM Haval H6 HEV Premium (Carflix, https://www.youtube.com/shorts/Ezgvja0QQjs): volta limpa no carro de 0 a 26 s (mão na porta aos 28 s); **480x848** (ampliação 2,26x); plaqueta "carflix" na frente e atrás. Sem preço → sem dado. Segundo H6 (limite 2 por modelo).
+- R22 — GWM Haval H6 GT PHEV (Carflix, https://www.youtube.com/shorts/Huhkk5CT3xI): 478x850, câmera tremida, mão aos 14 s, placa grande "carflix" e letreiro no fim. Sem preço → sem dado.
+
+Reprovados (principais motivos; ~100 Shorts olhados no total, folhas em r4b/):
+- Naxter Veículos (Song Pro, Song Plus, Seal, Yuan Pro, King, Haval H6 HEV/GT, EX2, EX30, Ora GT, Jaecoo): apresentador e/ou legenda + logo verde "X" por cima e vinheta. Fiat 500e (Naxter): letreiro na parede e logo "X" por cima no interior; trecho limpo só ~6 s.
+- Concessionárias BYD (Unic Moema, Dahruj, Grupo AB, Servopa): apresentador falando, legenda, arte de oferta.
+- Esquina Motors (Dolphin GS 2024 preto, Dolphin Mini 2024 branco): **marca d'água "ESQUINA" por cima do vídeo inteiro** (logo) + letreiro; carro limpo, mas reprovado pela regra.
+- Mixcar (Haval H6 Premium, Tiggo 7 Pro Hybrid, Corolla Cross Hybrid, Corolla Altis Hybrid, XC60 T8): colagem com logo e nome do carro por cima, mão.
+- Carrera Seminovos (H6 PHEV19, Ora 03 GT, Song Plus Premium): logo e preço por cima o vídeo todo.
+- 4F Motors (Dolphin GS 2025): texto "APENAS 2.940KM" o vídeo todo. Buscar Veículos (Song Plus): moldura de anúncio. Nikel One (H6 GT): logo no canto + shopping.
+- Esquina/Star Motors/Santa Paula/automovelpe (Leaf 2022, H6, Ora 03, Dolphin Mini 2027, EX30): apresentador ou arte animada.
+- Horizontais (não são 9:16): Aky Veículos (Yuan Pro, Song Plus GS, King GL, Corolla Cross Hybrid), Sena Motors, Via Mondo, Phipasa (500e, Corolla Cross), Podio Cars (EX30), automovelpe (XC40 Recharge), Brazilian Car (Song Pro), Guaíra Car, Volvo EX30 Naxter etc.
+- Baixa resolução demais: Carflix Dolphin Mini (360x640), Song Pro DM-i, King DM-i (horizontais 640x356/848x480).
+
+O que funcionou e o que bloqueou:
+- **YouTube**: busca do yt-dlp (`ytsearch`) para descobrir canais + **aba Shorts dos canais de loja** (`<canal>/shorts`, `--flat-playlist`) → vertical nativo. Funciona sem login. Rende pouco: a maioria das lojas grava com apresentador/legenda.
+- **Instagram Reels**: listar perfil/reels pede login (yt-dlp: URL não suportada sem login); busca na web só devolve páginas de perfil. Bloqueado.
+- **TikTok / Kwai**: busca na web não indexa vídeos; sem login dá captcha. Não tentado além disso.
+- Consultas registradas em buscas-feitas.csv (ferramentas `ytsearch_ytdlp` e `yt_canal_shorts`); vídeos olhados gravados em memoria-mineracao.jsonl (ids `yt…`).
+
+## Rodada 4 — Meta, limite de buscas ampliado (27/11)
+Pedido: completar 12 (faltavam 8). Decisões do Roberto valendo nesta rodada: elétrico **ou híbrido**, 0 km ou seminovo, qualquer modelo; **limite de 2 por modelo liberado para Dolphin/Dolphin Mini** (evitando repetir unidade/loja); limite de buscas ampliado de ~15 para ~40 (uma coleta por vez, 8–12 s entre buscas).
+Resultado: **+6 aprovados (05–10) nesta rodada + 2 da rodada 4B fora da Meta (21–22) = 12 de 12.**
+
+### Aprovados (rodada 4)
+| # | Arquivo | Veículo | Motorização | 0 km / seminovo | Loja | Valor (fonte) | Entrada | Parcela | Áudio | Trecho | Marcar na edição |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| 05 | aprovados/05-carro-byd-dolphin-mini-gs-2025.mp4 | BYD Dolphin Mini GS 2024/2025 (44 mil km) | 100% elétrico | seminovo | Victor Seminovos (ex-reserva R1) | R$ 109.654 — valor médio estimado (média de 7 anúncios reais de Dolphin Mini GS 2024/25 e 2025) | R$ 19.700 | R$ 987 | sem fala — manter | 32,5–45,8 s (13,3 s) | plaqueta colorida na placa (tampar); 2 flashes vermelhos de transição do próprio vídeo |
+| 06 | aprovados/06-carro-volvo-ex30-ultra-2024.mp4 | Volvo EX30 Ultra 2024 (20 mil km) | 100% elétrico | seminovo | Motion Motors | R$ 207.900 (preço do anúncio) | R$ 37.400 | R$ 1.871 | sem fala — manter | 0–15 s | plaqueta "Motion Motors" na placa (tampar) |
+| 07 | aprovados/07-carro-byd-dolphin-mini-gs-0km-2027.mp4 | BYD Dolphin Mini GS 2027 | 100% elétrico | 0 km | Plaza Veiculos | R$ 128.990 (preço do anúncio) | R$ 23.200 | R$ 1.161 | sem fala — manter | 10–25 s | sem placa; reflexo espelhado de letreiro no vidro só antes de 9 s (fora do corte) |
+| 08 | aprovados/08-carro-byd-king-dm-i-2026.mp4 | BYD King DM-i 2026 | híbrido plug-in (DM-i) | seminovo | Pague Menos Veículos (Manaus/AM) | R$ 149.900 (preço do anúncio, "POR 149.900") | R$ 27.000 | R$ 1.349 | voz do vendedor em off → trocar por música | 21–30 s + 39,6–44,9 s (14,3 s) | pula arte com preço e "CLICK NO LINK"; pessoas pequenas ao fundo pelo para-brisa (não em destaque) |
+| 09 | aprovados/09-carro-omoda-5-hev-0km-2027.mp4 | Omoda 5 1.5 TGDI HEV Luxury 2027 | híbrido (HEV) | 0 km | Carmax Santos | R$ 159.990 — anúncio sem preço; preço "a partir de" da concessionária oficial Omoda Jaecoo ADTSA (Biblioteca da Meta, 27/11) = preço de lançamento da versão Luxury | R$ 28.800 | R$ 1.440 | voz do vendedor → trocar por música | 16,9–25,8 s + 42,5–45,6 s (12,0 s) | letreiro "carmax", mão na maçaneta e bancos com plástico ficam fora do corte |
+| 10 | aprovados/10-carro-byd-dolphin-mini-gs-2025.mp4 | BYD Dolphin Mini GS 2024/2025 | 100% elétrico | seminovo | RH Motors Cuiabá/MT (ex-reserva R2) | R$ 109.654 — valor médio estimado (mesma média do 05) | R$ 19.700 | R$ 987 | sem fala — manter | 2,0–11,35 s + 12,2–15,7 s (12,9 s) | plaqueta "RH Motors" na placa traseira (tampar); título inicial e vendedor sentado ao fundo ficaram fora |
+
+Todos conferidos no olho (folhas de quadros a 1–4 qps em `r4/`), sem pessoa em destaque, sem mão, sem texto/legenda/preço por cima. Valores pelo `calc_valores.py --reel`.
+
+### Reprovados (rodada 4)
+- Elite Car, Dolphin Mini GS 0 km (1544579934161245): mãos quase o vídeo todo e letreiro "Elite Car" no início e fim; trecho limpo de ~5 s.
+- Reserva R3 (Robinho): letreiro no alto, pessoa aos 22 s, mãos; continua reserva só se o Roberto quiser.
+- Cezana Motors, Dolphin Mini GS 0 km (2 vídeos): cartaz no para-brisa, balões, vinheta com telefone; o outro só tem detalhes.
+- Pague Menos, BYD Song Pro: título e preço por cima; trecho com o carro inteiro tem faixa da loja no teto.
+- V12 Motors: vitrine com vários carros, King só em detalhes.
+- Elite Car, GWM Ora 5 0 km (3 vídeos): (1) letreiro, mãos e reflexo de quem filma; (2) test drive com motorista; (3) apresentador.
+- Leapmotor Brasil, B10 (2 vídeos): arte Black Friday com preço o vídeo todo.
+- Blackout Custom, Omoda 5: grafite gigante da loja e mãos; anúncio de PPF, não de venda.
+- ZS Autos, Hyundai Kona Hybrid: caixa de texto (modelo/ano/km) em todo o trecho externo.
+- Seminovos Felice, Omoda 5 HEV: mão com a chave no início; só ~10 s limpos (reserva fraca).
+- Chevrolet Jorlan Goiânia, Captiva EV: vídeo de estilo de vida com modelo atuando.
+- RYK Motors, BYD Song Plus DM-i: legenda falada o vídeo todo e mãos.
+
+### Buscas (rodada 4, 39 na Meta, uma coleta por vez, sem bloqueio)
+pagina:644982622805736 (Motion Motors, 9), pagina:691189374071371 (Jorlan-ev, 60), dolphin mini 0km (78), dolphin mini pronta entrega (55), dolphin gs 0km (48), byd dolphin seminovo (27), song pro seminovo (20), byd king seminovo (12), seal u (45), sealion 7 (39), haval h6 seminovo (11), yuan pro 0km (3), yuan plus seminovo (1), ora 5 0km (18), ex30 (39), captiva ev (72), omoda e5 (69), aion y (38), leapmotor (66), kona elétrico (19), nissan leaf (9), peugeot e-2008, fiat 500e, corolla hybrid, kicks e-power seminovo (vazio — termo novo, não bloqueio), tiggo 8 phev (14), carro híbrido seminovo, elétrico pronta entrega, byd seminovo (tempo esgotado ao carregar; os 8 termos anteriores foram recoletados), controle "ex30" com 1 rolagem (29 → sem bloqueio), byd seminovo (41), dolphin mini usado (57), carro híbrido seminovo (36), elétrico pronta entrega (62), corolla hybrid (57), fiat 500e (49), peugeot e-2008 (63), pagina:109961088856166 (Plaza, 27), pagina:565704573285556 (Pague Menos, 100).
+Peneira com `--sem-preco` (0 km de concessionária raramente põe preço; valor vem do preço oficial/anúncio da marca). A peneira dos lotes 3 e 4 (meta-21/22/23) foi interrompida quando chegamos a 12; o que ficou sem analisar não entrou na memória e pode ser peneirado depois.
+Lojas: +4 boas (Plaza, Victor Seminovos, RH Motors, Carmax Santos) e +5 ruins (Leapmotor Brasil, Blackout Custom, Cezana Motors, V12 Motors, RYK Motors) em `07-Ferramentas/referencias/lojas-brutos.json`.
+
+### Para a edição
+- Tapar placa/plaqueta em 05, 06, 10 (e conferir 07–09); trocar a voz por música em 08 e 09 (e no 04, já anotado).
+- Nos textos da @beto.cred, falar "carta de crédito" (não usar a outra palavra).
