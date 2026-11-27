@@ -35,10 +35,14 @@ Sem valor, sem prazo e sem promessa: segue [[Compliance]] (B, atendimento). Para
 `07-Ferramentas/scripts/instagram/ig-responder-comentarios.mjs`. Usa o perfil do BitBrowser já logado, numa aba nova em segundo plano que fecha no fim. Não abre nem fecha perfil: se o perfil estiver fechado, pula a rodada.
 - **Lê** os posts (grade e aba Reels) e os comentários pelos dados que a própria página do Instagram carrega.
 - **Responde pela tela**, como uma pessoa: "Responder" no comentário certo, confere que a caixa abriu com o @ da pessoa, digita, "Postar".
+- **A resposta fica sempre dentro da conversa** (desde 27/11/2026, ~17h30). O Instagram no navegador arredonda o número do comentário que está sendo respondido. Com o número errado, a resposta saía **solta**, como comentário novo com o @ na frente. Isso aconteceu com um vendedor no 1º uso. Agora a ferramenta faz três coisas:
+  - confere o envio antes de ele sair do navegador e põe o número certo;
+  - bloqueia o envio (nada é publicado) e para, se ele não for resposta ao comentário certo;
+  - depois de publicar, abre a conversa e confere que a resposta está lá dentro. Se saiu solta, para e avisa.
 - Em post com muitos comentários, olha os que a página mostra primeiro (cerca de 15).
 - **Não roda junto com a postagem** (`ig-postar-lote.mjs`): a postagem espera a rodada de respostas acabar, e a rodada pula se houver post sendo publicado.
 
-Testado em 27/11/2026 no @tananconsorcio (leitura dos 12 posts e rodada escondida pela tarefa) e num post público com comentários (ensaio até o botão "Postar", sem postar). O clique final em "Postar" se confere no passo de 1 resposta do prompt.
+Testado em 27/11/2026 no @tananconsorcio (leitura dos 12 posts e rodada escondida pela tarefa) e num post público com comentários: ensaio até o clique em "Postar", com o envio bloqueado no navegador. No comentário que vinha com o número arredondado, a ferramenta corrigiu. No que vinha certo, deixou como estava. Nada foi publicado. A resposta de verdade se confere no passo de 1 resposta do prompt: no celular, ela tem que aparecer **embaixo do comentário da pessoa**.
 Em 27/11/2026 o Instagram não respondia mais pelo caminho antigo de dados pelo navegador (`/api/v1/...`, "página não encontrada"): por isso a leitura é pela página.
 
 ```
@@ -47,7 +51,7 @@ node 07-Ferramentas/scripts/instagram/ig-responder-comentarios.mjs --conta @cont
 | Opção | O que faz |
 |---|---|
 | `--testar` | só mostra o que responderia e a lista "para ver". Não escreve nada |
-| `--ensaiar <link do post>` | clica em "Responder" no 1º comentário do post, escreve a resposta, confere o botão "Postar" e sai sem postar |
+| `--ensaiar <link do post>` | clica em "Responder" no 1º comentário do post, escreve e clica em "Postar", mas o envio é **bloqueado no navegador**: mostra se a resposta ia sair dentro da conversa. Nada é publicado |
 | `--uma-vez --max-por-rodada 1` | responde só 1, para conferir no celular |
 | `--agendar` | liga no Agendador de Tarefas do Windows: uma rodada a cada 20 min, sem abrir janela, mesmo com o Claude fechado |
 | `--desagendar` | desliga |
@@ -57,7 +61,7 @@ node 07-Ferramentas/scripts/instagram/ig-responder-comentarios.mjs --conta @cont
 Para funcionar sozinho, o PC tem que estar ligado, com o usuário do Windows entrado, e o BitBrowser aberto com o perfil da conta aberto.
 
 ## Parada (igual às outras funções)
-Login, verificação, limite, bloqueio, resposta recusada ou resposta que não aparece no post: o script **para, trava a conta e mostra um aviso na tela**. Não tenta de novo. O operador confere a conta no BitBrowser e no celular. Só depois roda `--liberar`. Três rodadas seguidas com erro também travam.
+Login, verificação, limite, bloqueio, resposta recusada, resposta que não aparece no post, envio que não ia como resposta (bloqueado, nada publicado) ou resposta que saiu solta: o script **para, trava a conta e mostra um aviso na tela**. Não tenta de novo. O operador confere a conta no BitBrowser e no celular. Só depois roda `--liberar`. Três rodadas seguidas com erro também travam.
 
 ## Onde fica cada coisa (fora do cofre, na pasta do usuário do Windows)
 | Arquivo | O que tem |

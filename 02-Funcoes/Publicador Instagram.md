@@ -26,6 +26,13 @@ Pelo navegador do perfil do BitBrowser da conta:
 3. Colar a legenda e conferir que ficou idêntica.
 4. Sem música adicionada, sem local, sem marcação, sem colaboração, sem rótulo de IA, "compartilhar no Facebook" desligado. Nunca Turbinar.
 5. Compartilhar. Esperar "Seu reel foi compartilhado", abrir o Reel e conferir legenda e vídeo. Print.
+6. Se for Reel de **oferta**: tirar da grade do perfil pelo app do Instagram no celular (nas opções do Reel). Ele continua na aba Reels. Reel **educativo** fica na grade. Ver "Grade do perfil" abaixo.
+
+## Grade do perfil (27/11/2026)
+- **Oferta:** só na aba Reels, fora da grade do perfil.
+- **Educativo:** na grade (feed).
+- Vale para todas as contas, do Samuel e dos vendedores ([[Decisoes]], 27/11).
+- A postagem pelo computador (`ig-postar-lote.mjs`) ainda não tira da grade sozinha. Quem tira é o operador, pelo app do celular, logo depois de publicar a oferta.
 
 Script do tempo dos bots: `07-Ferramentas/scripts/instagram/ig-post-next.mjs` (`--check` confere sem postar; `--conta pedro`). Ajustar caminhos, portas e ids de aba antes de usar.
 

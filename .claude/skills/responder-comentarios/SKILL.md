@@ -12,6 +12,6 @@ As regras desta função ficam nas notas do cofre (fonte única). Leia, nesta or
 3. `05-Operacao/Perfil-do-operador.md`
 4. `02-Funcoes/Respondedor de comentarios.md`
 
-Passo a passo pronto: `04-Modelos/Prompt de respostas nos comentarios.md`. Sempre `--testar` antes, depois 1 resposta conferida no celular, só então `--agendar`.
+Passo a passo pronto: `04-Modelos/Prompt de respostas nos comentarios.md`. Sempre `git pull` e `--testar` antes, depois `--ensaiar <post>` (tem que dizer que a resposta ia sair dentro da conversa), depois 1 resposta conferida no celular (embaixo do comentário da pessoa, não como comentário novo), só então `--agendar`.
 
 Só a mensagem padrão com o WhatsApp do operador. Nunca valor, conversa, Direct, curtida ou seguir. Saída 2 = conta travada: pare, avise o operador e não rode `--liberar` sem ele conferir a conta.

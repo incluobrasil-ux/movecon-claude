@@ -15,6 +15,8 @@ atualizado: 2026-11-27
 
 **Como usar:** preencha a parte PREENCHA, cole no Claude Code aberto na pasta do cofre e envie. O Claude testa sem responder, responde só 1 para você conferir no celular e só depois liga de 20 em 20 minutos. Ele para e espera o seu OK em cada etapa.
 
+**Se você já usou antes de 27/11/2026, umas 17h30:** a versão antiga podia publicar a resposta **solta**, como comentário novo, e não dentro da conversa da pessoa. Já está corrigido. Cole este prompt de novo: o passo 0 atualiza a ferramenta, e os passos 3 e 4 conferem. A tarefa de 20 em 20 minutos usa a versão nova assim que o cofre é atualizado. Os comentários soltos que já saíram você pode apagar pelo celular. As pessoas já foram marcadas neles, e a ferramenta não responde de novo quem já recebeu.
+
 ```
 RESPOSTA AUTOMÁTICA DOS COMENTÁRIOS (prompt padrão do cofre MOVECON-Claude)
 
@@ -30,8 +32,11 @@ Regras fixas (não altere):
 2. Rode py -3 07-Ferramentas/scripts/bitbrowser.py listar e confirme o nome exato do PERFIL. Não abra, não feche e não mexa no perfil.
 3. Teste, sem responder nada:
    node 07-Ferramentas/scripts/instagram/ig-responder-comentarios.mjs --conta <CONTA> --perfil "<PERFIL>" --whatsapp <WHATSAPP> --testar
-   Me mostre a lista VOU RESPONDER, a lista PARA VOCÊ VER e o exemplo de resposta. PARE e espere o meu OK.
-4. Com o meu OK, responda só 1 para eu conferir no celular: o mesmo comando sem --testar e com --uma-vez --max-por-rodada 1. Me diga quem foi respondido e em qual post. PARE e espere o meu OK.
+   Depois rode o ensaio num post da lista (vai até o clique em "Postar", mas o envio é bloqueado; nada é publicado):
+   node 07-Ferramentas/scripts/instagram/ig-responder-comentarios.mjs --conta <CONTA> --perfil "<PERFIL>" --whatsapp <WHATSAPP> --ensaiar <link do post>
+   Tem que aparecer "a resposta ia sair DENTRO da conversa do comentário". Se não aparecer, PARE: não siga para o passo 4.
+   Me mostre a lista VOU RESPONDER, a lista PARA VOCÊ VER, o exemplo de resposta e o resultado do ensaio. PARE e espere o meu OK.
+4. Com o meu OK, responda só 1 para eu conferir no celular: o mesmo comando sem --testar e com --uma-vez --max-por-rodada 1. Me diga quem foi respondido e em qual post. No celular, a resposta tem que aparecer EMBAIXO do comentário da pessoa (dentro da conversa), e não como comentário novo. PARE e espere o meu OK.
 5. Com o meu OK, ligue de 20 em 20 minutos: o mesmo comando, sem --testar, com --agendar. Se a conta tiver menos de 2 semanas, acrescente --max-por-rodada 4 --max-por-dia 30. Mostre a tarefa criada com: schtasks /Query /TN "MOVECON comentarios <CONTA sem o @>"
 6. Se o script sair com código 2 ou aparecer na tela o aviso "respostas automáticas paradas": PARE. Não rode de novo e não rode --liberar. Me mostre o motivo. Eu confiro a conta e mando liberar.
 7. Você só usa a mensagem padrão. Nunca escreve valor ou simulação, nunca continua conversa, nunca manda Direct, nunca curte nem segue, nunca digita senha ou código.
@@ -39,7 +44,8 @@ Regras fixas (não altere):
 REVISÃO OBRIGATÓRIA (responda em português, frases curtas):
 - conta e perfil conferidos;
 - resultado do teste: quantos comentários vai responder e quantos ficaram para eu ver;
-- a resposta de teste: para quem, em qual post e se apareceu;
+- o ensaio: se a resposta ia sair dentro da conversa;
+- a resposta de teste: para quem, em qual post e se apareceu embaixo do comentário da pessoa;
 - se ficou ligado: de quantos em quantos minutos e o comando para desligar (--desagendar);
 - onde ficam o log e a lista "para ver".
 ```

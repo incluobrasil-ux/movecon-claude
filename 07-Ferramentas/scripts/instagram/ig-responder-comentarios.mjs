@@ -5,7 +5,8 @@
 // Uso (da pasta raiz do cofre, com o BitBrowser aberto e o perfil da conta aberto e logado):
 //   node 07-Ferramentas/scripts/instagram/ig-responder-comentarios.mjs --conta @conta --perfil "NOME NO BITBROWSER" --whatsapp 5577999999999 --testar
 //   --testar          só mostra o que responderia. Não escreve nada no Instagram.
-//   --ensaiar <post>  abre o post (link ou código), clica em "Responder" no 1º comentário, escreve a resposta e APAGA sem publicar.
+//   --ensaiar <post>  abre o post (link ou código), clica em "Responder" no 1º comentário, escreve e clica em "Postar",
+//                     mas o envio é BLOQUEADO no navegador: mostra se ia sair dentro da conversa. Nada é publicado.
 //   (sem --testar)    responde de verdade. --uma-vez: uma rodada e sai. Sem --uma-vez: repete a cada --intervalo-min.
 //   --agendar         cria a tarefa do Windows que roda uma rodada a cada --intervalo-min (padrão 20), sem abrir janela.
 //   --desagendar      apaga a tarefa.   --liberar: tira a trava depois de uma parada (só depois de conferir a conta).
@@ -13,7 +14,10 @@
 //   --porta N         porta do perfil, no lugar de --perfil.
 //   --posts 12  --dias 30  --max-por-rodada 8  --max-por-dia 60  --intervalo-min 20
 // Como funciona: abre uma aba própria em segundo plano no perfil do BitBrowser, lê os posts e os comentários pelos dados
-// que a própria página do Instagram carrega, e responde pela tela, como uma pessoa: "Responder", escreve, "Publicar".
+// que a própria página do Instagram carrega, e responde pela tela, como uma pessoa: "Responder", escreve, "Postar".
+// Antes de o envio sair, confere que vai como RESPOSTA ao comentário certo (o navegador arredonda o número do
+// comentário e a resposta sairia solta: a ferramenta corrige o número). Depois, confere que ficou dentro da conversa.
+// Se não for resposta, bloqueia o envio e para (ver conferirEnvio).
 // Responde só comentário principal (não a resposta dentro de uma conversa), de outra pessoa, sem resposta da conta,
 // dos últimos --dias dias, nos --posts posts mais novos (grade e aba Reels). Em post com muitos comentários, olha os
 // que a página mostra primeiro (cerca de 15). Comentário negativo ("golpe" etc.), propaganda e "já te chamei" não
@@ -149,8 +153,41 @@ async function abrirAba(porta) {
       try { const b = await pg.send('Network.getResponseBody', { requestId: m.params.requestId }, 20000); respostas.push({ url, corpo: b.base64Encoded ? Buffer.from(b.body, 'base64').toString('utf8') : b.body }); } catch {}
     }
   });
+  // conferência do envio: enquanto ligada, todo pedido que não é leitura para aqui antes de sair do navegador.
+  // filtro(corpo) devolve null (segue), { acao: 'barrar' } ou { acao: 'trocar', corpo }. Na dúvida, barra.
+  let filtro = null, sondaVista = false; const SONDA = 'sonda_movecon=' + Math.random().toString(36).slice(2);
+  pg.on(async m => {
+    if (m.method !== 'Fetch.requestPaused') return;
+    const { requestId, request: r } = m.params;
+    const leitura = /^(GET|HEAD|OPTIONS)$/i.test(r.method);
+    let d = null;
+    try {
+      if (filtro && !leitura) {
+        let corpo = r.postData || '';
+        if (!corpo && r.postDataEntries) corpo = r.postDataEntries.map(e => Buffer.from(e.bytes || '', 'base64').toString('utf8')).join('');
+        if (corpo === SONDA) { sondaVista = true; d = { acao: 'barrar' }; }
+        else if (!corpo && r.hasPostData) d = { acao: 'barrar' };
+        else d = filtro(corpo);
+      }
+    } catch { d = { acao: 'barrar' }; }
+    try {
+      if (d?.acao === 'barrar') await pg.send('Fetch.failRequest', { requestId, errorReason: 'BlockedByClient' });
+      else if (d?.acao === 'trocar') await pg.send('Fetch.continueRequest', { requestId, postData: Buffer.from(d.corpo, 'utf8').toString('base64') });
+      else await pg.send('Fetch.continueRequest', { requestId });
+    } catch {}
+  });
   await pg.send('Network.enable', {}); await pg.send('Page.enable');
+  await pg.send('Network.setBypassServiceWorker', { bypass: true }); // sem isso, parte dos pedidos escapa da conferência
   const ev = async (expr, to = 60000) => { const r = await pg.send('Runtime.evaluate', { expression: expr, returnByValue: true, awaitPromise: true }, to); if (r.exceptionDetails) throw new Error('JS: ' + (r.exceptionDetails.exception?.description || r.exceptionDetails.text)); return r.result?.value; };
+  // liga a conferência e prova que ela pega os pedidos (uma sonda que é barrada e nunca sai). false = não ligou.
+  const vigiar = async f => {
+    filtro = f; sondaVista = false;
+    await pg.send('Fetch.enable', { patterns: [{ urlPattern: '*', requestStage: 'Request' }] });
+    try { await ev(`fetch('/api/graphql', { method: 'POST', body: ${JSON.stringify(SONDA)}, credentials: 'include' }).then(() => 0, () => 0)`, 15000); } catch {}
+    for (let i = 0; i < 20 && !sondaVista; i++) await sleep(150);
+    return sondaVista;
+  };
+  const soltar = async () => { filtro = null; try { await pg.send('Fetch.disable'); } catch {} };
   const navegar = async url => {
     respostas.length = 0;
     await pg.send('Page.navigate', { url });
@@ -164,7 +201,7 @@ async function abrirAba(porta) {
     throw new Pular('a página do Instagram não carregou (internet?)');
   };
   const esperarDados = async (teste, ms = 15000) => { const ate = Date.now() + ms; while (Date.now() < ate) { if (respostas.some(r => teste(r.corpo))) return true; await sleep(500); } return false; };
-  return { ev, cdp: (m, p) => pg.send(m, p), navegar, respostas, esperarDados, fechar: async () => { pg.fechar(); await fecharAba(); } };
+  return { ev, cdp: (m, p) => pg.send(m, p), navegar, respostas, esperarDados, vigiar, soltar, fechar: async () => { await soltar(); pg.fechar(); await fecharAba(); } };
 }
 
 // ---------- dados que a página carregou ----------
@@ -206,7 +243,11 @@ async function lerPosts(aba) {
   await aba.esperarDados(c => c.includes('user_timeline_graphql_connection'));
   juntar();
   for (const t of await aba.ev(`[...document.querySelectorAll('script[type="application/json"]')].map(s => s.textContent).filter(t => t.includes('comment_count'))`)) for (const m of acharObjetos(lerJSON(t), ehMidia)) guardar(m, false);
-  const meu = await aba.ev(`/Editar perfil|Edit profile/.test(document.body.innerText)`);
+  // logado na conta certa: pelo cookie do Instagram (id de quem está logado = dono dos posts) ou pelo "Editar perfil"
+  // (em aba de segundo plano a tela pode demorar a desenhar: espera até 8 s)
+  let meu = false;
+  try { const ck = await aba.cdp('Network.getCookies', { urls: ['https://www.instagram.com/'] }); const uid = (ck.cookies || []).find(c => c.name === 'ds_user_id')?.value || ''; if (uid && dono) meu = uid === dono; } catch {}
+  for (let i = 0; i < 16 && !meu; i++) { meu = await aba.ev(`/Editar perfil|Edit profile/.test(document.body.innerText)`); if (!meu) await sleep(500); }
   const lista = [...midias.values()].sort((a, b) => (BigInt(String(b.pk)) > BigInt(String(a.pk)) ? 1 : -1));
   return { posts: lista.slice(0, POSTS), dono, meu };
 }
@@ -302,7 +343,65 @@ async function lerComentarios(aba, code, dono, est, expandir = true) {
   return { principais, comResposta };
 }
 
-// escreve a resposta pela tela, com o teclado do navegador. ensaio = escreve, confere o botão Postar e apaga, sem postar.
+// ---------- conferência do envio (27/11/2026, depois do 1º uso real) ----------
+// O Instagram no navegador manda o número do comentário respondido como número de JavaScript, que arredonda os
+// últimos dígitos (ex.: 18103286237051469 sai como 18103286237051468). Com o número errado o Instagram não acha o
+// comentário e a resposta sai SOLTA, como comentário novo com o @ na frente (aconteceu com um vendedor em 27/11).
+// Antes de o envio sair, a ferramenta confere: mesmo texto, mesmo post e resposta para o comentário certo. Número
+// arredondado = põe o número certo e deixa sair. Qualquer outra coisa (sem resposta, outro comentário) = bloqueia.
+function lerCampos(corpo) {
+  const d = s => { try { return decodeURIComponent(s.replace(/\+/g, ' ')); } catch { return s; } };
+  return String(corpo || '').split('&').map(cru => { const i = cru.indexOf('='); return i < 0 ? { cru, k: d(cru), v: '' } : { cru, k: d(cru.slice(0, i)), v: d(cru.slice(i + 1)) }; });
+}
+function conferirEnvio(corpo, { texto, cpk, mpk }) {
+  const campos = lerCampos(corpo);
+  const iv = campos.findIndex(c => c.k === 'variables');
+  let dados = null;
+  if (iv >= 0) dados = acharObjetos(lerJSON(campos[iv].v), o => typeof o.comment_text === 'string')[0] || null; // GraphQL
+  else { const c = campos.find(x => x.k === 'comment_text'); if (c) dados = Object.fromEntries(campos.map(x => [x.k, x.v])); } // caminho antigo
+  if (!dados) return null; // não é envio de comentário
+  const pai = dados.replied_to_comment_id != null && dados.replied_to_comment_id !== '' ? String(dados.replied_to_comment_id) : null;
+  const midia = dados.media_id != null ? String(dados.media_id).split('_')[0] : null;
+  const base = { pai };
+  if (limpo(dados.comment_text) !== limpo(texto)) return { ...base, acao: 'barrar', erro: 'o texto que ia sair é diferente da resposta' };
+  if (midia && mpk && midia !== String(mpk)) return { ...base, acao: 'barrar', erro: 'ia sair em outro post' };
+  if (!pai || /^0+$/.test(pai)) return { ...base, acao: 'barrar', erro: 'ia sair como comentário solto, sem ser resposta' };
+  if (pai === String(cpk)) return { ...base, acao: 'seguir' };
+  if (!/^\d+$/.test(pai) || Number(pai) !== Number(cpk)) return { ...base, acao: 'barrar', erro: `ia responder outro comentário (${pai})` };
+  // número arredondado pelo navegador: troca só esse número, o resto do envio sai igual
+  const novo = campos.map((c, i) => {
+    if (iv >= 0 && i === iv) return 'variables=' + encodeURIComponent(c.v.replace(/("replied_to_comment_id"\s*:\s*)("?)-?\d+\2/, `$1$2${cpk}$2`));
+    if (iv < 0 && c.k === 'replied_to_comment_id') return 'replied_to_comment_id=' + encodeURIComponent(String(cpk));
+    return c.cru;
+  }).join('&');
+  const conferido = conferirEnvio(novo, { texto, cpk, mpk });
+  if (!conferido || conferido.acao !== 'seguir') return { ...base, acao: 'barrar', erro: 'não consegui corrigir o número do comentário' };
+  return { ...base, acao: 'trocar', corpo: novo };
+}
+
+// depois de publicar: abre o post e confere que a resposta está DENTRO da conversa do comentário
+async function confirmarNaConversa(aba, it, texto) {
+  await espera(2500, 4000);
+  await aba.navegar(link(it.code));
+  for (let i = 0; i < 20; i++) { if (await aba.ev('document.querySelectorAll("[role=button]").length > 5')) break; await sleep(500); }
+  await sleep(1500);
+  const todos = new Map();
+  const juntar = fontes => { for (const t of fontes) for (const c of acharObjetos(lerJSON(t), ehComentario)) todos.set(String(c.pk), c); };
+  juntar(await aba.ev(`[...document.querySelectorAll('script[type="application/json"]')].map(s => s.textContent).filter(t => t.includes('child_comment_count') || t.includes('comments_connection'))`));
+  juntar(aba.respostas.map(r => r.corpo));
+  const meus = () => [...todos.values()].filter(c => limpo(c.text) === limpo(texto));
+  const dentro = () => meus().some(c => String(c.parent_comment_id || '') === String(it.cpk));
+  if (dentro()) return 'dentro';
+  if ((await aba.ev(verRespostasJS(it.user, prefixo(it.txt)))) === 'ok') { await espera(2500, 3500); juntar(aba.respostas.map(r => r.corpo)); }
+  if (dentro()) return 'dentro';
+  if (meus().some(c => !c.parent_comment_id)) return 'solto';
+  // a conversa só tinha o comentário da pessoa: se agora a conta aparece nela, é a nossa resposta
+  if (await aba.ev(donoNaConversaJS(it.user, prefixo(it.txt), CONTA))) return 'dentro';
+  return 'nao-achei';
+}
+
+// escreve a resposta pela tela (Responder -> caixa com "@fulano " -> digita -> Postar) e confere o envio antes de sair.
+// ensaio = faz tudo até o clique em "Postar", mas o envio é bloqueado no navegador: nada é publicado.
 async function responder(aba, it, texto, ensaio) {
   const r1 = await aba.ev(clicarResponderJS(it.user, prefixo(it.txt)));
   if (r1 !== 'ok') return { ok: false, erro: r1 === 'sem-bloco' ? 'não achei o comentário na tela' : r1 };
@@ -313,22 +412,41 @@ async function responder(aba, it, texto, ensaio) {
   if (r2.antes.toLowerCase() + resto.toLowerCase() !== texto.toLowerCase()) return { ok: false, erro: 'o começo da resposta não bate com a caixa', antes: r2.antes };
   await aba.cdp('Input.insertText', { text: resto });
   await espera(1500, 2500);
-  const r3 = await aba.ev(postarJS(r2.antes + resto, ensaio));
-  if (!r3.ok || ensaio) {
-    // sai da página sem postar: o rascunho da caixa é descartado (testado em 27/11)
-    try { await aba.cdp('Page.navigate', { url: 'about:blank' }); await sleep(800); } catch {}
-    return { ...r3, antes: r2.antes };
-  }
   texto = r2.antes + resto;
-  for (let i = 0; i < 30; i++) {
-    await sleep(1000);
-    const nova = acharObjetos(aba.respostas.flatMap(r => lerJSON(r.corpo)), o => o.pk != null && o.text === texto);
-    const d = await aba.ev(depoisJS(texto));
-    if (d.erro) throw new Parar(`o Instagram não aceitou a resposta para @${it.user}: ${d.erro}`);
-    if (nova.length) return { ok: true, pk: String(nova[0].pk) };
-    if (i >= 6 && d.vazia && d.naTela) return { ok: true, pk: null };
-  }
-  throw new Parar(`cliquei em Postar na resposta para @${it.user}, mas ela não apareceu em 30 s. Confira no celular antes de liberar.`);
+  // sair da página sem postar descarta o rascunho da caixa (testado em 27/11)
+  const descartar = async () => { try { await aba.cdp('Page.navigate', { url: 'about:blank' }); await sleep(1200); } catch {} };
+  const r3 = await aba.ev(postarJS(texto, true)); // só confere o botão
+  if (!r3.ok) { await descartar(); return r3; }
+  const envio = { vistos: 0, ok: false, erro: null, pai: null, corrigido: false };
+  const ligou = await aba.vigiar(corpo => {
+    const c = conferirEnvio(corpo, { texto, cpk: it.cpk, mpk: it.mpk });
+    if (!c) return null;
+    envio.vistos++; envio.pai = c.pai; envio.erro = c.erro || null; envio.ok = c.acao !== 'barrar'; envio.corrigido = c.acao === 'trocar';
+    return ensaio || c.acao === 'barrar' ? { acao: 'barrar' } : c;
+  });
+  let desc = '';
+  try {
+    if (!ligou) { await descartar(); return { ok: false, erro: 'não consegui ligar a conferência do envio no navegador (nada foi enviado)' }; }
+    const r4 = await aba.ev(postarJS(texto, false));
+    if (!r4.ok) { await descartar(); return r4; }
+    for (let i = 0; i < 40 && !envio.vistos; i++) await sleep(250);
+    if (!envio.vistos) { await descartar(); return { ok: false, erro: 'cliquei em Postar, mas o envio não passou pela conferência (descartei a resposta)' }; }
+    desc = envio.ok ? `resposta dentro da conversa do comentário ${it.cpk}${envio.corrigido ? ` (o navegador ia mandar ${envio.pai}; corrigi)` : ''}` : envio.erro;
+    if (ensaio) { await descartar(); return { ok: envio.ok, ensaio: true, envio: desc + ' | envio bloqueado: nada publicado' }; }
+    if (!envio.ok) { await descartar(); throw new Parar(`bloqueei a resposta para @${it.user} em ${link(it.code)}: ${envio.erro}. Nada foi publicado.`); }
+    for (let i = 0; i < 30; i++) {
+      await sleep(1000);
+      const d = await aba.ev(depoisJS(texto));
+      if (d.erro) throw new Parar(`o Instagram não aceitou a resposta para @${it.user}: ${d.erro}`);
+      const nova = acharObjetos(aba.respostas.flatMap(r => lerJSON(r.corpo)), o => o.pk != null && o.text === texto)[0];
+      if (nova) { if (String(nova.parent_comment_id ?? '') === String(it.cpk)) return { ok: true, pk: String(nova.pk), desc }; break; }
+      if (i >= 8 && d.vazia) break;
+    }
+  } finally { await aba.soltar(); }
+  const onde = await confirmarNaConversa(aba, it, texto);
+  if (onde === 'dentro') return { ok: true, pk: null, desc };
+  if (onde === 'solto') throw new Parar(`a resposta para @${it.user} saiu SOLTA (fora da conversa) em ${link(it.code)}. Apague pelo celular. Parei para não repetir.`);
+  throw new Parar(`publiquei a resposta para @${it.user} em ${link(it.code)}, mas não consegui confirmar que ficou dentro da conversa. Confira no celular antes de liberar.`);
 }
 const horas = s => { const h = (Date.now() / 1000 - s) / 3600; return h < 1 ? 'há menos de 1 h' : h < 48 ? `há ${Math.round(h)} h` : `há ${Math.round(h / 24)} dias`; };
 const curto = s => (s.length > 90 ? s.slice(0, 87) + '...' : s);
@@ -345,9 +463,10 @@ async function ensaio() {
     principais.slice(0, 5).forEach(c => console.log(`  @${c.user?.username} | filhos ${c.child_comment_count} | ${horas(c.created_at)} | "${curto(limpo(c.text))}"`));
     const alvo = principais.find(c => c.user?.username && c.user.username.toLowerCase() !== CONTA);
     if (!alvo) return console.log('Nenhum comentário de outra pessoa para ensaiar.');
-    const it = { user: alvo.user.username, txt: alvo.text };
+    const it = { code, user: alvo.user.username, txt: alvo.text, cpk: String(alvo.pk), mpk: '' };
     const r = await responder(aba, it, MODELOS[0](it.user), true);
     console.log(`ENSAIO (nada publicado) em @${it.user}:`, JSON.stringify(r));
+    console.log(r.ok && r.ensaio ? 'Resultado: a resposta ia sair DENTRO da conversa do comentário. O envio foi bloqueado no navegador.' : 'Resultado: a resposta NÃO sairia certa. Não ligue a resposta automática; avise o gestor.');
   } finally { await aba.fechar(); }
 }
 
@@ -429,7 +548,7 @@ async function rodada() {
         est.dias[hoje()] = (est.dias[hoje()] || 0) + 1;
         salvarEstado(est);
         feitos++;
-        log(`respondi @${it.user} em ${link(it.code)}`);
+        log(`respondi @${it.user} em ${link(it.code)}: ${r.desc || 'dentro da conversa'}`);
         naTela = ''; // depois de publicar, reabre o post antes da próxima resposta
       }
     } finally {
