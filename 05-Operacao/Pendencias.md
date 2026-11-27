@@ -21,6 +21,12 @@ Material em `08-Treinamento/`. Antes do dia:
 - [ ] Nicho de cada vendedor e quem aprova as peças dele.
 - [ ] **SDR depois do Grok:** quem responde o lead no CRM? O bot do Grok recebia pelo webhook e respondia pela API do CRM. No CRM em produção, o módulo `ai-agents` só faz triagem (AGT-01) e resumo diário (AGT-09), e a chave do "Meu Claude" é só de leitura. Falta ligar um SDR que leia as "Regras do meu SDR" de cada vendedor e responda pela API (e a chave da Anthropic no CRM).
 
+## Perfil @tananconsorcio (aberta em 27/11/2026)
+- [ ] Link do WhatsApp na bio (https://wa.me/5577998392976): o Instagram só deixa pôr link pelo app do celular.
+- [ ] Reels de teste: trocar para perfil profissional (criador) e conferir se a opção aparece; até lá, Reel normal.
+- [ ] 4 vídeos de prova social (depoimento, 18 dias, lance embutido, cota contemplada): story de vídeo só pelo app.
+- [ ] Oferta de Black Friday (1ª parcela em 2027): confirmar com a Alpha por escrito antes de usar.
+
 ## Música em alta pelo PC (aberta em 26/11/2026)
 - [ ] Escolher o caminho da música em alta: **agendador** (Buffer ou Metricool, sem Meta Developers; testar 1 conta no plano grátis) ou **script** `ig_musica.py` (precisa de app no Meta Developers). Hoje a postagem é pelo BitBrowser, sem música.
 - [ ] Contas como criador ou comercial; Páginas do Facebook ligadas; app e token (passo a passo em [[Musica em alta pela API]]).

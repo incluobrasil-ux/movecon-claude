@@ -94,6 +94,9 @@ async function listarReels() {
   if (!codes) {
     const vazio = await c.ev(`/ainda n[aã]o (publicou|h[aá] publica[cç][oõ]es)|when you share|no (posts|reels) yet|0 (publica[cç][oõ]es|posts)/i.test(document.body.innerText || '')`);
     if (vazio) return [];
+    // 27/11: conta nova sem nenhum Reel não tem a aba Reels (só a grade): sem link da aba = nada postado em Reels ainda
+    const semAba = await c.ev(`!!document.querySelector('header') && /Editar perfil|Edit profile/.test(document.body.innerText) && !document.querySelector('a[href="/${HANDLE}/reels/"]')`);
+    if (semAba) return [];
     passo = 0;
     codes = await waitFor(tenta, 25000, 1500);
     if (!codes) await fim(2, { ok: false, erro: 'aba Reels do perfil não carregou (não dá para checar repetição)' });
