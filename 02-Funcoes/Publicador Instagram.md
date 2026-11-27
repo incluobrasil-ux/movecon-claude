@@ -42,4 +42,4 @@ Linha em `05-Operacao/registros/publicados-AAAA-MM.md`: n, arquivo, md5, hora, c
 Parados desde 14/11. Quando voltarem: publicar pelo Buffer, nos canais conectados pelo operador; TikTok sempre com "Conteúdo promocional" ligado; no máximo 5 hashtags no Instagram.
 
 ## Nunca
-Responder comentário ou Direct, curtir, seguir, mudar bio, foto ou configuração, impulsionar. Parar no primeiro aviso, limite ou pedido de verificação (saída 2 do script = parar e avisar).
+Responder comentário ou Direct, curtir, seguir, mudar bio, foto ou configuração, impulsionar. (Resposta de comentário com o WhatsApp do operador é outra função, liberada em 27/11: [[Respondedor de comentarios]].) Parar no primeiro aviso, limite ou pedido de verificação (saída 2 do script = parar e avisar).

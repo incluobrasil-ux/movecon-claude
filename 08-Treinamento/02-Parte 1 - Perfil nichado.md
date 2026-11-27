@@ -95,7 +95,7 @@ Temas que servem para qualquer nicho: o que é carta de crédito · sorteio x la
 - O @ na tela é o da conta que posta.
 - TikTok: ligar "Conteúdo promocional". Instagram: no máximo 5 hashtags.
 - Legenda com os **mesmos valores da tela**, "Vídeo ilustrativo." quando o vídeo é de terceiro.
-- Nunca: turbinar, responder comentário ou Direct pelo Claude, curtir, seguir. Quem responde é o vendedor.
+- Nunca: turbinar, responder comentário ou Direct pelo Claude, curtir, seguir. Quem responde é o vendedor. Exceção (27/11/2026): o Claude pode responder os comentários sem resposta só com o seu WhatsApp, de 20 em 20 minutos ([[Respondedor de comentarios]]).
 
 ## 5. Pedidos prontos para o Claude
 Copie, troque o que está entre colchetes e cole.

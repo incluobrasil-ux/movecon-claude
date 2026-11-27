@@ -16,6 +16,7 @@ atualizado: 2026-11-19
 - Mexer em configuração da conta: senha, e-mail, telefone, bio, foto, privacidade. Aceitar termos.
 - Clicar em **Turbinar**, **Promover**, impulsionar ou anúncio pago. Mexer em Business Manager ou Gerenciador de Anúncios sem ordem escrita.
 - Abrir o Messenger, responder comentário, mandar Direct. Quem responde lead é o operador ou o SDR.
+  - **Única exceção (gestor, 27/11/2026):** responder comentário **só com a mensagem padrão do WhatsApp do operador**, pela ferramenta `ig-responder-comentarios.mjs`, na conta do próprio operador. Regras em [[Respondedor de comentarios]]. Conversa, valor, Direct e Messenger continuam proibidos.
 - Usar a conta pessoal do operador ou de quem cuida da BM para publicar.
 
 ## Uma região por conta

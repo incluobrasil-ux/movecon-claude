@@ -15,6 +15,7 @@ As skills ficam em `.claude/skills/` (pasta oculta, por isso o Obsidian não mos
 | escrever-copy | texto do anúncio, legenda | [[Copywriter]], [[Anuncio Marketplace]] |
 | publicar-marketplace | postar no Marketplace, rodada, grupos | [[Publicador Marketplace]] |
 | publicar-instagram | postar Reel | [[Publicador Instagram]] |
+| responder-comentarios | responder os comentários sem resposta com o WhatsApp do operador, a cada 20 min | [[Respondedor de comentarios]] |
 | conferir-no-ar | conferir se saiu, repostar erro técnico | regra própria |
 | contagem-marketplace | relatório, cliques | [[Analista]], [[Relatorio diario]] |
 | atendimento | o que respondo, objeção, briefing | [[Atendimento]] |

@@ -23,13 +23,14 @@ Este cofre substitui os bots do Grok. As mesmas funções (minerar, editar, escr
 | "Minera 50 vídeos brutos de caminhão e carro" | [[Minerador]] (criativos) |
 | "Edita esses brutos no padrão dos Reels" | [[Editor]] + [[Reel Instagram]] |
 | "Posta o próximo Reel na @minha_conta" | [[Publicador Instagram]] |
+| "Responde os comentários da @minha_conta com meu WhatsApp, de 20 em 20 minutos" | [[Respondedor de comentarios]] + [[Prompt de respostas nos comentarios]] |
 | "Faz o relatório do Marketplace de hoje" | [[Analista]] + [[Relatorio diario]] |
 | "O lead disse que vai pensar, o que respondo?" | [[Atendimento]] |
 | "O que está pendente?" | [[Pendencias]] |
 
 ## Mapa do cofre
 - **Regras que valem sempre:** [[Regras de ouro]] · [[Compliance]] · [[Aprovacao e registro]] · [[Contas e navegador]]
-- **Funções:** [[Coordenador]] · [[Minerador]] · [[Editor]] · [[Copywriter]] · [[Publicador Marketplace]] · [[Publicador Instagram]] · [[Analista]] · [[Atendimento]]
+- **Funções:** [[Coordenador]] · [[Minerador]] · [[Editor]] · [[Copywriter]] · [[Publicador Marketplace]] · [[Publicador Instagram]] · [[Respondedor de comentarios]] · [[Analista]] · [[Atendimento]]
 - **Padrões:** [[Anuncio Marketplace]] · [[Reel Instagram]] · [[Fotos de veiculo]] · [[Calculo de entrada e parcela]] · [[Mineracao - o que procurar]]
 - **Modelos:** [[Pasta do bem]] · [[Entrega de mineracao]] · [[LEIA-ME de edicao]] · [[Lista de aprovacao]] · [[Registro de publicacao]] · [[Relatorio diario]]
 - **Operação deste operador:** [[Perfil-do-operador]] · [[Decisoes]] · [[Pendencias]] · pasta `05-Operacao/registros/`
