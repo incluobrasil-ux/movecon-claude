@@ -32,7 +32,14 @@ Sem valor, sem prazo e sem promessa: segue [[Compliance]] (B, atendimento). Para
 - Conta com menos de 2 semanas: use `--max-por-rodada 4 --max-por-dia 30`.
 
 ## Ferramenta
-`07-Ferramentas/scripts/instagram/ig-responder-comentarios.mjs`. Usa o perfil do BitBrowser já logado: lê os comentários pela própria sessão do navegador, numa aba nova em segundo plano, que fecha no fim. Não abre nem fecha perfil: se o perfil estiver fechado, pula a rodada.
+`07-Ferramentas/scripts/instagram/ig-responder-comentarios.mjs`. Usa o perfil do BitBrowser já logado, numa aba nova em segundo plano que fecha no fim. Não abre nem fecha perfil: se o perfil estiver fechado, pula a rodada.
+- **Lê** os posts (grade e aba Reels) e os comentários pelos dados que a própria página do Instagram carrega.
+- **Responde pela tela**, como uma pessoa: "Responder" no comentário certo, confere que a caixa abriu com o @ da pessoa, digita, "Postar".
+- Em post com muitos comentários, olha os que a página mostra primeiro (cerca de 15).
+- **Não roda junto com a postagem** (`ig-postar-lote.mjs`): a postagem espera a rodada de respostas acabar, e a rodada pula se houver post sendo publicado.
+
+Testado em 27/11/2026 no @tananconsorcio (leitura dos 12 posts e rodada escondida pela tarefa) e num post público com comentários (ensaio até o botão "Postar", sem postar). O clique final em "Postar" se confere no passo de 1 resposta do prompt.
+Em 27/11/2026 o Instagram não respondia mais pelo caminho antigo de dados pelo navegador (`/api/v1/...`, "página não encontrada"): por isso a leitura é pela página.
 
 ```
 node 07-Ferramentas/scripts/instagram/ig-responder-comentarios.mjs --conta @conta --perfil "NOME NO BITBROWSER" --whatsapp 5577999999999 --testar
@@ -40,6 +47,7 @@ node 07-Ferramentas/scripts/instagram/ig-responder-comentarios.mjs --conta @cont
 | Opção | O que faz |
 |---|---|
 | `--testar` | só mostra o que responderia e a lista "para ver". Não escreve nada |
+| `--ensaiar <link do post>` | clica em "Responder" no 1º comentário do post, escreve a resposta, confere o botão "Postar" e sai sem postar |
 | `--uma-vez --max-por-rodada 1` | responde só 1, para conferir no celular |
 | `--agendar` | liga no Agendador de Tarefas do Windows: uma rodada a cada 20 min, sem abrir janela, mesmo com o Claude fechado |
 | `--desagendar` | desliga |
@@ -61,6 +69,6 @@ Login, verificação, limite, bloqueio, resposta recusada ou resposta que não a
 Nome e conversa de cliente não entram no cofre ([[Regras de ouro]]). Quem chamou no WhatsApp entra no CRM pelo atendimento.
 
 ## Nunca
-Responder com valor, simulação ou conversa; mandar Direct; curtir; seguir; responder comentário negativo; apagar ou esconder comentário; rodar em conta que não seja a do operador; rodar dois scripts no mesmo perfil ao mesmo tempo.
+Responder com valor, simulação ou conversa; mandar Direct; curtir; seguir; responder comentário negativo; apagar ou esconder comentário; rodar em conta que não seja a do operador; rodar dois scripts no mesmo perfil ao mesmo tempo (a trava entre respostas e postagem já é automática; outros scripts, não).
 
 Modelo de pedido para o vendedor: [[Prompt de respostas nos comentarios]].

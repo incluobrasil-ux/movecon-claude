@@ -13,7 +13,7 @@
 // Ordem: a de LEGENDAS.md. Item já postado (postados.json da entrega ou mesma 1ª linha no perfil) é pulado.
 // Para no primeiro sinal de login, verificação, limite, aviso, termos ou erro (saída 2) e não tenta de novo.
 // Nunca: Turbinar, anúncio, música, compartilhar no Facebook. Nunca digita senha.
-import fs from 'fs'; import crypto from 'crypto'; import path from 'path';
+import fs from 'fs'; import crypto from 'crypto'; import path from 'path'; import os from 'os';
 import { connect, ensureVisible, STATE_JS, clickLabel, mouseClick, sleep, listTabs } from './ig-lib.mjs';
 
 const args = process.argv.slice(2);
@@ -59,9 +59,23 @@ if (!fila.length) sair(0, { ok: true, nada_a_postar: true });
 if (fs.existsSync(LOCK)) { try { const p = JSON.parse(fs.readFileSync(LOCK, 'utf8')); if (Date.now() - new Date(p.inicio).getTime() < 20 * 60 * 1000) sair(1, { ok: false, erro: 'ig.lock: outro post em andamento' }); } catch {} }
 fs.writeFileSync(LOCK, JSON.stringify({ pid: process.pid, inicio: new Date().toISOString() }));
 let c = null;
-async function fim(code, obj) { try { c && c.close(); } catch {} try { fs.unlinkSync(LOCK); } catch {} sair(code, obj); }
+// 27/11: a resposta automática dos comentários (ig-responder-comentarios.mjs) usa uma aba própria no mesmo perfil.
+// Os dois nunca rodam juntos: a postagem espera a rodada de respostas acabar e marca "postando" enquanto posta.
+const MV = path.join(os.homedir(), '.movecon');
+const POSTANDO = path.join(MV, `postando-${HANDLE}.lock`), RESPONDENDO = path.join(MV, `comentarios-${HANDLE}.lock`);
+function marcarPostando(on) { try { fs.mkdirSync(MV, { recursive: true }); if (on) fs.writeFileSync(POSTANDO, JSON.stringify({ pid: process.pid, inicio: new Date().toISOString() })); else fs.unlinkSync(POSTANDO); } catch {} }
+async function esperarRespostas() {
+  for (let i = 0; i < 60; i++) {
+    let rodando = false; try { rodando = Date.now() - new Date(JSON.parse(fs.readFileSync(RESPONDENDO, 'utf8')).inicio).getTime() < 15 * 60e3; } catch {}
+    if (!rodando) return;
+    if (i === 0) log('esperando a rodada de respostas dos comentários acabar');
+    await sleep(15000);
+  }
+}
+async function fim(code, obj) { try { c && c.close(); } catch {} try { fs.unlinkSync(LOCK); } catch {} marcarPostando(false); sair(code, obj); }
 
 // ---------- conexão: aba do Instagram no perfil já aberto ----------
+await esperarRespostas(); marcarPostando(true);
 let tabs = [];
 try { tabs = await listTabs(PORT); } catch (e) { await fim(1, { ok: false, erro: 'não conectou na porta ' + PORT + ' (o perfil do BitBrowser está aberto? use bitbrowser.py porta)' }); }
 if (!tabs.some(t => /^https:\/\/www\.instagram\.com\//.test(t.url || ''))) {
@@ -174,7 +188,9 @@ async function postar(it) {
 await conferirConta();
 const feitos = [];
 for (let i = 0; i < fila.length && feitos.filter(x => x.ok && !x.check).length < MAX; i++) {
+  if (i > 0) { await esperarRespostas(); marcarPostando(true); }
   const r = await postar(fila[i]);
+  marcarPostando(false);
   log(fila[i].n, JSON.stringify(r)); feitos.push({ n: fila[i].n, ...r });
   const restam = fila.length - i - 1;
   if (!CHECK && r.ok && restam && feitos.filter(x => x.ok).length < MAX) { log(`próximo em ${INTERVALO} min`); await sleep(INTERVALO * 60000); }

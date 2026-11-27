@@ -5,18 +5,22 @@
 // Uso (da pasta raiz do cofre, com o BitBrowser aberto e o perfil da conta aberto e logado):
 //   node 07-Ferramentas/scripts/instagram/ig-responder-comentarios.mjs --conta @conta --perfil "NOME NO BITBROWSER" --whatsapp 5577999999999 --testar
 //   --testar          só mostra o que responderia. Não escreve nada no Instagram.
+//   --ensaiar <post>  abre o post (link ou código), clica em "Responder" no 1º comentário, escreve a resposta e APAGA sem publicar.
 //   (sem --testar)    responde de verdade. --uma-vez: uma rodada e sai. Sem --uma-vez: repete a cada --intervalo-min.
 //   --agendar         cria a tarefa do Windows que roda uma rodada a cada --intervalo-min (padrão 20), sem abrir janela.
 //   --desagendar      apaga a tarefa.   --liberar: tira a trava depois de uma parada (só depois de conferir a conta).
 //   --preparar        só escreve os arquivos que a tarefa usa (.cmd e .vbs), sem criar a tarefa.
 //   --porta N         porta do perfil, no lugar de --perfil.
 //   --posts 12  --dias 30  --max-por-rodada 8  --max-por-dia 60  --intervalo-min 20
+// Como funciona: abre uma aba própria em segundo plano no perfil do BitBrowser, lê os posts e os comentários pelos dados
+// que a própria página do Instagram carrega, e responde pela tela, como uma pessoa: "Responder", escreve, "Publicar".
 // Responde só comentário principal (não a resposta dentro de uma conversa), de outra pessoa, sem resposta da conta,
-// dos últimos --dias dias, nos --posts posts mais novos. Comentário negativo ("golpe" etc.), propaganda e "já te chamei"
-// não recebem resposta automática: vão para uma lista para o operador ver.
+// dos últimos --dias dias, nos --posts posts mais novos (grade e aba Reels). Em post com muitos comentários, olha os
+// que a página mostra primeiro (cerca de 15). Comentário negativo ("golpe" etc.), propaganda e "já te chamei" não
+// recebem resposta automática: vão para uma lista para o operador ver.
 // Para no primeiro sinal de login, verificação, limite, bloqueio ou erro ao responder (saída 2), trava a conta até
-// --liberar e mostra um aviso na tela.
-// Não abre nem fecha perfil (perfil fechado = pula a rodada). Usa uma aba própria em segundo plano e fecha no fim.
+// --liberar e mostra um aviso na tela. Não abre nem fecha perfil (perfil fechado = pula a rodada).
+// Não roda junto com a postagem (ig-postar-lote.mjs): se houver post em andamento na conta, pula a rodada.
 // Fora do cofre, em %USERPROFILE%\.movecon\: o número (id) dos comentários respondidos, a lista para ver e o log.
 import fs from 'fs'; import path from 'path'; import os from 'os';
 import { execFileSync, spawn } from 'child_process'; import { fileURLToPath } from 'url';
@@ -29,7 +33,8 @@ const PERFIL = opt('--perfil');
 const PORTA = parseInt(opt('--porta', '0'), 10) || 0;
 let ZAP = String(opt('--whatsapp', '')).replace(/\D/g, '');
 if (/^\d{10,11}$/.test(ZAP)) ZAP = '55' + ZAP;
-const TESTAR = tem('--testar');
+const ENSAIAR = opt('--ensaiar');
+const TESTAR = tem('--testar') || !!ENSAIAR;
 const UMA = tem('--uma-vez') || TESTAR;
 const INTERVALO = Math.max(5, Math.round(parseFloat(opt('--intervalo-min', '20')) || 20));
 const POSTS = Math.max(1, parseInt(opt('--posts', '12'), 10) || 12);
@@ -42,6 +47,7 @@ const LOGS = path.join(PASTA, 'logs');
 fs.mkdirSync(LOGS, { recursive: true });
 const ESTADO = path.join(PASTA, `comentarios-${CONTA}.json`);
 const TRAVA = path.join(PASTA, `comentarios-${CONTA}.lock`);
+const POSTANDO = path.join(PASTA, `postando-${CONTA}.lock`); // escrita pelo ig-postar-lote.mjs durante cada post
 const PARA_VER = path.join(PASTA, `comentarios-${CONTA}-para-ver.txt`);
 const TAREFA = `MOVECON comentarios ${CONTA}`;
 
@@ -49,7 +55,7 @@ const log = (...a) => console.log(new Date().toLocaleString('pt-BR'), ...a);
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 const espera = (a, b) => sleep(a + Math.random() * (b - a));
 class Parar extends Error {} // problema na conta: trava até --liberar (saída 2)
-class Pular extends Error {} // nada a fazer agora (perfil fechado, outra rodada rodando): tenta na próxima
+class Pular extends Error {} // nada a fazer agora (perfil fechado, outra rodada ou post rodando): tenta na próxima
 const sair = (code, msg) => { if (msg) console.log(msg); process.exit(code); };
 
 // ---------- mensagem ----------
@@ -82,9 +88,10 @@ function salvarEstado(e) {
   const dias = Object.keys(e.dias).sort(); while (dias.length > 14) delete e.dias[dias.shift()];
   fs.writeFileSync(ESTADO, JSON.stringify(e, null, 1));
 }
+const fresco = (arq, min) => { try { return Date.now() - new Date(JSON.parse(fs.readFileSync(arq, 'utf8')).inicio).getTime() < min * 60e3; } catch { return false; } };
 function pegarTrava() {
-  try { const t = JSON.parse(fs.readFileSync(TRAVA, 'utf8')); if (Date.now() - new Date(t.inicio).getTime() < 30 * 60e3) throw new Pular('outra rodada desta conta ainda está rodando'); }
-  catch (e) { if (e instanceof Pular) throw e; }
+  if (fresco(TRAVA, 30)) throw new Pular('outra rodada desta conta ainda está rodando');
+  if (fresco(POSTANDO, 15)) throw new Pular('tem post sendo publicado nesta conta agora');
   fs.writeFileSync(TRAVA, JSON.stringify({ pid: process.pid, inicio: new Date().toISOString() }));
 }
 function soltarTrava() { try { const t = JSON.parse(fs.readFileSync(TRAVA, 'utf8')); if (t.pid === process.pid) fs.unlinkSync(TRAVA); } catch {} }
@@ -117,104 +124,232 @@ async function acharPorta() {
 function conectar(url) {
   const ws = new WebSocket(url);
   const pronto = new Promise((r, j) => { const t = setTimeout(() => j(new Error('o navegador não respondeu')), 15000); ws.onopen = () => { clearTimeout(t); r(); }; ws.onerror = () => { clearTimeout(t); j(new Error('o navegador recusou a conexão')); }; });
-  let id = 0; const pend = new Map();
-  ws.onmessage = e => { const m = JSON.parse(e.data); if (m.id && pend.has(m.id)) { const p = pend.get(m.id); pend.delete(m.id); m.error ? p.j(new Error(JSON.stringify(m.error))) : p.r(m.result); } };
+  let id = 0; const pend = new Map(); const ouvintes = [];
+  ws.onmessage = e => { const m = JSON.parse(e.data); if (m.id && pend.has(m.id)) { const p = pend.get(m.id); pend.delete(m.id); m.error ? p.j(new Error(JSON.stringify(m.error))) : p.r(m.result); } else if (m.method) for (const f of ouvintes) f(m); };
   const send = (method, params = {}, to = 60000) => new Promise((r, j) => { const i = ++id; const t = setTimeout(() => { pend.delete(i); j(new Error('o navegador demorou: ' + method)); }, to); pend.set(i, { r: v => { clearTimeout(t); r(v); }, j: e => { clearTimeout(t); j(e); } }); ws.send(JSON.stringify({ id: i, method, params })); });
-  return { pronto, send, fechar: () => { try { ws.close(); } catch {} } };
+  return { pronto, send, on: f => ouvintes.push(f), fechar: () => { try { ws.close(); } catch {} } };
 }
 async function abrirAba(porta) {
   let ver;
   try { ver = await (await fetch(`http://127.0.0.1:${porta}/json/version`, { signal: AbortSignal.timeout(10000) })).json(); }
   catch { throw new Pular(`o perfil não respondeu na porta ${porta} (fechado?)`); }
   const nav = conectar(ver.webSocketDebuggerUrl); await nav.pronto;
-  const { targetId } = await nav.send('Target.createTarget', { url: `https://www.instagram.com/${CONTA}/`, background: true });
+  const { targetId } = await nav.send('Target.createTarget', { url: 'about:blank', background: true });
   const fecharAba = async () => { try { await nav.send('Target.closeTarget', { targetId }, 10000); } catch {} nav.fechar(); };
-  let aba = null;
-  for (let i = 0; i < 30 && !aba; i++) { await sleep(500); aba = (await (await fetch(`http://127.0.0.1:${porta}/json/list`)).json()).find(t => t.id === targetId && t.webSocketDebuggerUrl); }
-  if (!aba) { await fecharAba(); throw new Error('a aba nova não apareceu no navegador'); }
-  const pg = conectar(aba.webSocketDebuggerUrl); await pg.pronto;
-  const ev = async (expr, to = 90000) => { const r = await pg.send('Runtime.evaluate', { expression: expr, returnByValue: true, awaitPromise: true }, to); if (r.exceptionDetails) throw new Error('JS: ' + (r.exceptionDetails.exception?.description || r.exceptionDetails.text)); return r.result?.value; };
-  return { ev, fechar: async () => { pg.fechar(); await fecharAba(); } };
-}
-async function esperarPagina(aba) {
-  for (let i = 0; i < 40; i++) {
-    await sleep(750);
-    let s; try { s = await aba.ev('({ host: location.hostname, path: location.pathname, pronto: document.readyState })', 10000); } catch { continue; }
-    if (s.host !== 'www.instagram.com') continue;
-    if (/^\/(accounts\/login|challenge|checkpoint|accounts\/suspended|accounts\/disabled)/.test(s.path)) throw new Parar(`o Instagram abriu ${s.path} (login, verificação ou bloqueio)`);
-    if (s.pronto !== 'loading') return s;
-  }
-  throw new Pular('a página do Instagram não carregou (internet?)');
+  let tab = null;
+  for (let i = 0; i < 30 && !tab; i++) { await sleep(300); tab = (await (await fetch(`http://127.0.0.1:${porta}/json/list`)).json()).find(t => t.id === targetId && t.webSocketDebuggerUrl); }
+  if (!tab) { await fecharAba(); throw new Error('a aba nova não apareceu no navegador'); }
+  const pg = conectar(tab.webSocketDebuggerUrl); await pg.pronto;
+  // guarda o que a página do Instagram carrega (os mesmos dados que aparecem na tela)
+  const respostas = []; const pedidos = new Map();
+  pg.on(async m => {
+    if (m.method === 'Network.requestWillBeSent') { if (/instagram\.com\/(api\/graphql|graphql\/query|api\/v1\/)/.test(m.params.request.url)) pedidos.set(m.params.requestId, m.params.request.url); }
+    else if (m.method === 'Network.loadingFinished' && pedidos.has(m.params.requestId)) {
+      const url = pedidos.get(m.params.requestId); pedidos.delete(m.params.requestId);
+      try { const b = await pg.send('Network.getResponseBody', { requestId: m.params.requestId }, 20000); respostas.push({ url, corpo: b.base64Encoded ? Buffer.from(b.body, 'base64').toString('utf8') : b.body }); } catch {}
+    }
+  });
+  await pg.send('Network.enable', {}); await pg.send('Page.enable');
+  const ev = async (expr, to = 60000) => { const r = await pg.send('Runtime.evaluate', { expression: expr, returnByValue: true, awaitPromise: true }, to); if (r.exceptionDetails) throw new Error('JS: ' + (r.exceptionDetails.exception?.description || r.exceptionDetails.text)); return r.result?.value; };
+  const navegar = async url => {
+    respostas.length = 0;
+    await pg.send('Page.navigate', { url });
+    for (let i = 0; i < 50; i++) {
+      await sleep(500);
+      let s; try { s = await ev('({ href: location.href, path: location.pathname, pronto: document.readyState })', 10000); } catch { continue; }
+      if (!s.href.startsWith('https://www.instagram.com/')) continue;
+      if (/^\/(accounts\/login|challenge|checkpoint|accounts\/suspended|accounts\/disabled)/.test(s.path)) throw new Parar(`o Instagram abriu ${s.path} (login, verificação ou bloqueio)`);
+      if (s.pronto !== 'loading') return s;
+    }
+    throw new Pular('a página do Instagram não carregou (internet?)');
+  };
+  const esperarDados = async (teste, ms = 15000) => { const ate = Date.now() + ms; while (Date.now() < ate) { if (respostas.some(r => teste(r.corpo))) return true; await sleep(500); } return false; };
+  return { ev, cdp: (m, p) => pg.send(m, p), navegar, respostas, esperarDados, fechar: async () => { pg.fechar(); await fecharAba(); } };
 }
 
-// ---------- Instagram (a mesma sessão já logada no navegador) ----------
-const chamarJS = (metodo, rota, form) => `(async () => {
-  const ck = n => (document.cookie.match(new RegExp('(?:^|; )' + n + '=([^;]*)')) || [])[1] || '';
-  const h = { 'X-CSRFToken': ck('csrftoken'), 'X-IG-App-ID': '936619743392459', 'X-Requested-With': 'XMLHttpRequest', 'X-IG-WWW-Claim': sessionStorage.getItem('www-claim-v2') || '0' };
-  const ini = { method: ${JSON.stringify(metodo)}, headers: h, credentials: 'include' };
-  const form = ${JSON.stringify(form || null)};
-  if (form) { h['Content-Type'] = 'application/x-www-form-urlencoded'; ini.body = new URLSearchParams(form).toString(); }
-  try { const r = await fetch(${JSON.stringify(rota)}, ini); return { status: r.status, url: r.url, text: await r.text() }; }
-  catch (e) { return { status: 0, url: '', text: String(e) }; }
-})()`;
+// ---------- dados que a página carregou ----------
 // números de 16+ dígitos (ids) viram texto antes do JSON.parse, para não perder precisão
 const aspasNosIds = t => String(t || '').replace(/("\w+"\s*:\s*)(-?\d{16,})(?=\s*[,}\]])/g, '$1"$2"');
-async function ig(aba, metodo, rota, form) {
-  const r = await aba.ev(chamarJS(metodo, rota, form));
-  let j = null; try { j = JSON.parse(aspasNosIds(r.text)); } catch {}
-  const ok = r.status === 200 && !!j && (j.status === 'ok' || j.status === undefined);
-  if (!ok) {
-    const t = String(r.text || '').slice(0, 3000);
-    let motivo = null;
-    if (/checkpoint_required|challenge_required|"\/challenge\//i.test(t)) motivo = 'o Instagram pediu verificação (checkpoint)';
-    else if (r.status === 401 || /login_required|"require_login"\s*:\s*true/i.test(t) || /\/accounts\/login/.test(r.url || '')) motivo = 'o Instagram pediu login';
-    else if (r.status === 429 || /feedback_required|"spam"\s*:\s*true|please wait|tente novamente|try again later|rate.?limit|limitamos/i.test(t)) motivo = 'limite ou bloqueio de ação do Instagram';
-    else if (/suspend|disabled|desativad|suspens/i.test(t)) motivo = 'conta suspensa ou desativada';
-    if (motivo) throw new Parar(`${motivo} (HTTP ${r.status} em ${rota.split('?')[0]}): ${t.slice(0, 300)}`);
-  }
-  return { ...r, j, ok };
+function lerJSON(t) {
+  const s = aspasNosIds(String(t || '').replace(/^for \(;;\);/, ''));
+  try { return [JSON.parse(s)]; } catch {}
+  const out = []; for (const linha of s.split(/\r?\n/)) { try { out.push(JSON.parse(linha)); } catch {} }
+  return out;
 }
+function acharObjetos(raizes, teste) {
+  const out = []; const pilha = [...raizes];
+  while (pilha.length) { const o = pilha.pop(); if (!o || typeof o !== 'object') continue; if (!Array.isArray(o) && teste(o)) out.push(o); for (const v of Object.values(o)) if (v && typeof v === 'object') pilha.push(v); }
+  return out;
+}
+const tem_ = (o, k) => Object.prototype.hasOwnProperty.call(o, k);
+const ehMidia = o => typeof o.code === 'string' && o.pk != null && tem_(o, 'comment_count');
+const ehComentario = o => o.pk != null && typeof o.text === 'string' && o.user && typeof o.user === 'object' && tem_(o, 'created_at') && (tem_(o, 'child_comment_count') || tem_(o, 'parent_comment_id'));
 const doUsuario = x => String(x?.user?.pk ?? x?.user?.id ?? x?.user_id ?? '');
-async function lerComentarios(aba, mpk) {
-  const todos = []; let cursor = '', tipo = '', pags = 0;
-  do {
-    const r = await ig(aba, 'GET', `/api/v1/media/${mpk}/comments/?can_support_threading=true&permalink_enabled=false` + (cursor ? `&${tipo}=${encodeURIComponent(cursor)}` : ''));
-    if (!r.ok) throw new Error(`não consegui ler os comentários (HTTP ${r.status}): ${String(r.text).slice(0, 200)}`);
-    todos.push(...(r.j.comments || []));
-    if (r.j.has_more_headload_comments && r.j.next_min_id) { cursor = r.j.next_min_id; tipo = 'min_id'; }
-    else if (r.j.has_more_comments && r.j.next_max_id) { cursor = r.j.next_max_id; tipo = 'max_id'; }
-    else cursor = '';
-    if (cursor) await espera(1000, 2500);
-  } while (cursor && ++pags < 6);
-  const unicos = new Map(); for (const c of todos) unicos.set(String(c.pk), c);
-  return [...unicos.values()];
+const limpo = s => String(s || '').replace(/\s+/g, ' ').trim();
+const prefixo = s => limpo(s).slice(0, 25);
+
+async function lerPosts(aba) {
+  const midias = new Map(); let dono = '';
+  const guardar = (m, doPerfil) => {
+    const u = (m.user?.username || m.owner?.username || '').toLowerCase();
+    if (u && u !== CONTA) return;
+    if (!u && !doPerfil) return;
+    if (u === CONTA && !dono) dono = String(m.user?.pk ?? m.user?.id ?? m.owner?.pk ?? m.owner?.id ?? '');
+    midias.set(m.code, { ...midias.get(m.code), ...m });
+  };
+  const juntar = () => { for (const r of aba.respostas) { const doPerfil = /clips_connection|user_timeline_graphql_connection/.test(r.corpo); for (const m of acharObjetos(lerJSON(r.corpo), ehMidia)) guardar(m, doPerfil); } };
+  await aba.navegar(`https://www.instagram.com/${CONTA}/reels/`);
+  await aba.esperarDados(c => c.includes('clips_connection'));
+  juntar();
+  await espera(1500, 3000);
+  await aba.navegar(`https://www.instagram.com/${CONTA}/`);
+  await aba.esperarDados(c => c.includes('user_timeline_graphql_connection'));
+  juntar();
+  for (const t of await aba.ev(`[...document.querySelectorAll('script[type="application/json"]')].map(s => s.textContent).filter(t => t.includes('comment_count'))`)) for (const m of acharObjetos(lerJSON(t), ehMidia)) guardar(m, false);
+  const meu = await aba.ev(`/Editar perfil|Edit profile/.test(document.body.innerText)`);
+  const lista = [...midias.values()].sort((a, b) => (BigInt(String(b.pk)) > BigInt(String(a.pk)) ? 1 : -1));
+  return { posts: lista.slice(0, POSTS), dono, meu };
 }
-async function temRespostaDaConta(aba, mpk, c, dono) {
-  const n = c.child_comment_count || 0;
-  if (!n) return false;
-  const prev = c.preview_child_comments || [];
-  if (prev.some(x => doUsuario(x) === dono)) return true;
-  if (prev.length >= n) return false;
-  let cursor = '', pags = 0;
-  do {
-    await espera(1000, 2500);
-    const r = await ig(aba, 'GET', `/api/v1/media/${mpk}/comments/${c.pk}/child_comments/` + (cursor ? `?max_id=${encodeURIComponent(cursor)}` : ''));
-    if (!r.ok) throw new Error(`não consegui ler as respostas (HTTP ${r.status})`);
-    if ((r.j.child_comments || []).some(x => doUsuario(x) === dono)) return true;
-    cursor = r.j.has_more_tail_child_comments ? (r.j.next_max_child_cursor || '') : '';
-  } while (cursor && ++pags < 4);
-  return false;
-}
-async function respostaApareceu(aba, it, dono) {
-  for (let i = 0; i < 2; i++) {
-    await espera(4000, 8000);
-    const r = await ig(aba, 'GET', `/api/v1/media/${it.mpk}/comments/${it.cpk}/child_comments/`);
-    if (r.ok && (r.j.child_comments || []).some(x => doUsuario(x) === dono)) return true;
+
+// ---------- tela do post (como uma pessoa) ----------
+const BASE_JS = `
+  const clean = s => String(s || '').replace(/\\s+/g, ' ').trim();
+  const VER = /^(—\\s*)?(Ver (todas as )?(\\d+ )?respostas?( \\(\\d+\\))?|Ver mais respostas|View (all )?(\\d+ )?repl(y|ies)( \\(\\d+\\))?|View more replies)$/i;
+  const responderBtns = () => [...document.querySelectorAll('[role=button]')].filter(b => /^(Responder|Reply)$/.test(clean(b.innerText)));
+  // o bloco de um comentário = o 1º elemento acima do botão "Responder" que tem link de perfil; o autor é o 1º link de perfil dele
+  const autorDe = el => { const a = [...el.querySelectorAll('a[href]')].find(x => /^\\/[A-Za-z0-9._]+\\/$/.test(x.getAttribute('href'))); return a ? a.getAttribute('href').slice(1, -1).toLowerCase() : null; };
+  const bloco = (user, pre) => {
+    for (const b of responderBtns()) {
+      let el = b;
+      for (let i = 0; i < 10 && el; i++) {
+        el = el.parentElement; if (!el) break;
+        const autor = autorDe(el);
+        if (autor) { if (autor === user.toLowerCase() && clean(el.innerText).includes(pre)) return { el, b }; break; }
+      }
+    }
+    return null;
+  };
+  const caixa = () => document.querySelector('textarea[aria-label^="Adicione um coment"], textarea[placeholder^="Adicione um coment"], textarea[aria-label^="Add a comment"]') || document.querySelector('form textarea');
+  const setar = (ta, v) => { Object.getOwnPropertyDescriptor(HTMLTextAreaElement.prototype, 'value').set.call(ta, v); ta.dispatchEvent(new Event('input', { bubbles: true })); };
+`;
+const verRespostasJS = (user, pre) => `(() => { ${BASE_JS}
+  const a = bloco(${JSON.stringify(user)}, ${JSON.stringify(pre)}); if (!a) return 'sem-bloco';
+  let el = a.el;
+  for (let i = 0; i < 6 && el; i++) {
+    el = el.parentElement; if (!el) break;
+    const v = [...el.querySelectorAll('[role=button],span,div')].find(x => VER.test(clean(x.innerText)));
+    if (v) { if (responderBtns().filter(b => el.contains(b)).length !== 1) return 'ambiguo'; (v.closest('[role=button]') || v).click(); return 'ok'; }
+  }
+  return 'sem-botao';
+})()`;
+const donoNaConversaJS = (user, pre, dono) => `(() => { ${BASE_JS}
+  const a = bloco(${JSON.stringify(user)}, ${JSON.stringify(pre)}); if (!a) return false;
+  let el = a.el;
+  for (let i = 0; i < 6 && el; i++) {
+    el = el.parentElement; if (!el) break;
+    if (responderBtns().filter(b => el.contains(b)).length > 1 || /Ocultar respostas|Hide replies/i.test(el.innerText)) {
+      return [...el.querySelectorAll('a[href="/' + ${JSON.stringify(dono)} + '/"]')].some(x => clean(x.innerText) === ${JSON.stringify(dono)});
+    }
   }
   return false;
+})()`;
+const clicarResponderJS = (user, pre) => `(() => { ${BASE_JS}
+  const a = bloco(${JSON.stringify(user)}, ${JSON.stringify(pre)}); if (!a) return 'sem-bloco';
+  a.b.scrollIntoView({ block: 'center' }); a.b.click(); return 'ok';
+})()`;
+// confere que a caixa abriu como resposta para a pessoa ("@fulano ") e põe o cursor no fim, para digitar o resto
+const prepararCaixaJS = user => `(() => { ${BASE_JS}
+  const ta = caixa(); if (!ta) return { ok: false, erro: 'caixa de comentário não achada' };
+  const antes = ta.value;
+  if (antes.toLowerCase() !== '@' + ${JSON.stringify(user.toLowerCase())} + ' ') return { ok: false, erro: 'a caixa não abriu como resposta para @' + ${JSON.stringify(user)}, antes };
+  ta.focus(); ta.setSelectionRange(antes.length, antes.length);
+  return { ok: document.activeElement === ta, antes };
+})()`;
+// acha o botão "Postar" da caixa; só clica se não for ensaio
+const postarJS = (texto, soConferir) => `(() => { ${BASE_JS}
+  const ta = caixa(); if (!ta) return { ok: false, erro: 'caixa de comentário sumiu' };
+  if (ta.value !== ${JSON.stringify(texto)}) return { ok: false, erro: 'o texto na caixa ficou diferente', valor: ta.value };
+  const PUB = /^(Postar|Publicar|Post)$/i;
+  let raiz = ta; for (let i = 0; i < 6 && raiz.parentElement; i++) { raiz = raiz.parentElement; if ([...raiz.querySelectorAll('[role=button],button')].some(b => PUB.test(clean(b.innerText)))) break; }
+  const pub = [...raiz.querySelectorAll('[role=button],button')].find(b => PUB.test(clean(b.innerText)));
+  if (!pub) return { ok: false, erro: 'o botão Postar não apareceu' };
+  if (pub.getAttribute('aria-disabled') === 'true' || pub.disabled) return { ok: false, erro: 'o botão Postar está desligado' };
+  if (${soConferir ? 'true' : 'false'}) return { ok: true, ensaio: true, botao: clean(pub.innerText) };
+  pub.click(); return { ok: true };
+})()`;
+const depoisJS = texto => `(() => { ${BASE_JS}
+  const ta = caixa();
+  const avisos = [...document.querySelectorAll('[role=dialog],[role=alert],[role=status]')].map(d => clean(d.innerText)).join(' | ');
+  const erro = /não foi possível|nao foi possivel|tente novamente|try again|restring|bloque|couldn.t|não pode ser publicad|limit/i.test(avisos) ? avisos.slice(0, 300) : '';
+  return { vazia: !!ta && ta.value === '', naTela: document.body.innerText.includes(${JSON.stringify(texto.slice(-30))}), erro };
+})()`;
+
+async function lerComentarios(aba, code, dono, est, expandir = true) {
+  await aba.navegar(`https://www.instagram.com/p/${code}/`);
+  for (let i = 0; i < 20; i++) { if (await aba.ev('!!document.querySelector("textarea") || document.querySelectorAll("[role=button]").length > 5')) break; await sleep(500); }
+  await sleep(1500);
+  const todos = new Map();
+  const juntar = fontes => { for (const t of fontes) for (const c of acharObjetos(lerJSON(t), ehComentario)) todos.set(String(c.pk), c); };
+  juntar(await aba.ev(`[...document.querySelectorAll('script[type="application/json"]')].map(s => s.textContent).filter(t => t.includes('child_comment_count') || t.includes('comments_connection'))`));
+  juntar(aba.respostas.map(r => r.corpo));
+  const desde = Date.now() / 1000 - DIAS * 86400;
+  const principais = [...todos.values()].filter(c => !c.parent_comment_id);
+  const abrir = !expandir ? [] : principais.filter(c => (c.child_comment_count || 0) > 0 && doUsuario(c) !== dono && !est.respondidos[String(c.pk)] && (c.created_at || 0) >= desde).slice(0, 15);
+  for (const c of abrir) { if ((await aba.ev(verRespostasJS(c.user.username, prefixo(c.text)))) === 'ok') await espera(1800, 3000); }
+  if (abrir.length) { await sleep(1500); juntar(aba.respostas.map(r => r.corpo)); }
+  const comResposta = new Set([...todos.values()].filter(c => c.parent_comment_id && doUsuario(c) === dono).map(c => String(c.parent_comment_id)));
+  for (const c of abrir) if (!comResposta.has(String(c.pk)) && await aba.ev(donoNaConversaJS(c.user.username, prefixo(c.text), CONTA))) comResposta.add(String(c.pk));
+  return { principais, comResposta };
+}
+
+// escreve a resposta pela tela, com o teclado do navegador. ensaio = escreve, confere o botão Postar e apaga, sem postar.
+async function responder(aba, it, texto, ensaio) {
+  const r1 = await aba.ev(clicarResponderJS(it.user, prefixo(it.txt)));
+  if (r1 !== 'ok') return { ok: false, erro: r1 === 'sem-bloco' ? 'não achei o comentário na tela' : r1 };
+  await espera(1200, 2000);
+  const r2 = await aba.ev(prepararCaixaJS(it.user));
+  if (!r2.ok) return r2;
+  const resto = texto.slice(r2.antes.length);
+  if (r2.antes.toLowerCase() + resto.toLowerCase() !== texto.toLowerCase()) return { ok: false, erro: 'o começo da resposta não bate com a caixa', antes: r2.antes };
+  await aba.cdp('Input.insertText', { text: resto });
+  await espera(1500, 2500);
+  const r3 = await aba.ev(postarJS(r2.antes + resto, ensaio));
+  if (!r3.ok || ensaio) {
+    // sai da página sem postar: o rascunho da caixa é descartado (testado em 27/11)
+    try { await aba.cdp('Page.navigate', { url: 'about:blank' }); await sleep(800); } catch {}
+    return { ...r3, antes: r2.antes };
+  }
+  texto = r2.antes + resto;
+  for (let i = 0; i < 30; i++) {
+    await sleep(1000);
+    const nova = acharObjetos(aba.respostas.flatMap(r => lerJSON(r.corpo)), o => o.pk != null && o.text === texto);
+    const d = await aba.ev(depoisJS(texto));
+    if (d.erro) throw new Parar(`o Instagram não aceitou a resposta para @${it.user}: ${d.erro}`);
+    if (nova.length) return { ok: true, pk: String(nova[0].pk) };
+    if (i >= 6 && d.vazia && d.naTela) return { ok: true, pk: null };
+  }
+  throw new Parar(`cliquei em Postar na resposta para @${it.user}, mas ela não apareceu em 30 s. Confira no celular antes de liberar.`);
 }
 const horas = s => { const h = (Date.now() / 1000 - s) / 3600; return h < 1 ? 'há menos de 1 h' : h < 48 ? `há ${Math.round(h)} h` : `há ${Math.round(h / 24)} dias`; };
 const curto = s => (s.length > 90 ? s.slice(0, 87) + '...' : s);
+const link = code => `https://www.instagram.com/p/${code}/`;
+
+// ---------- ensaio num post (não publica) ----------
+async function ensaio() {
+  const code = String(ENSAIAR).replace(/^.*\/(p|reel|reels)\//, '').replace(/[/?#].*$/, '');
+  const porta = await acharPorta();
+  const aba = await abrirAba(porta);
+  try {
+    const { principais } = await lerComentarios(aba, code, '', lerEstado(), false);
+    console.log(`post ${link(code)}: ${principais.length} comentários principais lidos da página`);
+    principais.slice(0, 5).forEach(c => console.log(`  @${c.user?.username} | filhos ${c.child_comment_count} | ${horas(c.created_at)} | "${curto(limpo(c.text))}"`));
+    const alvo = principais.find(c => c.user?.username && c.user.username.toLowerCase() !== CONTA);
+    if (!alvo) return console.log('Nenhum comentário de outra pessoa para ensaiar.');
+    const it = { user: alvo.user.username, txt: alvo.text };
+    const r = await responder(aba, it, MODELOS[0](it.user), true);
+    console.log(`ENSAIO (nada publicado) em @${it.user}:`, JSON.stringify(r));
+  } finally { await aba.fechar(); }
+}
 
 // ---------- uma rodada ----------
 async function rodada() {
@@ -226,56 +361,47 @@ async function rodada() {
   try {
     const porta = await acharPorta();
     aba = await abrirAba(porta);
-    await esperarPagina(aba);
-    let eu = await aba.ev(`(document.cookie.match(/(?:^|; )ds_user_id=(\\d+)/) || [])[1] || ''`);
-    const perfil = await ig(aba, 'GET', `/api/v1/users/web_profile_info/?username=${encodeURIComponent(CONTA)}`);
-    const dono = String(perfil.j?.data?.user?.id || '');
-    if (!dono) throw new Error(`não achei a conta @${CONTA} (HTTP ${perfil.status})`);
-    if (!eu) { const cu = await ig(aba, 'GET', '/api/v1/accounts/current_user/?edit=true'); eu = String(cu.j?.user?.pk ?? cu.j?.user?.pk_id ?? ''); }
-    if (!eu) throw new Parar('o perfil do BitBrowser não está logado no Instagram');
-    if (eu !== dono) {
-      if (!TESTAR) throw new Parar(`o perfil do BitBrowser está logado em outra conta, não na @${CONTA}`);
-      log(`AVISO: o perfil está logado em outra conta, não na @${CONTA}. Teste só de leitura.`);
+    const { posts, dono, meu } = await lerPosts(aba);
+    if (!meu) {
+      if (!TESTAR) throw new Parar(`o perfil do BitBrowser não está logado na @${CONTA} (não aparece "Editar perfil")`);
+      log(`AVISO: o perfil não está logado na @${CONTA}. Teste só de leitura.`);
     }
-    await espera(1000, 2500);
-    const feed = await ig(aba, 'GET', `/api/v1/feed/user/${dono}/?count=${POSTS}`);
-    if (!feed.ok) throw new Error(`não consegui ler os posts (HTTP ${feed.status}): ${String(feed.text).slice(0, 200)}`);
-    const posts = (feed.j.items || []).slice(0, POSTS);
+    if (!posts.length) { log(`@${CONTA}: nenhum post encontrado.`); return; }
+    if (!dono) throw new Error('não consegui identificar a conta nos posts');
 
     const fila = [], ver = [], cont = { posts: posts.length, comComentario: 0, deOutros: 0, jaRespondidos: 0, antigos: 0, semNovidade: 0 };
     const desde = Date.now() / 1000 - DIAS * 86400;
     for (const p of posts) {
-      const mpk = String(p.pk ?? String(p.id || '').split('_')[0]);
-      const n = p.comment_count || 0;
+      const mpk = String(p.pk); const n = p.comment_count || 0;
       if (!n || p.comments_disabled) continue;
       cont.comComentario++;
       const antes = est.posts[mpk];
       if (!TESTAR && antes && antes.n === n && !antes.pendente) { cont.semNovidade++; continue; }
-      await espera(1200, 3000);
-      for (const c of await lerComentarios(aba, mpk)) {
+      await espera(1500, 3500);
+      const { principais, comResposta } = await lerComentarios(aba, p.code, dono, est);
+      for (const c of principais) {
         const uid = doUsuario(c);
         if (!uid || uid === dono) continue;
         cont.deOutros++;
         if ((c.created_at || 0) < desde) { cont.antigos++; continue; }
         const cpk = String(c.pk);
-        if (est.respondidos[cpk] || await temRespostaDaConta(aba, mpk, c, dono)) { cont.jaRespondidos++; continue; }
-        const txt = String(c.text || '').replace(/\s+/g, ' ').trim();
+        if (est.respondidos[cpk] || comResposta.has(cpk)) { cont.jaRespondidos++; continue; }
+        const txt = limpo(c.text);
         const tipo = NEGATIVO.test(txt) ? 'negativo' : PROPAGANDA.test(txt) ? 'propaganda' : JA_CHAMOU.test(txt) ? 'disse que já chamou' : null;
-        const item = { post: p.code, mpk, cpk, user: c.user?.username || '?', txt, quando: c.created_at || 0 };
+        const item = { code: p.code, mpk, cpk, user: c.user?.username || '?', txt, quando: c.created_at || 0 };
         if (tipo) ver.push({ ...item, tipo }); else fila.push(item);
       }
       est.posts[mpk] = { n, pendente: false };
     }
     fila.sort((a, b) => b.quando - a.quando);
     const vagas = Math.max(0, Math.min(MAXR, MAXD - (est.dias[hoje()] || 0)));
-    const link = it => `https://www.instagram.com/p/${it.post}/`;
 
     if (TESTAR) {
       console.log(`\nCONTA @${CONTA} | posts lidos: ${cont.posts} | com comentário: ${cont.comComentario} | comentários de outras pessoas: ${cont.deOutros} | já respondidos: ${cont.jaRespondidos} | mais antigos que ${DIAS} dias: ${cont.antigos}`);
       console.log(`\nVOU RESPONDER (${fila.length}; até ${MAXR} por rodada e ${MAXD} por dia, um a cada 40 a 90 s, os mais novos primeiro):`);
-      fila.forEach((it, i) => console.log(`  ${i + 1}. ${link(it)} | @${it.user} | "${curto(it.txt)}" | ${horas(it.quando)}`));
+      fila.forEach((it, i) => console.log(`  ${i + 1}. ${link(it.code)} | @${it.user} | "${curto(it.txt)}" | ${horas(it.quando)}`));
       console.log(`\nPARA VOCÊ VER (sem resposta automática) (${ver.length}):`);
-      ver.forEach((it, i) => console.log(`  ${i + 1}. [${it.tipo}] ${link(it)} | @${it.user} | "${curto(it.txt)}"`));
+      ver.forEach((it, i) => console.log(`  ${i + 1}. [${it.tipo}] ${link(it.code)} | @${it.user} | "${curto(it.txt)}"`));
       console.log(`\nExemplo de resposta: "${MODELOS[0](fila[0]?.user || 'fulano')}"`);
       console.log('Modo teste: nada foi escrito no Instagram.');
       return;
@@ -283,26 +409,31 @@ async function rodada() {
 
     const novos = ver.filter(it => !est.vistos[it.cpk]);
     if (novos.length) {
-      fs.appendFileSync(PARA_VER, novos.map(it => `${new Date().toLocaleString('pt-BR')} | ${it.tipo} | ${link(it)} | @${it.user} | ${curto(it.txt)}`).join('\n') + '\n');
+      fs.appendFileSync(PARA_VER, novos.map(it => `${new Date().toLocaleString('pt-BR')} | ${it.tipo} | ${link(it.code)} | @${it.user} | ${curto(it.txt)}`).join('\n') + '\n');
       for (const it of novos) est.vistos[it.cpk] = new Date().toISOString();
     }
-    let feitos = 0;
+    let feitos = 0, naTela = '';
     try {
       for (const it of fila.slice(0, vagas)) {
+        if (fresco(POSTANDO, 15)) { log('post sendo publicado nesta conta: paro as respostas desta rodada'); break; }
         if (feitos) await espera(40000, 90000);
+        if (naTela !== it.code) { await aba.navegar(`https://www.instagram.com/p/${it.code}/`); await espera(3000, 5000); naTela = it.code; }
         let k; do { k = Math.floor(Math.random() * MODELOS.length); } while (k === est.ultimoModelo);
-        const r = await ig(aba, 'POST', `/api/v1/web/comments/${it.mpk}/add/`, { comment_text: MODELOS[k](it.user), replied_to_comment_id: it.cpk });
-        if (!r.ok) throw new Parar(`o Instagram não aceitou a resposta (HTTP ${r.status}): ${String(r.text).slice(0, 300)}`);
+        const r = await responder(aba, it, MODELOS[k](it.user), false);
+        if (!r.ok) {
+          if (r.erro === 'não achei o comentário na tela') { log(`não achei o comentário de @${it.user} em ${link(it.code)} (pode ter sido apagado): pulei`); est.respondidos[it.cpk] = new Date().toISOString(); continue; }
+          throw new Parar(`não consegui responder @${it.user} em ${link(it.code)}: ${r.erro}`);
+        }
         est.ultimoModelo = k;
         est.respondidos[it.cpk] = new Date().toISOString();
         est.dias[hoje()] = (est.dias[hoje()] || 0) + 1;
         salvarEstado(est);
         feitos++;
-        log(`respondi @${it.user} em ${link(it)}`);
-        if (feitos === 1 && !(await respostaApareceu(aba, it, dono))) throw new Parar(`o Instagram aceitou a resposta para @${it.user}, mas ela não apareceu no post (${link(it)}). Pode ser filtro de spam. Confira no celular antes de liberar.`);
+        log(`respondi @${it.user} em ${link(it.code)}`);
+        naTela = ''; // depois de publicar, reabre o post antes da próxima resposta
       }
     } finally {
-      for (const it of fila.slice(feitos)) if (est.posts[it.mpk]) est.posts[it.mpk].pendente = true;
+      for (const it of fila.slice(feitos)) if (est.posts[it.mpk] && !est.respondidos[it.cpk]) est.posts[it.mpk].pendente = true;
       est.falhas = 0;
       salvarEstado(est);
     }
@@ -348,6 +479,7 @@ if (!PERFIL && !PORTA) sair(1, 'Falta --perfil "NOME DO PERFIL NO BITBROWSER" (o
 if (!NUM) sair(1, 'O --whatsapp precisa ser 55 + DDD + número, só dígitos. Ex.: 5577999999999.');
 if (tem('--preparar')) { const a = prepararArquivos(); sair(0, `Arquivos prontos (nenhuma tarefa criada):\n  ${a.cmd}\n  ${a.vbs}\nPara rodar uma rodada escondida, como a tarefa faria: wscript.exe "${a.vbs}"\nLog: ${a.logf}`); }
 if (tem('--agendar')) { agendar(); sair(0); }
+if (ENSAIAR) { try { await ensaio(); sair(0); } catch (e) { sair(e instanceof Parar ? 2 : 1, 'erro no ensaio: ' + e.message); } }
 
 for (;;) {
   try { await rodada(); }
