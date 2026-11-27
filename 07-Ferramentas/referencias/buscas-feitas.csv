@@ -231,3 +231,18 @@ data;ferramenta;termo;pais;status;coletados;pc;saida
 2026-11-26 03:51;ig_posts(sem login);ig-links.json;BR;ativos;1218;DESKTOP-QBB3SNO;10-Trabalho/2026-11-26-agro-alto-ticket/ig.json
 2026-11-26 03:52;brutos_meta;colheitadeira à venda;BR;ativos;11;DESKTOP-QBB3SNO;10-Trabalho/2026-11-26-agro-alto-ticket/meta-A.json
 2026-11-26 03:52;brutos_meta;colheitadeira seminova;BR;ativos;1;DESKTOP-QBB3SNO;10-Trabalho/2026-11-26-agro-alto-ticket/meta-A.json
+2026-11-26 21:27;brutos_meta;carro elétrico seminovo;BR;ativos;74;ROBERTO;10-Trabalho/2026-11-26-brutos-eletricos/meta-01.json
+2026-11-26 21:28;brutos_meta;carro elétrico à venda;BR;ativos;93;ROBERTO;10-Trabalho/2026-11-26-brutos-eletricos/meta-02.json
+2026-11-26 21:28;brutos_meta;elétrico único dono;BR;ativos;57;ROBERTO;10-Trabalho/2026-11-26-brutos-eletricos/meta-03.json
+2026-11-26 21:29;brutos_meta;dolphin mini seminovo;BR;ativos;16;ROBERTO;10-Trabalho/2026-11-26-brutos-eletricos/meta-04.json
+2026-11-26 21:29;brutos_meta;byd dolphin;BR;ativos;77;ROBERTO;10-Trabalho/2026-11-26-brutos-eletricos/meta-05.json
+2026-11-26 21:30;brutos_meta;gwm ora;BR;ativos;67;ROBERTO;10-Trabalho/2026-11-26-brutos-eletricos/meta-06.json
+2026-11-26 21:31;brutos_meta;geely ex2;BR;ativos;85;ROBERTO;10-Trabalho/2026-11-26-brutos-eletricos/meta-07.json
+2026-11-26 21:31;brutos_meta;spark euv;BR;ativos;66;ROBERTO;10-Trabalho/2026-11-26-brutos-eletricos/meta-08.json
+2026-11-26 21:32;brutos_meta;gac aion;BR;ativos;77;ROBERTO;10-Trabalho/2026-11-26-brutos-eletricos/meta-09.json
+2026-11-26 21:32;brutos_meta;dolphin mini salvador;BR;vazio;0;ROBERTO;10-Trabalho/2026-11-26-brutos-eletricos/meta-10.json
+2026-11-26 21:33;brutos_meta;byd dolphin;BR;ativos;48;ROBERTO;10-Trabalho/2026-11-26-brutos-eletricos/controle-10.json
+2026-11-26 21:34;brutos_meta;dolphin mini;BR;inativos;222;ROBERTO;10-Trabalho/2026-11-26-brutos-eletricos/meta-11-inativos.json
+2026-11-26 21:52;brutos_meta;dolphin gs;BR;inativos;216;ROBERTO;10-Trabalho/2026-11-26-brutos-eletricos/meta-12-inativos.json
+2026-11-26 21:53;brutos_meta;ora 03;BR;inativos;204;ROBERTO;10-Trabalho/2026-11-26-brutos-eletricos/meta-13-inativos.json
+2026-11-26 21:55;brutos_meta;yuan pro;BR;inativos;144;ROBERTO;10-Trabalho/2026-11-26-brutos-eletricos/meta-14-inativos.json
