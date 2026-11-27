@@ -22,7 +22,8 @@ Material em `08-Treinamento/`. Antes do dia:
 - [ ] **SDR depois do Grok:** quem responde o lead no CRM? O bot do Grok recebia pelo webhook e respondia pela API do CRM. No CRM em produção, o módulo `ai-agents` só faz triagem (AGT-01) e resumo diário (AGT-09), e a chave do "Meu Claude" é só de leitura. Falta ligar um SDR que leia as "Regras do meu SDR" de cada vendedor e responda pela API (e a chave da Anthropic no CRM).
 
 ## Perfil @tananconsorcio (aberta em 27/11/2026)
-- [ ] Link do WhatsApp na bio (https://wa.me/5577998392976): o Instagram só deixa pôr link pelo app do celular.
+- [ ] Link do WhatsApp na bio (https://wa.me/5577998392976): o Instagram só deixa pôr link pelo app do celular (conferido no computador e no modo celular do navegador em 27/11).
+- [ ] Destaques fixados (Quem sou, Família, Contemplados): "Salvar story em Itens Arquivados" estava desligado e foi ligado em 27/11. Os 14 stories entram no arquivo quando expirarem (28/11, de 03h a 05h); depois disso dá para montar os destaques pelo computador. Para ter hoje: no app, abrir o story → Destacar.
 - [ ] Reels de teste: trocar para perfil profissional (criador) e conferir se a opção aparece; até lá, Reel normal.
 - [ ] 4 vídeos de prova social (depoimento, 18 dias, lance embutido, cota contemplada): story de vídeo só pelo app.
 - [ ] Oferta de Black Friday (1ª parcela em 2027): confirmar com a Alpha por escrito antes de usar.
