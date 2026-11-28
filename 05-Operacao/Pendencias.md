@@ -27,7 +27,7 @@ Material em `08-Treinamento/`. Antes do dia:
 - [ ] Reels de teste: trocar para perfil profissional (criador) e conferir se a opção aparece; até lá, Reel normal.
 - [ ] 4 vídeos de prova social (depoimento, 18 dias, lance embutido, cota contemplada): story de vídeo só pelo app.
 - [ ] Oferta de Black Friday (1ª parcela em 2027): confirmar com a Alpha por escrito antes de usar.
-- [ ] **Ofertas na grade:** tirar da grade, pelo app do celular, as 21 ofertas postadas de 27/11 04h16 a 28/11 09h21: as 9 do lote de R$ 200 mil a 1 milhão (se ainda estiverem na grade) e as 12 do modelo "passo a passo". Links em `05-Operacao/registros/publicados-2026-11.md`. Na grade ficam só os educativos. A ferramenta não tira sozinha (regra de 27/11 ~17h).
+- [ ] **A conta caiu (28/11 11h22, aviso do Samuel: "o meu instagram caiu"):** ver no app o motivo e se dá para recorrer. Nada mais é postado nela; as 12 ofertas do "passo a passo" foram para a @samuelbritotanan. Se a conta voltar: tirar da grade as 21 ofertas postadas de 27/11 04h16 a 28/11 09h21 (links em `05-Operacao/registros/publicados-2026-11.md`); na grade ficam só os educativos.
 
 ## Música em alta pelo PC (aberta em 26/11/2026)
 - [ ] Escolher o caminho da música em alta: **agendador** (Buffer ou Metricool, sem Meta Developers; testar 1 conta no plano grátis) ou **script** `ig_musica.py` (precisa de app no Meta Developers). Hoje a postagem é pelo BitBrowser, sem música.
